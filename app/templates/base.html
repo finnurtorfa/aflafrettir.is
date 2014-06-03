@@ -18,6 +18,15 @@ Aflafréttir.is
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
       <li><a href="{{ url_for('aflafrettir.index') }}">Forsíða</a></li>
+      <li><a href="{{ url_for('aflafrettir.index') }}">Hafa samband</a></li>
+      <li><a href="{{ url_for('aflafrettir.index') }}">Um síðuna</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      {% if current_user.is_authenticated() %}
+      <li><a href="{{ url_for('aflafrettir.user', username=current_user.username) }}">Stjórnborð</a></li>
+      {% elif not current_user.is_authenticated() %}
+      <li><a href="{{ url_for('auth.login') }}">Innskráning</a></li>
+      {% endif %}
     </ul>
   </div> <!-- collapse-navbar -->
 
