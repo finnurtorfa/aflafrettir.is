@@ -18,7 +18,7 @@ class User(db.Model):
   is_admin      = db.Column(db.Boolean)
   password_hash = db.Column(db.String(128))
   name          = db.Column(db.String(64))
-  member_since  = db.Column(db.DateTime(), default = datetime.uctnow)
+  member_since  = db.Column(db.DateTime(), default = datetime.utcnow)
 
   @property
   def password(self):
