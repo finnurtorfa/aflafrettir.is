@@ -39,15 +39,18 @@ Aflafréttir.is
 </div> <!-- navbar -->
 {% endblock %}
 
-{% block content %}
-<div class="container">
-  {% for message in get_flashed_messages() %}
-  <div class="alert alert-warning">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ message }}
-  </div> <!-- alert-warning -->
-  {% endfor %}
 
-  {% block page_content %} {% endblock %}
-</div> <!-- container -->
+{% block content %}
+  {% block sidebar %} {% endblock %}
+  
+  <div class="container">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ message }}
+    </div> <!-- alert-warning -->
+    {% endfor %}
+  
+    {% block page_content %} {% endblock %}
+  </div> <!-- container -->
 {% endblock %}

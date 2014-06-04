@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+<div class="row-offcanvas row-offcanvas-right">
+  <div class="col-xs-6 col-sm-2 sidebar-offcanvas" id="sidebar" role="navigation">
+    <div class="list-group">
+      <a href="#" class="list-group-item">Item 1</a>
+      <a href="#" class="list-group-item">Item 2</a>
+      <a href="#" class="list-group-item">Item 3</a>
+    </div><!-- list-group -->
+  </div><!-- sidebar-offcanvas -->
+</div><!-- row-offcanvas-right -->
+{% endblock %}
+
 {% block page_content %}
 <h1> Hello, World </h1>
 {% endblock %}
