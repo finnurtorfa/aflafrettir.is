@@ -6,7 +6,7 @@
   <h1> {{ user.username }} </h1>
   <p>
     {% if user.name %}{{ user.name }}<br>{% endif %}
-    {% if user.location %}{{ user.location }}<br>{% endif %}
+    {% if user.location %}<a href="http://maps.google.com?q={{ user.location }}">{{ user.location }}</a><br>{% endif %}
     {% if user.bio %}{{ user.bio }}<br>{% endif %}
   </p>
 </div>
