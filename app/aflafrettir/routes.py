@@ -10,4 +10,4 @@ def index():
 @aflafrettir.route('/user/<username>')
 def user(username):
   user = User.query.filter_by(username=username).first_or_404()
-  return render_template('aflafrettir/user.html', username = username)
+  return render_template('aflafrettir/user.html', user=user)
