@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block sidebar %}
-<li class="active"><a href="#">Menu Item 1</a></li>
-<li><a href="#">Menu Item 2</a></li>
+<li><a href="{{ url_for('admin.edit_user') }}"> Breyta prófíl </a></li>
 <li><a href="#">Menu Item 3</a></li>
 <li><a href="#">Menu Item 4</a></li>
 <li><a href="#">Reviews <span class="badge">1,118</span></a></li>
+<li><a href="#">Extra <span class="badge">1,118</span></a></li>
 {% endblock %}
 
 {% block page_content %}
