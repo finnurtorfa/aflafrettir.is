@@ -1,11 +1,13 @@
-{% extends "base.html" %}
+{% extends "aflafrettir/index.html" %}
 
 {% block page_content %}
 <div class="page-header user-profile">
-  <div class="user-avatar"><img src="{{ user.gravatar(128) }}"></div>
+  <div class="user-avatar"><img src="{{ user.gravatar(180) }}"></div>
   <h1> {{ user.username }} </h1>
   <p>
     {% if user.name %}{{ user.name }}<br>{% endif %}
+    {% if user.location %}{{ user.location }}<br>{% endif %}
+    {% if user.bio %}{{ user.bio }}<br>{% endif %}
   </p>
 </div>
 {% endblock %}

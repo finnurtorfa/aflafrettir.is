@@ -21,9 +21,11 @@ class User(UserMixin, db.Model):
                             unique=True, 
                             index=True)
   is_admin      = db.Column(db.Boolean)
+  name          = db.Column(db.String(64))
+  location      = db.Column(db.String(64))
+  bio           = db.Column(db.Text())
   password_hash = db.Column(db.String(128))
   avatar_hash   = db.Column(db.String(32))
-  name          = db.Column(db.String(64))
   member_since  = db.Column(db.DateTime(), default = datetime.utcnow)
 
   def __init__(self, **kwargs):
