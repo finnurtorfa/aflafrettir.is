@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request
-from flask.ext.login import login_user
+from flask.ext.login import login_user, logout_user, login_required
 
 from . import auth
 from .forms import LoginForm
@@ -21,3 +21,9 @@ def login():
     return redirect(request.args.get('next') or url_for('aflafrettir.index'))
 
   return render_template('auth/login.html', form=form)
+
+@auth.route('/logout')
+def logout():
+  logout_user()
+  flash('Þú hefur verið skráður út!')
+  return redirect(url_for('aflafrettir.index'))
