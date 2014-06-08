@@ -35,3 +35,7 @@ def edit_user():
 
   return render_template('admin/edit_user.html', form=form)
 
+@admin.route('/news')
+@login_required
+def news():
+  return render_template('admin/news.html')
