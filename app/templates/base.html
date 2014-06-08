@@ -6,7 +6,7 @@ Aflafréttir.is
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
 
 {% block navbar %}
@@ -49,7 +49,6 @@ Aflafréttir.is
 
 <div class="row">
   <div class="col-sm-3">
-    <div class="sidebar-nav">
       <div class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
@@ -61,12 +60,9 @@ Aflafréttir.is
           <span class="visible-xs navbar-brand">Sidebar menu</span>
         </div><!-- ./navbar-header -->
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
-          <ul class="nav navbar-nav">
-            {% block sidebar %} {% endblock %}
-          </ul>
+          {% block sidebar %} {% endblock %}
         </div> <!-- ./navbar-collapse -->
       </div><!-- ./navbar-default -->
-    </div><!-- ./sidebar-nav -->
   </div><!-- ./col-sm-3 -->
   
   <div class="col-sm-9">
@@ -80,4 +76,9 @@ Aflafréttir.is
     {% block page_content %} {% endblock %}
   </div> <!-- ./col-sm-9 -->
 </div> <!-- ./row -->
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
 {% endblock %}
