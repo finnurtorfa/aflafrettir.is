@@ -5,12 +5,10 @@ $('[data-toggle=collapse]').click(function(){
     if ( $(new_attr).hasClass("in")  && new_attr != attr ) {
       $(new_attr).removeClass("in");
       $(new_attr).fadeOut();
+    } else if ( $(attr).hasClass("in") ) {
+      $(attr).fadeOut();
+    } else {
+      $(attr).fadeIn();
     }
   });
-  
-  if ( $(attr).hasClass("in") ) {
-    $(attr).fadeOut();
-  } else {
-    $(attr).fadeIn();
-  }
 });
