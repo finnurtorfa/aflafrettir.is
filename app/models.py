@@ -59,11 +59,11 @@ class User(UserMixin, db.Model):
     hash = self.avatar_hash or \
            hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
-    return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(url=url,
-                                                                 hash=hash,
-                                                                 size=size,
-                                                                 default=default,
-                                                                 rating=rating)
+    return '{u}/{h}?s={s}&d={d}&r={r}'.format(u=url,
+                                              h=hash,
+                                              s=size,
+                                              d=default,
+                                              r=rating)
 
 class Post(db.Model):
   __tablename__ = 'posts'
@@ -73,3 +73,12 @@ class Post(db.Model):
   body_html     = db.Column(db.Text)
   timestamp     = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   author_id     = db.Column(db.Integer, db.ForeignKey('users.id'))
+  category_id   = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+class Category(db.Model):
+  __tablename__ = 'categories'
+  id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  name          = db.Column(db.String(64), nullable=False, unique=True)
+  active        = db.Column(db.Boolean, nullable=False, default=False)
+  posts         = db.relationship('Post', backref='category', lazy='dynamic')
+
