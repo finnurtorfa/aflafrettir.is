@@ -27,6 +27,7 @@ class User(UserMixin, db.Model):
   password_hash = db.Column(db.String(128))
   avatar_hash   = db.Column(db.String(32))
   member_since  = db.Column(db.DateTime(), default = datetime.utcnow)
+  posts         = db.relationship('Post', backref='author', lazy='dynamic')
 
   def __init__(self, **kwargs):
     super(User, self).__init__(**kwargs)
@@ -64,4 +65,11 @@ class User(UserMixin, db.Model):
                                                                  default=default,
                                                                  rating=rating)
 
-
+class Post(db.Model):
+  __tablename__ = 'posts'
+  id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  title         = db.Column(db.String(64))
+  body          = db.Column(db.Text)
+  body_html     = db.Column(db.Text)
+  timestamp     = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+  author_id     = db.Column(db.Integer, db.ForeignKey('users.id'))
