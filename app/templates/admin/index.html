@@ -6,7 +6,7 @@
     <a class="collapsible" href="#" data-toggle="collapse" data-target="#profile-menu">
       <h3> Prófíll </h3>
     </a>
-    <ul class="list-unstyled collapse {% if url_for(request.endpoint) == url_for('admin.index') or url_for(request.endpoint) == url_for('admin.edit_user') %} in {% endif %}" id="profile-menu">
+    <ul class="list-unstyled collapse {% if url_for(request.endpoint) in [url_for('admin.index'), url_for('admin.edit_user')] %} in {% endif %}" id="profile-menu">
       <li><a href="{{ url_for('admin.index') }}"> Skoða </a></li>
       <li><a href="{{ url_for('admin.edit_user') }}"> Breyta </a></li>
     </ul> <!-- ./list-unstyled collapse in -->
@@ -16,9 +16,9 @@
     <a class="collapsible" href="#" data-toggle="collapse" data-target="#news-menu">
       <h3> Fréttir </h3>
     </a>
-    <ul class="list-unstyled collapse {% if url_for(request.endpoint) == url_for('admin.news') %} in {% endif %}" id="news-menu">
+    <ul class="list-unstyled collapse {% if url_for(request.endpoint) in [url_for('admin.news'), url_for('admin.post')] %} in {% endif %}" id="news-menu">
       <li><a href="{{ url_for('admin.news') }}"> Yfirlit </a></li>
-      <li><a href="{{ url_for('admin.index') }}"> Ný Frétt </a></li>
+      <li><a href="{{ url_for('admin.post') }}"> Ný Frétt </a></li>
     </ul> <!-- ./list-unstyled collapse in -->
   </li> <!-- ./nav-header -->
   
