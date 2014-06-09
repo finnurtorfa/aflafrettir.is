@@ -7,7 +7,7 @@ from . import admin
 from .forms import ProfileForm, PostForm
 
 from .. import db
-from ..models import User
+from ..models import User, Post
 
 @admin.route('/')
 @login_required
@@ -47,8 +47,19 @@ def news():
 def post():
   form = PostForm()
   form.category.choices = [(0, 'Almenn frétt')]
+  form.created.data = datetime.utcnow()
 
   if form.validate_on_submit():
+
+    post = Post(title=form.title.data,
+                body=form.post.data, 
+                body_html=form.post.data, 
+                timestamp=form.created.data, 
+                author=current_user)
+
+    db.session.add(post)
+    db.session.commit()
+
     flash("Fréttin hefur verið vistuð!")
     return redirect(url_for('admin.news'))
 
