@@ -1,8 +1,10 @@
+from datetime import datetime
+
 from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, current_user
 
 from . import admin
-from .forms import ProfileForm
+from .forms import ProfileForm, PostForm
 
 from .. import db
 from ..models import User
@@ -39,3 +41,15 @@ def edit_user():
 @login_required
 def news():
   return render_template('admin/news.html')
+
+@admin.route('/news/post', methods=['GET', 'POST'])
+@login_required
+def post():
+  form = PostForm()
+  form.category.choices = [(0, 'Almenn frétt')]
+
+  if form.validate_on_submit():
+    flash("Fréttin hefur verið vistuð!")
+    return redirect(url_for('admin.news'))
+
+  return render_template('admin/post.html', form=form)
