@@ -20,9 +20,7 @@ bkLib.onDomLoaded(function() {
 
   <div class="col-xs-4">
   {{ wtf.form_field(form.title) }}
-  <div class="form-group"><label class="control-label" for="{{ form.created.name }}">{{ form.created.label }}</label>
-  {{ form.created(**{'type':'datetime-local', 'class':'form-control'}) }}
-  </div>
+  {{ wtf.form_field(form.created) }}
   {{ wtf.form_field(form.category) }}
   </div>
   <div class="form-group {% if form.post.errors %}has-error{% endif %}">
