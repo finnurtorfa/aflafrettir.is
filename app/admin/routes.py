@@ -113,6 +113,16 @@ def edit_post(post_id):
 
   return render_template('admin/post.html', form=form)
 
+@admin.route('/news/delete/<int:post_id>')
+@login_required
+def delete_post(post_id):
+  post = Post.get_by_id(post_id)
+
+  db.session.delete(post)
+  db.session.commit()
+
+  return redirect(url_for('admin.news'))
+
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
 def category():
