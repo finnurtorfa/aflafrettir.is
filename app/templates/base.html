@@ -57,24 +57,25 @@ Aflafréttir.is
         </button>
         <span class="visible-xs navbar-brand">Sidebar menu</span>
       </div><!-- ./navbar-header -->
+      
       <div class="navbar-collapse collapse sidebar-navbar-collapse">
         {% block sidebar %} {% endblock %}
       </div> <!-- ./navbar-collapse -->
     </div><!-- ./navbar-default -->
-  </div><!-- ./col-sm-3 -->
+  </div><!-- ./col-sm-2 -->
   
   <div class="col-sm-8">
-  <div class="well">
-    {% for message in get_flashed_messages() %}
-    <div class="alert alert-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      {{ message }}
-    </div> <!-- alert-warning -->
-    {% endfor %}
-    
-    {% block page_content %} {% endblock %}
+    <div class="well">
+      {% for message in get_flashed_messages() %}
+      <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+      </div> <!-- alert-warning -->
+      {% endfor %}
+      
+      {% block page_content %} {% endblock %}
+    </div> <!-- ./well -->
   </div> <!-- ./col-sm-9 -->
-</div>
 </div> <!-- ./row -->
 {% endblock %}
 
