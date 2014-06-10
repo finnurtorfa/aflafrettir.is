@@ -18,3 +18,11 @@ class PostForm(Form):
   post      = TextAreaField('Frétt', validators=[Required()])
   category  = SelectField('Flokkur', coerce=int, validators=[Optional()])
   submit    = SubmitField('Senda')
+
+class CategoryForm(Form):
+  category  = StringField('Nafn á Flokki', validators=[Optional()])
+  submit    = SubmitField('Senda', validators=[Optional()])
+  inactive  = SelectField('Flokkar sem ekki birtast', validators=[Optional()])
+  right     = SubmitField('>', validators=[Optional()])
+  left      = SubmitField('<', validators=[Optional()])
+  active    = SelectField('Flokkar sem birtast', validators=[Optional()])
