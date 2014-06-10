@@ -1,5 +1,6 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, TextAreaField, SubmitField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField, \
+                    DateTimeField
 from wtforms.validators import Required, Length, Email, Optional
 
 class ProfileForm(Form):
@@ -10,4 +11,18 @@ class ProfileForm(Form):
   bio       = TextAreaField('Um', validators=[Optional()])
   submit    = SubmitField('Breyta')
 
+class PostForm(Form):
+  title     = StringField('Titill', validators=[Required(), 
+                                                Length(1,64)])
+  created   = DateTimeField('Dagsetning', validators=[Optional()])
+  post      = TextAreaField('Frétt', validators=[Required()])
+  category  = SelectField('Flokkur', coerce=int, validators=[Optional()])
+  submit    = SubmitField('Senda')
 
+class CategoryForm(Form):
+  category  = StringField('Nafn á Flokki', validators=[Optional()])
+  submit    = SubmitField('Senda', validators=[Optional()])
+  inactive  = SelectField('Flokkar sem ekki birtast', validators=[Optional()])
+  right     = SubmitField('>', validators=[Optional()])
+  left      = SubmitField('<', validators=[Optional()])
+  active    = SelectField('Flokkar sem birtast', validators=[Optional()])

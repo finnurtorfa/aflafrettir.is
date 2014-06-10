@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block sidebar %}
-<li class="active"><a href="#">Menu Item 1</a></li>
-<li><a href="#">Menu Item 2</a></li>
-<li><a href="#">Menu Item 3</a></li>
-<li><a href="#">Menu Item 4</a></li>
-<li><a href="#">Reviews <span class="badge">1,118</span></a></li>
+<ul class="list-unstyled">
+  <li class="nav-header">
+    <a href="#" data-toggle="collapse" data-target="#profile-menu">
+      <h5> Item 1 </h5>
+    </a>
+  </li>
+  <li class="nav-header"> 
+    <a href="#" data-toggle="collapse" data-target="#menu2">
+      <h5> Item 2 </h5>
+    </a>
+  </li>
+</ul> <!-- ./list-unstyled -->
 {% endblock %}
 
 {% block page_content %}
