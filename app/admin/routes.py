@@ -70,10 +70,49 @@ def post():
     db.session.commit()
 
     flash("Fréttin hefur verið vistuð!")
+
     return redirect(url_for('admin.news'))
 
   return render_template('admin/post.html', form=form)
   
+@admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(post_id):
+  post = Post.get_by_id(post_id)
+
+  form = PostForm()
+  form.category.choices = [(0, 'Almenn frétt')]
+
+  active = Category.get_all_active()
+
+  form.category.choices.extend([(n+1, i.name) for n, i in enumerate(active)])
+
+  if form.validate_on_submit():
+    name = form.category.choices[int(form.category.data)][1]
+    category = Category.get_by_name(name)
+
+    post.title      = form.title.data
+    post.body       = form.post.data
+    post.body_html  = form.post.data
+    post.timestamp  = form.created.data
+    post.author     = current_user
+    post.category   = category
+
+    db.session.add(post)
+    db.session.commit()
+
+    flash("Fréttin hefur verið uppfærð!")
+
+    return redirect(url_for('admin.news'))
+  
+  form.title.data       = post.title
+  form.post.data        = post.body
+  form.created.data     = post.timestamp
+  form.category.data    = [i for i, v in enumerate(form.category.choices)
+                             if v[1] == post.category.name][0]
+
+  return render_template('admin/post.html', form=form)
+
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
 def category():

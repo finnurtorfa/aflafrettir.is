@@ -84,6 +84,10 @@ class Post(db.Model):
     else:
       return cls.query.order_by(cls.timestamp).all()
 
+  @classmethod
+  def get_by_id(cls, aid):
+    return cls.query.filter_by(id=aid).first()
+
 class Category(db.Model):
   __tablename__ = 'categories'
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
