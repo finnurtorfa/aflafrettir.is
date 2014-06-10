@@ -16,7 +16,7 @@
     {% for post in posts %}
     <tr>
       <td> {{ post.title }} </td>
-      <td> {{ post.category }} </td>
+      <td> {{ post.category.name }} </td>
       <td> {{ post.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
       <td> 0 </td>
       <td> Aðgerðir </td>

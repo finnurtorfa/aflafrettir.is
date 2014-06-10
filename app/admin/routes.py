@@ -51,12 +51,20 @@ def post():
   form.category.choices = [(0, 'Almenn frétt')]
   form.created.data = datetime.utcnow()
 
+  active = Category.get_all_active()
+
+  form.category.choices.extend([(n+1, i.name) for n, i in enumerate(active)])
+
   if form.validate_on_submit():
+    name = form.category.choices[int(form.category.data)][1]
+    category = Category.get_by_name(name)
+
     post = Post(title=form.title.data,
                 body=form.post.data, 
                 body_html=form.post.data, 
                 timestamp=form.created.data, 
-                author=current_user)
+                author=current_user,
+                category=category)
 
     db.session.add(post)
     db.session.commit()
@@ -73,8 +81,6 @@ def category():
 
     active = Category.get_all_active()
     inactive = Category.get_all_active(False)
-    print(active)
-    print(inactive)
 
     if active:
       form.active.choices = [(n, i.name) for n,i in enumerate(active)]
