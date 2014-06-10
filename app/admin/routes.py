@@ -40,7 +40,10 @@ def edit_user():
 @admin.route('/news')
 @login_required
 def news():
-  return render_template('admin/news.html')
+  posts = Post.get_all()
+  print(posts)
+
+  return render_template('admin/news.html', posts=posts)
 
 @admin.route('/news/post', methods=['GET', 'POST'])
 @login_required

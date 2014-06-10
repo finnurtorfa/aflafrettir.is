@@ -7,6 +7,8 @@ from flask.ext.login import UserMixin
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from sqlalchemy import desc
+
 from . import db, login_manager
 
 class User(UserMixin, db.Model):
@@ -74,6 +76,13 @@ class Post(db.Model):
   timestamp     = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   author_id     = db.Column(db.Integer, db.ForeignKey('users.id'))
   category_id   = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+  @classmethod
+  def get_all(cls, descending=True):
+    if descending:
+      return cls.query.order_by(cls.timestamp.desc()).all()
+    else:
+      return cls.query.order_by(cls.timestamp).all()
 
 class Category(db.Model):
   __tablename__ = 'categories'
