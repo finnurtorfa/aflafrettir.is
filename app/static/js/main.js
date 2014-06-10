@@ -12,3 +12,9 @@ $('[data-toggle=collapse]').click(function(){
     }
   });
 });
+
+$('#confirm-delete').on('show.bs.modal', function(e) {
+  console.log($(this))
+  $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+  $('.debug-url').html('Þú ert við það að fara að eyða færslu með titilinn: <strong>' + $(e.relatedTarget).data('title') + '</strong> <br> Ertu viss?');
+});
