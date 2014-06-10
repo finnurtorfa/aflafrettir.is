@@ -4,10 +4,10 @@ from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, current_user
 
 from . import admin
-from .forms import ProfileForm, PostForm
+from .forms import ProfileForm, PostForm, CategoryForm
 
 from .. import db
-from ..models import User, Post
+from ..models import User, Post, Category
 
 @admin.route('/')
 @login_required
@@ -41,7 +41,6 @@ def edit_user():
 @login_required
 def news():
   posts = Post.get_all()
-  print(posts)
 
   return render_template('admin/news.html', posts=posts)
 
@@ -53,7 +52,6 @@ def post():
   form.created.data = datetime.utcnow()
 
   if form.validate_on_submit():
-
     post = Post(title=form.title.data,
                 body=form.post.data, 
                 body_html=form.post.data, 
@@ -67,3 +65,54 @@ def post():
     return redirect(url_for('admin.news'))
 
   return render_template('admin/post.html', form=form)
+  
+@admin.route('/news/category', methods=['GET', 'POST'])
+@login_required
+def category():
+    form = CategoryForm()
+
+    active = Category.get_all_active()
+    inactive = Category.get_all_active(False)
+    print(active)
+    print(inactive)
+
+    if active:
+      form.active.choices = [(n, i.name) for n,i in enumerate(active)]
+    else:
+      form.active.choices = [(0, '')]
+
+    if inactive:
+      form.inactive.choices = [(n, i.name) for n,i in enumerate(inactive)]
+    else:
+      form.inactive.choices = [(0, '')]
+
+    if request.method == 'POST':
+      if form.submit.data and form.category.data:
+        category = Category(name=form.category.data)
+
+        db.session.add(category)
+        db.session.commit()
+
+        return redirect(url_for('admin.category'))
+
+      if form.right.data and inactive and form.inactive.data != None:
+        category_selected = form.inactive.choices[int(form.inactive.data)][1]
+        category = Category.get_by_name(category_selected)
+        category.active=True
+
+        db.session.add(category)
+        db.session.commit()
+
+        return redirect(url_for('admin.category'))
+
+      if form.left.data and active and form.active.data != None:
+        category_selected = form.active.choices[int(form.active.data)][1]
+        category = Category.get_by_name(category_selected)
+        category.active=False
+
+        db.session.add(category)
+        db.session.commit()
+
+        return redirect(url_for('admin.category'))
+
+    return render_template('admin/category.html', form=form)

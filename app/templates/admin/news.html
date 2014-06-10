@@ -5,6 +5,7 @@
   <thead>
     <tr>
       <th> Titill </th>
+      <th> Flokkur </th>
       <th> Dagsetning </th>
       <th> Athugasemdir </th>
       <th> Aðgerðir </th>
@@ -15,6 +16,7 @@
     {% for post in posts %}
     <tr>
       <td> {{ post.title }} </td>
+      <td> {{ post.category }} </td>
       <td> {{ post.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
       <td> 0 </td>
       <td> Aðgerðir </td>
