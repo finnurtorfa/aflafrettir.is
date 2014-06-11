@@ -114,6 +114,14 @@ class Ad(db.Model):
  filename       = db.Column(db.String(120), nullable=False)
  placement      = db.Column(db.Integer, nullable=False)
  active         = db.Column(db.Boolean, default=False)
- added          = db.Column(db.DateTime, 
+ timestamp      = db.Column(db.DateTime, 
                             nullable=False,
                             default=datetime.utcnow)
+
+ @classmethod
+ def get_all(cls, descending=True):
+   if descending:
+     return cls.query.order_by(cls.timestamp.desc()).all()
+   else:
+     return cls.query.order_by(cls.timestamp).all()
+
