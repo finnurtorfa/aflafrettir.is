@@ -108,3 +108,12 @@ class Category(db.Model):
   def get_by_name(cls, name):
     return cls.query.filter_by(name=name).first()
 
+class Ad(db.Model):
+ __tablename__  = 'ads'
+ id             = db.Column(db.Integer, primary_key=True, autoincrement=True)
+ filename       = db.Column(db.String(120), nullable=False)
+ placement      = db.Column(db.Integer, nullable=False)
+ active         = db.Column(db.Boolean, default=False)
+ added          = db.Column(db.DateTime, 
+                            nullable=False,
+                            default=datetime.utcnow)
