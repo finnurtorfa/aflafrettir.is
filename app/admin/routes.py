@@ -9,14 +9,18 @@ from .forms import ProfileForm, PostForm, CategoryForm
 from .. import db
 from ..models import User, Post, Category
 
+### Profile Related Routes
+##############################
+
 @admin.route('/')
+@admin.route('/profile', alias=True)
 @login_required
-def index():
+def profile_index():
   return render_template('admin/user.html', user=current_user)
 
-@admin.route('/edit_user', methods=['GET', 'POST'])
+@admin.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
-def edit_user():
+def profile_edit():
   form = ProfileForm()
 
   if form.validate_on_submit():
@@ -29,7 +33,7 @@ def edit_user():
 
     flash("Síðan hefur verið uppfærð")
 
-    return redirect(url_for('admin.index'))
+    return redirect(url_for('admin.profile_index'))
 
   form.name.data = current_user.name
   form.location.data = current_user.location
@@ -37,16 +41,19 @@ def edit_user():
 
   return render_template('admin/edit_user.html', form=form)
 
+### News Related Routes
+##############################
+
 @admin.route('/news')
 @login_required
-def news():
+def news_index():
   posts = Post.get_all()
 
   return render_template('admin/news.html', posts=posts)
 
 @admin.route('/news/post', methods=['GET', 'POST'])
 @login_required
-def post():
+def news_post():
   form = PostForm()
   form.category.choices = [(0, 'Almenn frétt')]
   form.created.data = datetime.utcnow()
@@ -71,13 +78,13 @@ def post():
 
     flash("Fréttin hefur verið vistuð!")
 
-    return redirect(url_for('admin.news'))
+    return redirect(url_for('admin.news_index'))
 
   return render_template('admin/post.html', form=form)
   
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def edit_post(post_id):
+def news_edit(post_id):
   post = Post.get_by_id(post_id)
 
   form = PostForm()
@@ -103,7 +110,7 @@ def edit_post(post_id):
 
     flash("Fréttin hefur verið uppfærð!")
 
-    return redirect(url_for('admin.news'))
+    return redirect(url_for('admin.news_index'))
   
   form.title.data       = post.title
   form.post.data        = post.body
@@ -115,17 +122,17 @@ def edit_post(post_id):
 
 @admin.route('/news/delete/<int:post_id>')
 @login_required
-def delete_post(post_id):
+def news_delete(post_id):
   post = Post.get_by_id(post_id)
 
   db.session.delete(post)
   db.session.commit()
 
-  return redirect(url_for('admin.news'))
+  return redirect(url_for('admin.news_index'))
 
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
-def category():
+def news_category():
     form = CategoryForm()
 
     active = Category.get_all_active()
@@ -148,7 +155,7 @@ def category():
         db.session.add(category)
         db.session.commit()
 
-        return redirect(url_for('admin.category'))
+        return redirect(url_for('admin.news_category'))
 
       if form.right.data and inactive and form.inactive.data != None:
         category_selected = form.inactive.choices[int(form.inactive.data)][1]
@@ -158,7 +165,7 @@ def category():
         db.session.add(category)
         db.session.commit()
 
-        return redirect(url_for('admin.category'))
+        return redirect(url_for('admin.news_category'))
 
       if form.left.data and active and form.active.data != None:
         category_selected = form.active.choices[int(form.active.data)][1]
@@ -168,6 +175,7 @@ def category():
         db.session.add(category)
         db.session.commit()
 
-        return redirect(url_for('admin.category'))
+        return redirect(url_for('admin.news_category'))
 
     return render_template('admin/category.html', form=form)
+
