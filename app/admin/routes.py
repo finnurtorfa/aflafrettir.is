@@ -179,3 +179,10 @@ def news_category():
 
     return render_template('admin/category.html', form=form)
 
+### File Upload Related Routes
+##############################
+
+@admin.route('/upload')
+@login_required
+def upload_index():
+  pass
