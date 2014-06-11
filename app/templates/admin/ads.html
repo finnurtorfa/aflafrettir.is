@@ -23,7 +23,8 @@
   <thead>
     <tr>
       <th> Titill </th>
-      <th> Flokkur </th>
+      <th> Staðsetning </th>
+      <th> Virk? </th>
       <th> Dagsetning </th>
       <th> Aðgerðir </th>
     </tr>
@@ -33,9 +34,13 @@
     {% for ad in ads %}
     <tr>
       <td> {{ ad.filename }} </td>
-      <td> {{ ad.placement }} </td>
+      <td> {{ form.placement.choices[ad.placement][1] }} </td>
+      <td> {% if ad.active %} Já {% else %} Nei {% endif %} </td>
       <td> {{ ad.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
       <td> 
+        <a href="{{ url_for('admin.ad_edit', ad_id=ad.id) }}">
+          <span class="glyphicon glyphicon-pencil"></span>
+        </a>
         <a data-href="#" data-title="{{ ad.filename }}" data-toggle="modal" data-target="#confirm-delete" href="#">
           <span class="glyphicon glyphicon-trash"></span>
         </a>

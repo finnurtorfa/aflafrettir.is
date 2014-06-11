@@ -186,8 +186,9 @@ def news_category():
 @admin.route('/ad')
 @login_required
 def ad_index():
+  form = AdForm()
   ads = Ad.get_all()
-  return render_template('admin/ads.html', ads=ads)
+  return render_template('admin/ads.html', form=form, ads=ads)
 
 @admin.route('/ad/upload', methods=['GET', 'POST'])
 @login_required
@@ -214,3 +215,23 @@ def ad_upload():
 
   return render_template('admin/upload.html', form=form)
 
+@admin.route('/ad/edit/<int:ad_id>', methods=['GET', 'POST'])
+@login_required
+def ad_edit(ad_id):
+  form = AdForm()
+  ad = Ad.get_by_id(ad_id)
+
+  if request.method == 'POST':
+    ad.placement = form.placement.data
+    ad.active    = form.active.data
+
+    db.session.add(ad)
+    db.session.commit()
+
+    flash("Auglýsingin hefur verið uppfærð")
+    return redirect(url_for('admin.ad_index'))
+
+  form.placement.data = ad.placement
+  form.active.data    = ad.active
+
+  return render_template('admin/upload.html', form=form)
