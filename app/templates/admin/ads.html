@@ -41,7 +41,7 @@
         <a href="{{ url_for('admin.ad_edit', ad_id=ad.id) }}">
           <span class="glyphicon glyphicon-pencil"></span>
         </a>
-        <a data-href="#" data-title="{{ ad.filename }}" data-toggle="modal" data-target="#confirm-delete" href="#">
+        <a data-href="{{ url_for('admin.ad_delete', ad_id=ad.id) }}" data-title="{{ ad.filename }}" data-toggle="modal" data-target="#confirm-delete" href="#">
           <span class="glyphicon glyphicon-trash"></span>
         </a>
       </td>

@@ -204,7 +204,7 @@ def ad_upload():
       except UploadNotAllowed:
         flash("Ekki leyfileg tegund af skrá!")
 
-        return redirect(url_for('admin.ad_upload'))
+        return redirect(url_for('admin.ad_index'))
       else:
         ad = Ad(filename=filename,
                 placement=form.placement.data,
@@ -212,6 +212,8 @@ def ad_upload():
 
         db.session.add(ad)
         db.session.commit()
+        
+        return redirect(url_for('admin.ad_index'))
 
   return render_template('admin/upload.html', form=form)
 
@@ -235,3 +237,17 @@ def ad_edit(ad_id):
   form.active.data    = ad.active
 
   return render_template('admin/upload.html', form=form)
+
+@admin.route('/ad/delete/<int:ad_id>')
+@login_required
+def ad_delete(ad_id):
+  import os
+
+  ad = Ad.get_by_id(ad_id)
+
+  os.remove(ads.path(ad.filename))
+
+  db.session.delete(ad)
+  db.session.commit()
+
+  return redirect(url_for('admin.ad_index'))
