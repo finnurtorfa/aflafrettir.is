@@ -1,6 +1,6 @@
 from flask.ext.wtf import Form
 from wtforms import StringField, TextAreaField, SubmitField, SelectField, \
-                    DateTimeField
+                    DateTimeField, FileField, BooleanField
 from wtforms.validators import Required, Length, Email, Optional
 
 class ProfileForm(Form):
@@ -26,3 +26,16 @@ class CategoryForm(Form):
   right     = SubmitField('>', validators=[Optional()])
   left      = SubmitField('<', validators=[Optional()])
   active    = SelectField('Flokkar sem birtast', validators=[Optional()])
+
+class AdForm(Form):
+  ad        = FileField('Skrá', validators=[Required(), Length(1,120)])
+  placement = SelectField('Staðsetning', 
+                          choices=[(0, 'Efst'),
+                                   (1, 'Aðalhluti'),
+                                   (2, 'Til vinstri'),
+                                   (3, 'Til hægri')],
+                          coerce=int,
+                          validators=[Required()])
+  active    = BooleanField('Auglýsing virk?', validators=[Required()])
+  submit    = SubmitField('Vista')
+
