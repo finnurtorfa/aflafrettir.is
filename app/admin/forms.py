@@ -30,11 +30,10 @@ class CategoryForm(Form):
 class AdForm(Form):
   ad        = FileField('Skrá', validators=[Required()])
   placement = SelectField('Staðsetning', 
-                          choices=[(0, ' '),
-                                   (1, 'Efst'),
-                                   (2, 'Aðalhluti'),
-                                   (3, 'Til vinstri'),
-                                   (4, 'Til hægri')],
+                          choices=[(0, 'Efst'),
+                                   (1, 'Aðalhluti'),
+                                   (2, 'Til vinstri'),
+                                   (3, 'Til hægri')],
                           coerce=int,
                           validators=[Required()])
   active    = BooleanField('Auglýsing virk?', validators=[Required()])
