@@ -1,0 +1,17 @@
+{% extends "admin/index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1> Bæta við auglýsingu </h1>
+</div>
+
+<form action="{{ request.path }}" method="post" enctype="multipart/form-data" class="form" role="form">
+  {{ wtf.form_field(form.ad) }}
+  {{ wtf.form_field(form.placement) }}
+  {{ wtf.form_field(form.active) }}
+  {{ wtf.form_field(form.submit) }}
+
+</form>
+{% endblock %}
+

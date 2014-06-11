@@ -2,11 +2,12 @@ from datetime import datetime
 
 from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, current_user
+from flask.ext.uploads import UploadNotAllowed
 
 from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm
 
-from .. import db
+from .. import db, ads
 from ..models import User, Post, Category, Ad
 
 ### Profile Related Routes
@@ -182,8 +183,34 @@ def news_category():
 ### File Upload Related Routes
 ##############################
 
-@admin.route('/upload')
+@admin.route('/ad')
 @login_required
-def upload_index():
+def ad_index():
   ads = Ad.get_all()
   return render_template('admin/ads.html', ads=ads)
+
+@admin.route('/ad/upload', methods=['GET', 'POST'])
+@login_required
+def ad_upload():
+  form = AdForm()
+
+  if request.method == 'POST':
+    if form.ad.data:
+      try:
+        file = request.files.get('ad')
+        filename = ads.save(file)
+        flash("Skráin hefur verið vistuð!")
+      except UploadNotAllowed:
+        flash("Ekki leyfileg tegund af skrá!")
+
+        return redirect(url_for('admin.ad_upload'))
+      else:
+        ad = Ad(filename=filename,
+                placement=form.placement.data,
+                active=form.active.data)
+
+        db.session.add(ad)
+        db.session.commit()
+
+  return render_template('admin/upload.html', form=form)
+

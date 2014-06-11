@@ -25,7 +25,6 @@
       <th> Titill </th>
       <th> Flokkur </th>
       <th> Dagsetning </th>
-      <th> Athugasemdir </th>
       <th> Aðgerðir </th>
     </tr>
   </thead>
@@ -34,13 +33,9 @@
     {% for ad in ads %}
     <tr>
       <td> {{ ad.filename }} </td>
-      <td> {{ ad.category }} </td>
+      <td> {{ ad.placement }} </td>
       <td> {{ ad.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
-      <td> 0 </td>
       <td> 
-        <a href="#">
-          <span class="glyphicon glyphicon-pencil"></span>
-        </a>
         <a data-href="#" data-title="{{ ad.filename }}" data-toggle="modal" data-target="#confirm-delete" href="#">
           <span class="glyphicon glyphicon-trash"></span>
         </a>
