@@ -4,10 +4,10 @@ from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, current_user
 
 from . import admin
-from .forms import ProfileForm, PostForm, CategoryForm
+from .forms import ProfileForm, PostForm, CategoryForm, AdForm
 
 from .. import db
-from ..models import User, Post, Category
+from ..models import User, Post, Category, Ad
 
 ### Profile Related Routes
 ##############################
@@ -185,4 +185,5 @@ def news_category():
 @admin.route('/upload')
 @login_required
 def upload_index():
-  pass
+  ads = Ad.get_all()
+  return render_template('admin/ads.html', ads=ads)

@@ -23,6 +23,15 @@
     </ul> <!-- ./list-unstyled collapse in -->
   </li> <!-- ./nav-header -->
   
+  <li class="nav-header">
+    <a class="collapsible" href="#" data-toggle="collapse" data-target="#ads-menu">
+      <h3> Auglýsingar </h3>
+    </a>
+    <ul class="list-unstyled collapse {% if request.path in [url_for('admin.upload_index')] %} in {% endif %}" id="ads-menu">
+      <li><a href="{{ url_for('admin.upload_index') }}"> Yfirlit </a></li>
+    </ul> <!-- ./list-unstyled collapse in -->
+  </li> <!-- ./nav-header -->
+  
 </ul> <!-- ./list-unstyled -->
 {% endblock %}
 
