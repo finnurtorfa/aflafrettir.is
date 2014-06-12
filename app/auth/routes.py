@@ -18,7 +18,7 @@ def login():
     
     login_user(user, form.remember_me.data)
 
-    return redirect(request.args.get('next') or url_for('admin.index'))
+    return redirect(request.args.get('next') or url_for('admin.profile_index'))
 
   return render_template('auth/login.html', form=form)
 
@@ -26,4 +26,4 @@ def login():
 def logout():
   logout_user()
   flash('Þú hefur verið skráður út!')
-  return redirect(url_for('aflafrettir.index'))
+  return redirect(url_for('aflafrettir.profile_index'))
