@@ -108,3 +108,24 @@ class Category(db.Model):
   def get_by_name(cls, name):
     return cls.query.filter_by(name=name).first()
 
+class Ad(db.Model):
+  __tablename__  = 'ads'
+  id             = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  filename       = db.Column(db.String(120), nullable=False)
+  placement      = db.Column(db.Integer, nullable=False)
+  active         = db.Column(db.Boolean, default=False)
+  timestamp      = db.Column(db.DateTime, 
+                             nullable=False,
+                             default=datetime.utcnow)
+ 
+  @classmethod
+  def get_all(cls, descending=True):
+    if descending:
+      return cls.query.order_by(cls.timestamp.desc()).all()
+    else:
+      return cls.query.order_by(cls.timestamp).all()
+
+  @classmethod
+  def get_by_id(cls, aid):
+    return cls.query.filter_by(id=aid).first()
+

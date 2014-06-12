@@ -2,21 +2,26 @@ from datetime import datetime
 
 from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, current_user
+from flask.ext.uploads import UploadNotAllowed
 
 from . import admin
-from .forms import ProfileForm, PostForm, CategoryForm
+from .forms import ProfileForm, PostForm, CategoryForm, AdForm
 
-from .. import db
-from ..models import User, Post, Category
+from .. import db, ads
+from ..models import User, Post, Category, Ad
+
+### Profile Related Routes
+##############################
 
 @admin.route('/')
+@admin.route('/profile', alias=True)
 @login_required
-def index():
+def profile_index():
   return render_template('admin/user.html', user=current_user)
 
-@admin.route('/edit_user', methods=['GET', 'POST'])
+@admin.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
-def edit_user():
+def profile_edit():
   form = ProfileForm()
 
   if form.validate_on_submit():
@@ -29,7 +34,7 @@ def edit_user():
 
     flash("Síðan hefur verið uppfærð")
 
-    return redirect(url_for('admin.index'))
+    return redirect(url_for('admin.profile_index'))
 
   form.name.data = current_user.name
   form.location.data = current_user.location
@@ -37,16 +42,19 @@ def edit_user():
 
   return render_template('admin/edit_user.html', form=form)
 
+### News Related Routes
+##############################
+
 @admin.route('/news')
 @login_required
-def news():
+def news_index():
   posts = Post.get_all()
 
   return render_template('admin/news.html', posts=posts)
 
 @admin.route('/news/post', methods=['GET', 'POST'])
 @login_required
-def post():
+def news_post():
   form = PostForm()
   form.category.choices = [(0, 'Almenn frétt')]
   form.created.data = datetime.utcnow()
@@ -71,13 +79,13 @@ def post():
 
     flash("Fréttin hefur verið vistuð!")
 
-    return redirect(url_for('admin.news'))
+    return redirect(url_for('admin.news_index'))
 
   return render_template('admin/post.html', form=form)
   
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def edit_post(post_id):
+def news_edit(post_id):
   post = Post.get_by_id(post_id)
 
   form = PostForm()
@@ -103,7 +111,7 @@ def edit_post(post_id):
 
     flash("Fréttin hefur verið uppfærð!")
 
-    return redirect(url_for('admin.news'))
+    return redirect(url_for('admin.news_index'))
   
   form.title.data       = post.title
   form.post.data        = post.body
@@ -115,17 +123,17 @@ def edit_post(post_id):
 
 @admin.route('/news/delete/<int:post_id>')
 @login_required
-def delete_post(post_id):
+def news_delete(post_id):
   post = Post.get_by_id(post_id)
 
   db.session.delete(post)
   db.session.commit()
 
-  return redirect(url_for('admin.news'))
+  return redirect(url_for('admin.news_index'))
 
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
-def category():
+def news_category():
     form = CategoryForm()
 
     active = Category.get_all_active()
@@ -148,7 +156,7 @@ def category():
         db.session.add(category)
         db.session.commit()
 
-        return redirect(url_for('admin.category'))
+        return redirect(url_for('admin.news_category'))
 
       if form.right.data and inactive and form.inactive.data != None:
         category_selected = form.inactive.choices[int(form.inactive.data)][1]
@@ -158,7 +166,7 @@ def category():
         db.session.add(category)
         db.session.commit()
 
-        return redirect(url_for('admin.category'))
+        return redirect(url_for('admin.news_category'))
 
       if form.left.data and active and form.active.data != None:
         category_selected = form.active.choices[int(form.active.data)][1]
@@ -168,6 +176,78 @@ def category():
         db.session.add(category)
         db.session.commit()
 
-        return redirect(url_for('admin.category'))
+        return redirect(url_for('admin.news_category'))
 
     return render_template('admin/category.html', form=form)
+
+### File Upload Related Routes
+##############################
+
+@admin.route('/ad')
+@login_required
+def ad_index():
+  form = AdForm()
+  ads = Ad.get_all()
+  return render_template('admin/ads.html', form=form, ads=ads)
+
+@admin.route('/ad/upload', methods=['GET', 'POST'])
+@login_required
+def ad_upload():
+  form = AdForm()
+
+  if request.method == 'POST':
+    if form.ad.data:
+      try:
+        file = request.files.get('ad')
+        filename = ads.save(file)
+        flash("Skráin hefur verið vistuð!")
+      except UploadNotAllowed:
+        flash("Ekki leyfileg tegund af skrá!")
+
+        return redirect(url_for('admin.ad_index'))
+      else:
+        ad = Ad(filename=filename,
+                placement=form.placement.data,
+                active=form.active.data)
+
+        db.session.add(ad)
+        db.session.commit()
+        
+        return redirect(url_for('admin.ad_index'))
+
+  return render_template('admin/upload.html', form=form)
+
+@admin.route('/ad/edit/<int:ad_id>', methods=['GET', 'POST'])
+@login_required
+def ad_edit(ad_id):
+  form = AdForm()
+  ad = Ad.get_by_id(ad_id)
+
+  if request.method == 'POST':
+    ad.placement = form.placement.data
+    ad.active    = form.active.data
+
+    db.session.add(ad)
+    db.session.commit()
+
+    flash("Auglýsingin hefur verið uppfærð")
+    return redirect(url_for('admin.ad_index'))
+
+  form.placement.data = ad.placement
+  form.active.data    = ad.active
+
+  return render_template('admin/upload.html', form=form)
+
+@admin.route('/ad/delete/<int:ad_id>')
+@login_required
+def ad_delete(ad_id):
+  import os
+
+  ad = Ad.get_by_id(ad_id)
+
+  os.remove(ads.path(ad.filename))
+
+  db.session.delete(ad)
+  db.session.commit()
+
+  return redirect(url_for('admin.ad_index'))

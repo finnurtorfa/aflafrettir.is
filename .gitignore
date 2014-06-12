@@ -54,3 +54,6 @@ docs/_build/
 
 # Sqlite db's
 *.sqlite
+
+# Uploads directory
+uploads/

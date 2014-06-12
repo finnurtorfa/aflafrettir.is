@@ -23,25 +23,25 @@
   <thead>
     <tr>
       <th> Titill </th>
-      <th> Flokkur </th>
+      <th> Staðsetning </th>
+      <th> Virk? </th>
       <th> Dagsetning </th>
-      <th> Athugasemdir </th>
       <th> Aðgerðir </th>
     </tr>
   </thead>
 
   <tbody>
-    {% for post in posts %}
+    {% for ad in ads %}
     <tr>
-      <td> {{ post.title }} </td>
-      <td> {{ post.category.name }} </td>
-      <td> {{ post.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
-      <td> 0 </td>
+      <td> {{ ad.filename }} </td>
+      <td> {{ form.placement.choices[ad.placement][1] }} </td>
+      <td> {% if ad.active %} Já {% else %} Nei {% endif %} </td>
+      <td> {{ ad.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
       <td> 
-        <a href="{{ url_for('admin.news_edit', post_id=post.id) }}">
+        <a href="{{ url_for('admin.ad_edit', ad_id=ad.id) }}">
           <span class="glyphicon glyphicon-pencil"></span>
         </a>
-        <a data-href="{{ url_for('admin.news_delete', post_id=post.id) }}" data-title="{{ post.title }}" data-toggle="modal" data-target="#confirm-delete" href="#">
+        <a data-href="{{ url_for('admin.ad_delete', ad_id=ad.id) }}" data-title="{{ ad.filename }}" data-toggle="modal" data-target="#confirm-delete" href="#">
           <span class="glyphicon glyphicon-trash"></span>
         </a>
       </td>

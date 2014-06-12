@@ -3,11 +3,12 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
-  SECRET_KEY = os.environ.get('SECRET_KEY')
+  SECRET_KEY = os.environ.get('SECRET_KEY') or 'my secret key'
+  UPLOADS_DEFAULT_DEST = os.environ.get('UPLOADS_DEFAULT_DEST') or \
+          basedir + '/uploads'
 
 class DevelopmentConfig(Config):
   DEBUG = True
-  SECRET_KEY = os.environ.get('SECRET_KEY') or 'my secret key'
   SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
           'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite')
 

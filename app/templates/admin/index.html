@@ -6,9 +6,9 @@
     <a class="collapsible" href="#" data-toggle="collapse" data-target="#profile-menu">
       <h3> Prófíll </h3>
     </a>
-    <ul class="list-unstyled collapse {% if request.path in [url_for('admin.index'), url_for('admin.edit_user')] %} in {% endif %}" id="profile-menu">
-      <li><a href="{{ url_for('admin.index') }}"> Skoða </a></li>
-      <li><a href="{{ url_for('admin.edit_user') }}"> Breyta </a></li>
+    <ul class="list-unstyled collapse {% if request.path in [url_for('admin.profile_index'), url_for('admin.profile_edit')] %} in {% endif %}" id="profile-menu">
+      <li><a href="{{ url_for('admin.profile_index') }}"> Skoða </a></li>
+      <li><a href="{{ url_for('admin.profile_edit') }}"> Breyta </a></li>
     </ul> <!-- ./list-unstyled collapse in -->
   </li> <!-- ./nav-header -->
 
@@ -16,25 +16,23 @@
     <a class="collapsible" href="#" data-toggle="collapse" data-target="#news-menu">
       <h3> Fréttir </h3>
     </a>
-    <ul class="list-unstyled collapse {% if request.path in [url_for('admin.news'), url_for('admin.post'), url_for('admin.category')] %} in {% endif %}" id="news-menu">
-      <li><a href="{{ url_for('admin.news') }}"> Yfirlit </a></li>
-      <li><a href="{{ url_for('admin.post') }}"> Ný Frétt </a></li>
-      <li><a href="{{ url_for('admin.category') }}"> Flokkar </a></li>
+    <ul class="list-unstyled collapse {% if request.path in [url_for('admin.news_index'), url_for('admin.news_post'), url_for('admin.news_category')] %} in {% endif %}" id="news-menu">
+      <li><a href="{{ url_for('admin.news_index') }}"> Yfirlit </a></li>
+      <li><a href="{{ url_for('admin.news_post') }}"> Ný Frétt </a></li>
+      <li><a href="{{ url_for('admin.news_category') }}"> Flokkar </a></li>
     </ul> <!-- ./list-unstyled collapse in -->
   </li> <!-- ./nav-header -->
   
-  <li class="nav-header"> 
-    <a class="collapsible" href="#" data-toggle="collapse" data-target="#menu2">
-      <h5>Reports <i class="glyphicon glyphicon-chevron-right"></i></h5>
+  <li class="nav-header">
+    <a class="collapsible" href="#" data-toggle="collapse" data-target="#ads-menu">
+      <h3> Auglýsingar </h3>
     </a>
-    <ul class="list-unstyled collapse" id="menu2">
-      <li><a href="#">Information &amp; Stats</a></li>
-      <li><a href="#">Views</a></li>
-      <li><a href="#">Requests</a></li>
-      <li><a href="#">Timetable</a></li>
-      <li><a href="#">Alerts</a></li>
-    </ul>
+    <ul class="list-unstyled collapse {% if request.path in [url_for('admin.ad_index'), url_for('admin.ad_upload')] %} in {% endif %}" id="ads-menu">
+      <li><a href="{{ url_for('admin.ad_index') }}"> Yfirlit </a></li>
+      <li><a href="{{ url_for('admin.ad_upload') }}"> Ný Auglýsing </a></li>
+    </ul> <!-- ./list-unstyled collapse in -->
   </li> <!-- ./nav-header -->
+  
 </ul> <!-- ./list-unstyled -->
 {% endblock %}
 
