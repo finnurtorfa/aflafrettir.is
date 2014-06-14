@@ -11,7 +11,8 @@
 
 header {
 	min-height:180px;
-  	margin-bottom:5px;
+  margin-bottom:5px;
+  margin-top:70px;
 }
 
 /* only apply sticky columns on wider screens */
@@ -212,7 +213,7 @@ footer {
 /* Carousel base class */
 .carousel {
   height: 500px;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 }
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
