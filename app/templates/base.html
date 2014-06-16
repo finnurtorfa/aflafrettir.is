@@ -70,41 +70,11 @@
 
 {% block content %}
 
-{% block header %}
-{% endblock %}
+{% block header %} {% endblock %}
+{% block content_left %} {% endblock %}
+{% block content_center %} {% endblock %}
+{% block content_right %} {% endblock %}
 
-<div class="row">
-  <div class="col-sm-2">
-    <div class="navbar navbar-default" role="navigation">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="visible-xs navbar-brand">Sidebar menu</span>
-      </div><!-- ./navbar-header -->
-      
-      <div class="navbar-collapse collapse sidebar-navbar-collapse">
-        {% block sidebar %} {% endblock %}
-      </div> <!-- ./navbar-collapse -->
-    </div><!-- ./navbar-default -->
-  </div><!-- ./col-sm-2 -->
-  
-  <div class="col-sm-8">
-    <div class="well">
-      {% for message in get_flashed_messages() %}
-      <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-      </div> <!-- alert-warning -->
-      {% endfor %}
-      
-      {% block page_content %} {% endblock %}
-    </div> <!-- ./well -->
-  </div> <!-- ./col-sm-9 -->
-</div> <!-- ./row -->
 {% endblock %}
 
 {% block scripts %}
