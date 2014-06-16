@@ -3,9 +3,9 @@
 {% block html_attribs %} lang="is" {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     {{ super() }}
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     <!--[if lt IE 9]>
       <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -23,7 +23,7 @@
 <div class="navbar navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="{{ url_for('aflafrettir.index') }}">Aflafréttir.is</a>
+      <a class="navbar-brand" href="{{ url_for('aflafrettir.index') }}"><b>Aflafréttir.is</b></a>
       <a class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="glyphicon glyphicon-chevron-down"></span>
       </a>
@@ -71,9 +71,20 @@
 {% block content %}
 
 {% block header %} {% endblock %}
-{% block content_left %} {% endblock %}
+
+<!-- Main content of site -->
+<div class="container">
+  <div class="no-gutter row">
+    <!-- Left side of main content -->
+    <div class="col-md-2">
+      <div class="panel panel-default">
+        {% block content_left %} {% endblock %}
+      </div> <!-- ./panel panel-default -->
+    </div> <!-- ./col-md-2 -->
+  </div> <!-- ./no-gutter row -->
 {% block content_center %} {% endblock %}
 {% block content_right %} {% endblock %}
+</div> <!-- ./container -->
 
 {% endblock %}
 
