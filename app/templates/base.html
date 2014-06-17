@@ -14,9 +14,9 @@
 {% block title %} Aflafréttir.is {% endblock %}
 
 {% block metas %}
-    {{ super() }}
-    <meta http-quiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 {% endblock %}
 
 {% block navbar %}
@@ -76,7 +76,7 @@
 <div class="container">
   <div class="no-gutter row">
     <!-- Beginning of left side of main content -->
-        {% block content_left %} {% endblock %}
+    {% block content_left %} {% endblock %}
     <!-- End of left side of main content -->
 
     <!-- Beginning of main content -->
@@ -89,6 +89,16 @@
   </div> <!-- ./no-gutter row -->
 </div> <!-- ./container -->
 
+{% block footer %} 
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">©Company 2014</div>
+    </div>
+  </div>
+</footer>
+
+{% endblock %}
 {% endblock %}
 
 {% block scripts %}

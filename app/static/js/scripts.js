@@ -1,12 +1,16 @@
-$('#sidebar').affix({
+$('#content_left').affix({
       offset: {
         top: 510,
-        bottom: 100
+        bottom: function() {
+          return (this.bottom = $('footer').outerHeight(true))
+        }
       }
 });	
-$('#midCol').affix({
+$('#content_right').affix({
       offset: {
-        top: 230,
-        bottom: 100
+        top: 510,
+        bottom: function() {
+          return (this.bottom = $('footer').outerHeight(true));
+        }
       }
 });	

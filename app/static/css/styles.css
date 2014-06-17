@@ -17,41 +17,41 @@ header {
 
 /* only apply sticky columns on wider screens */
 @media (min-width: 1200px) {
-  #sidebar {
- 	margin-left:15px;
+  #content_left {
+ 	  margin-left:15px;
   }
 
-  #content {
- 	padding-right:15px;
+  #content_right {
+ 	  margin-right:15px;
   }
 
-  #sidebar.affix-top {
-      position: static;
+  #content_left.affix-top {
+    position: static;
   }
   
-  #sidebar.affix {
-      position: fixed !important;
-      top: 51px;
-      width:200px;
+  #content_left.affix {
+    position: fixed !important;
+    top: 70px;
+    width:200px;
   }
 
-  #midCol.affix-top {
-      position: static;
+  #content_right.affix-top {
+    position: static;
   }
 
-  #midCol.affix-bottom {
-      padding-top:0;
+  #content_right.affix {
+    position:fixed !important;
+    top: 70px;
+  	width:278px;
   }
-  
-  #midCol.affix {
-      position:fixed !important;
-  	  top: 20px;
-  	  width:292px;
+
+  #content_right.affix-bottom {
+    padding-top:0;
   }
 }
 
 .affix {
-      position:static;
+  position:static;
 }
 
 body {
@@ -63,13 +63,13 @@ body {
 
 a,a:hover {
 	color:#77CCDD;
-  	text-decoration:none;
+  text-decoration:none;
 }
 
 .highlight-bk {
 	background-color:#77CCDD;
-    padding:1px;
-    width:100%;
+  padding:1px;
+  width:100%;
 }
 
 .highlight {
@@ -78,32 +78,32 @@ a,a:hover {
   
 h3.highlight  {
 	padding-top:13px;
-    padding-bottom:14px;
-  	border-bottom:2px solid #77CCDD;
+  padding-bottom:14px;
+  border-bottom:2px solid #77CCDD;
 }
 
 .navbar {
 	background-color:#77CCDD;
-  	color:#ffffff;
-  	border-radius:0;
+  color:#ffffff;
+  border-radius:0;
 }
 .navbar-nav > li > a {
-  	color:#fff;
-  	padding-left:20px;
-  	padding-right:20px;
-  	border-left:1px solid #66BBCC;
+	color:#fff;
+	padding-left:20px;
+  padding-right:20px;
+  border-left:1px solid #66BBCC;
 }
 .navbar-nav > li:last-child > a {
-  	border-right:1px solid #66BBCC;
+  border-right:1px solid #66BBCC;
 }
 
 .navbar-nav li a:hover {
-  	background-color:#66BBCC;
+  background-color:#66BBCC;
 }
 
 .navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
 	color: #000;
-  	opacity:.9;
+  opacity:.9;
 }
 
 .navbar-brand {
@@ -124,7 +124,7 @@ h3.highlight  {
 
 .navbar-toggle {
 	color:#fff;
-    border-width:0;
+  border-width:0;
 }
   
 .navbar-toggle:hover {
@@ -132,10 +132,10 @@ h3.highlight  {
 }
 
 .panel,.panel-heading {
-  	border-radius:0;
-  	border-width:0;
-  	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
-	box-shadow: 0 3px 3px  rgba(0, 0, 0, 0.09);
+  border-radius:0;
+  border-width:0;
+	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 3px 3px  rgba(0, 0, 0, 0.09);
 }
 
 .thumbnail {
@@ -144,7 +144,7 @@ h3.highlight  {
 }
 
 .well {
-  	border-radius:0;
+  border-radius:0;
 }
 
 .accordion-heading .accordion-toggle, .accordion-inner, .nav-stacked li > a {
@@ -153,9 +153,9 @@ h3.highlight  {
 
 footer {
 	height:50px;
-  	background-color:#dfdfdf;
-  	color:#888;
-  	margin-top:20px;
+	background-color:#dfdfdf;
+	color:#888;
+  margin-top:20px;
 }
 
 @media (min-width: 992px) {
