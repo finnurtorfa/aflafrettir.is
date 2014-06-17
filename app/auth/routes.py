@@ -26,4 +26,4 @@ def login():
 def logout():
   logout_user()
   flash('Þú hefur verið skráður út!')
-  return redirect(url_for('aflafrettir.profile_index'))
+  return redirect(url_for('aflafrettir.index'))
