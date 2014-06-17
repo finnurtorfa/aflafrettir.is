@@ -1,11 +1,12 @@
 from flask import render_template
 
 from . import aflafrettir
-from ..models import User
+from ..models import User, Category
 
 @aflafrettir.route('/')
 def index():
-  return render_template('aflafrettir/index.html')
+  categories = Category.get_all_active()
+  return render_template('aflafrettir/index.html', categories=categories)
 
 @aflafrettir.route('/user/<username>')
 def user(username):
