@@ -1,14 +1,18 @@
 {% extends "aflafrettir/index.html" %}
 
+{% block header %} {% endblock %}
+{% block content_left %} {% endblock %}
 {% block content_center %}
-<div class="page-header user-profile">
-  <div class="user-avatar"><img src="{{ user.gravatar(180) }}"></div>
-  <h1> {{ user.username }} </h1>
-  <p>
-    {% if user.name %}{{ user.name }}<br>{% endif %}
-    {% if user.location %}<a href="http://maps.google.com?q={{ user.location }}">{{ user.location }}</a><br>{% endif %}
-    {% if user.bio %}{{ user.bio }}<br>{% endif %}
-  </p>
-</div>
+  <div class="col-md-7" style="top:70px;" id="content">
+    {% include "_warnings.html" %}
+
+    <div class="user-avatar"><img src="{{ user.gravatar(180) }}"></div>
+    <h1> {{ user.username }} </h1>
+    <p>
+      {% if user.name %}{{ user.name }}<br>{% endif %}
+      {% if user.location %}<a href="http://maps.google.com?q={{ user.location }}">{{ user.location }}</a><br>{% endif %}
+      {% if user.bio %}{{ user.bio }}<br>{% endif %}
+    </p>
+</div> <!-- ./col-md-7 -->
 {% endblock %}
 

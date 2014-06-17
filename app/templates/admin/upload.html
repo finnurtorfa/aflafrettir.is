@@ -2,18 +2,24 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content_center %}
-<div class="page-header">
-  <h1> Bæta við auglýsingu </h1>
-</div>
+<div class="col-md-10" style="top:70px;" id="content">
+  {% include "_warnings.html" %}
 
-<form action="{{ request.path }}" method="post" enctype="multipart/form-data" class="form" role="form">
-  {% if request.path == url_for('admin.ad_upload') %} 
-  {{ wtf.form_field(form.ad) }}
-  {% endif %}
-  {{ wtf.form_field(form.placement) }}
-  {{ wtf.form_field(form.active) }}
-  {{ wtf.form_field(form.submit) }}
-
-</form>
+  <div class="panel">
+    <div class="panel-heading" style="background-color:#111;color:#fff;">Stjórnborð</div> 
+    <div class="panel-body">
+      <h1> Bæta við auglýsingu </h1>
+      
+      <form action="{{ request.path }}" method="post" enctype="multipart/form-data" class="form" role="form">
+        {% if request.path == url_for('admin.ad_upload') %} 
+        {{ wtf.form_field(form.ad) }}
+        {% endif %}
+        {{ wtf.form_field(form.placement) }}
+        {{ wtf.form_field(form.active) }}
+        {{ wtf.form_field(form.submit) }}
+      </form>
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
 {% endblock %}
 

@@ -75,15 +75,18 @@
 <!-- Main content of site -->
 <div class="container">
   <div class="no-gutter row">
-    <!-- Left side of main content -->
-    <div class="col-md-2">
-      <div class="panel panel-default">
+    <!-- Beginning of left side of main content -->
         {% block content_left %} {% endblock %}
-      </div> <!-- ./panel panel-default -->
-    </div> <!-- ./col-md-2 -->
+    <!-- End of left side of main content -->
+
+    <!-- Beginning of main content -->
+    {% block content_center %} {% endblock %}
+    <!-- End of main content -->
+
+    <!-- Beginning of right side of main content -->
+    {% block content_right %} {% endblock %}
+    <!-- End of right side of main content -->
   </div> <!-- ./no-gutter row -->
-{% block content_center %} {% endblock %}
-{% block content_right %} {% endblock %}
 </div> <!-- ./container -->
 
 {% endblock %}
@@ -91,5 +94,6 @@
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 <script src="{{ url_for('static', filename='js/holder/holder.js') }}"></script>
 {% endblock %}

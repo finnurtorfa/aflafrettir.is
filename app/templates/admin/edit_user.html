@@ -2,10 +2,17 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block content_center %}
-<div class="page-header">
-  <h1> Breyta Prófíl </h1>
-</div>
+<div class="col-md-10" style="top:70px;" id="content">
+  {% include "_warnings.html" %}
 
-{{ wtf.quick_form(form) }}
+  <div class="panel">
+    <div class="panel-heading" style="background-color:#111;color:#fff;">Stjórnborð</div> 
+    <div class="panel-body">
+      <h1> Breyta Prófíl </h1>
+
+      {{ wtf.quick_form(form) }}
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
 {% endblock %}
 
