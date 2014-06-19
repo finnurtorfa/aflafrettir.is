@@ -23,7 +23,7 @@ class HTMLStripper(HTMLParser):
   def get_data(self):
     return ''.join(self.fed)
 
-def urlify(string):
+def slugify(string):
   string = string.replace('æ', 'ae').replace('ð','d').replace('þ','th')
   return unicodedata.normalize('NFKD', string)\
           .lower().replace(' ', '-').encode('ascii', 'ignore')
