@@ -108,7 +108,6 @@ def news_edit(post_id):
     post.author     = current_user
     post.category   = category
 
-
     db.session.add(post)
     db.session.commit()
 
