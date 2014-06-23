@@ -7,12 +7,11 @@
 /* end */
 
 /* custom theme + Bootstrap resets */
-@import url('http://fonts.googleapis.com/css?family=Open+Sans:300,400');
 
 header {
 	min-height:180px;
   margin-bottom:5px;
-  margin-top:70px;
+  margin-top:57px;
 }
 
 /* only apply sticky columns on wider screens */
@@ -21,32 +20,14 @@ header {
  	  margin-left:15px;
   }
 
-  #content_right {
- 	  margin-right:15px;
-  }
-
   #content_left.affix-top {
     position: static;
   }
   
   #content_left.affix {
     position: fixed !important;
-    top: 70px;
+    top: 57px;
     width:200px;
-  }
-
-  #content_right.affix-top {
-    position: static;
-  }
-
-  #content_right.affix {
-    position:fixed !important;
-    top: 70px;
-  	width:278px;
-  }
-
-  #content_right.affix-bottom {
-    padding-top:0;
   }
 }
 
@@ -55,10 +36,16 @@ header {
 }
 
 body {
-  font-family: 'Open Sans',Arial,Helvetica,Sans-Serif;
-  font-weight:300;
+  font-family:'Open Sans',sans-serif;
+  font-weight:400;
   color:#676767;
   background-color:#efefef;
+}
+
+nav {
+  font-family:'Raleway',sans-serif;
+  font-weight:800;
+  font-size:125%;
 }
 
 a,a:hover {
@@ -91,14 +78,12 @@ h3.highlight  {
 	color:#fff;
 	padding-left:20px;
   padding-right:20px;
-  border-left:1px solid #66BBCC;
-}
-.navbar-nav > li:last-child > a {
-  border-right:1px solid #66BBCC;
 }
 
 .navbar-nav li a:hover {
-  background-color:#66BBCC;
+	background-color:#77CCDD;
+  color:#768c91;
+  transition: color 0.2s ease-in;
 }
 
 .navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
@@ -108,6 +93,13 @@ h3.highlight  {
 
 .navbar-brand {
 	color:#fff;
+  font-size:150%;
+}
+
+.navbar-brand:hover {
+	background-color:#77CCDD;
+  color:#768c91;
+  transition: color 0.2s ease-in;
 }
 
 .accordion-group {
@@ -116,6 +108,24 @@ h3.highlight  {
 
 .dropdown-menu {
 	min-width: 250px;
+}
+
+.dropdown-toggle {
+	background-color:#77CCDD;
+  color:#fff;
+  margin-top:5px;
+  font-size:125%;
+}
+
+.dropdown:hover, .dropdown-toggle:hover, .dropdown-toggle:focus {
+  color:#768c91;
+	background-color:#77CCDD;
+	background-image:none;
+  transition: color 0.2s ease-in, background-color 0.2s ease-in;
+}
+
+.dropdown:hover .dropdown-menu {
+  display:block;
 }
 
 .caret {
@@ -128,7 +138,8 @@ h3.highlight  {
 }
   
 .navbar-toggle:hover {
-	background-color:#fff;
+	background-color:#77CCDD;
+  color:#768c91;
 }
 
 .panel,.panel-heading {

@@ -2,51 +2,49 @@
 
 {% block header %}
 <header class="masthead">
-  <div class="container">
-    <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-captions" data-slide-to="1"></li>
-        <li data-target="#carousel-example-captions" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner">
-        <div class="item active">
-          <img data-src="holder.js/1140x500/auto/#777:#777" alt="First slide image">
-          <div class="carousel-caption">
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-          </div>
-        </div>
-        <div class="item">
-          <img data-src="holder.js/1140x500/auto/#666:#666" alt="Second slide image">
-          <div class="carousel-caption">
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <div class="item">
-          <img data-src="holder.js/1140x500/auto/#555:#5555" alt="Third slide image">
-          <div class="carousel-caption">
-            <h3>Third slide label</h3>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-          </div>
+  <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example-captions" data-slide-to="1"></li>
+      <li data-target="#carousel-example-captions" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="item active">
+        <img data-src="holder.js/1758x500/auto/#777:#777" alt="First slide image">
+        <div class="carousel-caption">
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
         </div>
       </div>
-      <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-      <a class="right carousel-control" href="#carousel-example-captions" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
+      <div class="item">
+        <img data-src="holder.js/1758x500/auto/#666:#666" alt="Second slide image">
+        <div class="carousel-caption">
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="item">
+        <img data-src="holder.js/1758x500/auto/#555:#5555" alt="Third slide image">
+        <div class="carousel-caption">
+          <h3>Third slide label</h3>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </div>
     </div>
-  </div> <!-- ./container -->
+    <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-captions" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+  </div>
 </header>
 {% endblock %}
 
 {% block content_left %}
 <div class="col-md-2">
   <div class="panel panel-default" id="content_left">
-    <div class="panel-heading" style="background-color:#888;color:#fff;">Flokkar</div>
+    <div class="panel-heading" style="background-color:#a0dbe7;color:#fff;">Flokkar</div>
     <div class="panel-body">
       <ul class="nav nav-stacked">
         {% for category in categories %}
@@ -58,66 +56,35 @@
 </div> <!-- ./col-md-2 -->
 {% endblock %}
 
-{% block content_center %}
-  <div class="col-md-7" id="content">
-    {% include "_warnings.html" %}
+{% block content_main %}
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
 
-    <div class="panel">
-      <div class="panel-heading" style="background-color:#555;color:#eee;">Fréttir</div> 
-      <div class="panel-body">
-        
-      {% for post in posts %}
-        <div class="row">
-          <div class="col-xs-12">
-            <h2> {{ post.title }} </h2>
-            <p> {{ post.body }} </p>
-            <p class="lead"><button class="btn btn-default">Lesa meira</button></p>
-            <p class="pull-right">
-              <span class="label label-default">{{ post.category.name }}</span>
-            </p>
-            <ul class="list-inline">
-              <li><a href="#">2 Days Ago</a></li>
-              <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 2 Comments</a></li>
-              <li><a href="#"><i class="glyphicon glyphicon-share"></i> 14 Shares</a></li>
-            </ul>
-          </div> <!-- ./col-xs-12 -->
-        </div> <!-- ./row -->
-        <hr>
-      {% endfor %}
-
-      </div> <!-- ./panel-body -->
-    </div> <!-- ./panel -->
-  </div> <!-- ./col-md-7 -->
-{% endblock %}
-
-{% block content_right %}
-<div class="col-md-3">
-  <div class="panel" id="content_right">
-   <div class="panel-heading" style="background-color:#111;color:#fff;">New Stories</div>
+  <div class="panel">
+    <div class="panel-heading" style="background-color:#77ccdd;color:#eee;">Fréttir</div> 
     <div class="panel-body">
-      <img class="img-responsive" src="//placehold.it/300/77CCDD/66BBCC">
-      <div class="well">
-        <h3><a href="http://getbootstrap.com">Bootstrap 3 is Here.</a></h3>
-        <p>
-        In simple terms, a responsive web design figures out what resolution of
-        device it's being served on. Flexible grids then size correctly to fit
-        the screen.
-        </p>
-        <p><a href="http://www.bootply.com/bootstrap-3-migration-guide" target="ext">Read our migration guide for help with upgrading to Bootstrap 3.</a></p>
-      </div>
+      
+    {% for post in posts %}
+      <div class="row">
+        <div class="col-xs-12">
+          <h2> {{ post.title }} </h2>
+          <p> {{ post.body }} </p>
+          <p class="lead"><button class="btn btn-default">Lesa meira</button></p>
+          <p class="pull-right">
+            <span class="label label-default">{{ post.category.name }}</span>
+          </p>
+          <ul class="list-inline">
+            <li><a href="#">2 Days Ago</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 2 Comments</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-share"></i> 14 Shares</a></li>
+          </ul>
+        </div> <!-- ./col-xs-12 -->
+      </div> <!-- ./row -->
       <hr>
-      <img class="img-responsive" src="//placehold.it/300/77CCDD/66BBCC">
-      <div class="well">
-        <h3><a href="http://getbootstrap.com">Bootstrap 3 is Here.</a></h3>
-        <p>
-        In simple terms, a responsive web design figures out what resolution of
-        device it's being served on. Flexible grids then size correctly to fit
-        the screen.
-        </p>
-        <p><a href="http://www.bootply.com/bootstrap-3-migration-guide" target="ext">Read our migration guide for help with upgrading to Bootstrap 3.</a></p>
-      </div>
-      <hr>
+    {% endfor %}
+
     </div> <!-- ./panel-body -->
   </div> <!-- ./panel -->
-</div> <!-- ./col-md-3 -->
+</div> <!-- ./col-md-7 -->
 {% endblock %}
+
