@@ -26,7 +26,7 @@ header {
   
   #content_left.affix {
     position: fixed !important;
-    top: 57px;
+    top: 67px;
     width:200px;
   }
 }
@@ -163,7 +163,12 @@ li.dropdown:hover {
   color:#fff;"
 }
 
-#content .panel-heading {
+#content, #sidebar {
+  top:67px;
+}
+
+#content_main .panel-heading,
+#content .panel-heading{
   background-color:#77ccdd;
   color:#fff;"
 }

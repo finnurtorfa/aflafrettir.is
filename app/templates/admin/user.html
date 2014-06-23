@@ -1,11 +1,11 @@
 {% extends "admin/index.html" %}
 
 {% block content_main %}
-<div class="col-md-10" style="top:70px;" id="content">
+<div class="col-md-10" id="content">
   {% include "_warnings.html" %}
 
   <div class="panel">
-    <div class="panel-heading" style="background-color:#111;color:#fff;">Stjórnborð</div> 
+    <div class="panel-heading">Stjórnborð</div> 
     <div class="panel-body">
       <div class="user-avatar"><img src="{{ user.gravatar(180) }}"></div>
       <h1> {{ user.username }} </h1>
