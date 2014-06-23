@@ -153,6 +153,21 @@ li.dropdown:hover {
   box-shadow: 0 3px 3px  rgba(0, 0, 0, 0.09);
 }
 
+.panel-heading {
+  font-family:'Raleway',sans-serif;
+  font-size: 150%;
+}
+
+#content_left .panel-heading {
+  background-color:#a0dbe7;
+  color:#fff;"
+}
+
+#content .panel-heading {
+  background-color:#77ccdd;
+  color:#fff;"
+}
+
 .thumbnail {
 	margin-bottom:8px;
 	border-radius:0;
