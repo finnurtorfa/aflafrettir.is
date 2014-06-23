@@ -6,11 +6,3 @@ $('#content_left').affix({
         }
       }
 });	
-$('#content_right').affix({
-      offset: {
-        top: 510,
-        bottom: function() {
-          return (this.bottom = $('footer').outerHeight(true));
-        }
-      }
-});	

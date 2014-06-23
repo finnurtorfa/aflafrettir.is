@@ -16,6 +16,7 @@
   {{ super() }}
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block metas %}
@@ -44,7 +45,7 @@
     <div class="navbar-header pull-right">
       <ul class="nav pull-left">
         <li class="dropdown pull-right">
-          <a href="#" data-toggle="dropdown" style="color:#777; margin-top: 5px;" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
+          <a href="#" data-toggle="dropdown" style="color:#777; margin-top:5px;" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
           <ul class="dropdown-menu">
             {% if not current_user.is_authenticated() %}
             <li><a href="{{ url_for('auth.login') }}">Innskráning</a></li>
@@ -56,7 +57,7 @@
         </li>
 
         <li class="dropdown pull-right">
-          <a href="#" data-toggle="dropdown" style="color:#777; margin-top: 5px;" class="dropdown-toggle"><span class="glyphicon glyphicon-search"></span><b class="caret"></b></a>
+          <a href="#" data-toggle="dropdown" style="color:#777; margin-top:5px;" class="dropdown-toggle"><span class="glyphicon glyphicon-search"></span><b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
               <form class="navbar-form" role="search">
@@ -94,7 +95,6 @@
 </nav>
 {% endblock %}
 
-
 {% block content %}
 
 {% block header %}
@@ -108,12 +108,9 @@
     <!-- End of left side of main content -->
 
     <!-- Beginning of main content -->
-    {% block content_center %} {% endblock %}
+    {% block content_main %} {% endblock %}
     <!-- End of main content -->
 
-    <!-- Beginning of right side of main content -->
-    {% block content_right %} {% endblock %}
-    <!-- End of right side of main content -->
   </div> <!-- ./no-gutter row -->
 </div> <!-- ./container -->
 
@@ -125,8 +122,8 @@
     </div>
   </div>
 </footer>
-
 {% endblock %}
+
 {% endblock %}
 
 {% block scripts %}
