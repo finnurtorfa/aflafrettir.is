@@ -1,20 +1,90 @@
 {% extends "base.html" %}
 
-{% block sidebar %}
-<ul class="list-unstyled">
-  <li class="nav-header">
-    <a href="#" data-toggle="collapse" data-target="#profile-menu">
-      <h5> Item 1 </h5>
+{% block header %}
+<header class="masthead">
+  <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example-captions" data-slide-to="1"></li>
+      <li data-target="#carousel-example-captions" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="item active">
+        <img data-src="holder.js/1758x500/auto/#777:#777" alt="First slide image">
+        <div class="carousel-caption">
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div>
+      </div>
+      <div class="item">
+        <img data-src="holder.js/1758x500/auto/#666:#666" alt="Second slide image">
+        <div class="carousel-caption">
+          <h3>Second slide label</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="item">
+        <img data-src="holder.js/1758x500/auto/#555:#5555" alt="Third slide image">
+        <div class="carousel-caption">
+          <h3>Third slide label</h3>
+          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+        </div>
+      </div>
+    </div>
+    <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
-  </li>
-  <li class="nav-header"> 
-    <a href="#" data-toggle="collapse" data-target="#menu2">
-      <h5> Item 2 </h5>
+    <a class="right carousel-control" href="#carousel-example-captions" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
-  </li>
-</ul> <!-- ./list-unstyled -->
+  </div>
+</header>
 {% endblock %}
 
-{% block page_content %}
-<h1> Hello, World </h1>
+{% block content_left %}
+<div class="col-md-2">
+  <div class="panel panel-default" id="content_left">
+    <div class="panel-heading">Flokkar</div>
+    <div class="panel-body">
+      <ul class="nav nav-stacked">
+        {% for category in categories %}
+          <li><a href="#">{{ category.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel panel-default -->
+</div> <!-- ./col-md-2 -->
 {% endblock %}
+
+{% block content_main %}
+<div class="col-md-10" id="content_main">
+  {% include "_warnings.html" %}
+
+  <div class="panel">
+    <div class="panel-heading">Fréttir</div> 
+    <div class="panel-body">
+      
+    {% for post in posts %}
+      <div class="row">
+        <div class="col-xs-12">
+          <h2> {{ post.title }} </h2>
+          <p> {{ post.body }} </p>
+          <p class="lead"><button class="btn btn-default">Lesa meira</button></p>
+          <p class="pull-right">
+            <span class="label label-default">{{ post.category.name }}</span>
+          </p>
+          <ul class="list-inline">
+            <li><a href="#">2 Days Ago</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 2 Comments</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-share"></i> 14 Shares</a></li>
+          </ul>
+        </div> <!-- ./col-xs-12 -->
+      </div> <!-- ./row -->
+      <hr>
+    {% endfor %}
+
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
+{% endblock %}
+

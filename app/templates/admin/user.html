@@ -1,14 +1,21 @@
 {% extends "admin/index.html" %}
 
-{% block page_content %}
-<div class="page-header user-profile">
-  <div class="user-avatar"><img src="{{ user.gravatar(180) }}"></div>
-  <h1> {{ user.username }} </h1>
-  <p>
-    {% if user.name %}{{ user.name }}<br>{% endif %}
-    {% if user.location %}<a href="http://maps.google.com?q={{ user.location }}">{{ user.location }}</a><br>{% endif %}
-    {% if user.bio %}{{ user.bio }}<br>{% endif %}
-  </p>
-</div>
+{% block content_main %}
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
+
+  <div class="panel">
+    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-body">
+      <div class="user-avatar"><img src="{{ user.gravatar(180) }}"></div>
+      <h1> {{ user.username }} </h1>
+      <p>
+        {% if user.name %}{{ user.name }}<br>{% endif %}
+        {% if user.location %}<a href="http://maps.google.com?q={{ user.location }}">{{ user.location }}</a><br>{% endif %}
+        {% if user.bio %}{{ user.bio }}<br>{% endif %}
+      </p>
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
 {% endblock %}
 

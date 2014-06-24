@@ -1,85 +1,134 @@
 {% extends "bootstrap/base.html" %}
 
-{% block title %}
-Aflafréttir.is
-{% endblock %}
+{% block html_attribs %} lang="is" {% endblock %}
 
 {% block head %}
-{{ super() }}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  {{ super() }}
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="{{ url_for('static', filename='js/Respond/src/respond.js') }}"></script>
+  <![endif]-->
+{% endblock %}
+
+{% block title %} Aflafréttir.is {% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block metas %}
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:title" content="Aflafréttir ">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.aflafrettir.is/">
+  <meta property="og:image" content="">
+  <meta property="og:site_name" content="Aflafréttir">
+  <meta property="og:description" content="Aflafréttir og fleira">
 {% endblock %}
 
 {% block navbar %}
-<div class="navbar navbar-default" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="{{ url_for('aflafrettir.index') }}">Aflafréttir.is</a>
-  </div> <!-- navbar-header -->
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-      <li><a href="{{ url_for('aflafrettir.index') }}">Forsíða</a></li>
-      <li><a href="{{ url_for('aflafrettir.index') }}">Hafa samband</a></li>
-      <li><a href="{{ url_for('aflafrettir.index') }}">Um síðuna</a></li>
-    </ul> <ul class="nav navbar-nav navbar-right"> {% if not current_user.is_authenticated() %}
-      <li><a href="{{ url_for('auth.login') }}">Innskráning</a></li>
-      {% elif current_user.is_authenticated() %}
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="{{ current_user.gravatar(size=18) }}"> {{ current_user.username }} <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="{{ url_for('admin.profile_index') }}">Stjórnborð</a></li>
-          <li><a href="{{ url_for('auth.logout') }}">Útskráning</a></li>
-        </ul>
-      </li>
-      {% endif %}
-    </ul>
-  </div> <!-- collapse-navbar -->
+<nav role="navigation" class="navbar navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Title -->
+    <div class="navbar-header pull-left">
+      <a class="navbar-brand" href="{{ url_for('aflafrettir.index') }}">
+        <b>Aflafréttir.is</b>
+      </a>
+    </div>
+    
+    <!-- 'Sticky' (non-collapsing) right-side menu item(s) -->
+    <div class="navbar-header pull-right">
+      <ul class="nav pull-left">
+        <li class="dropdown pull-right">
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            {% if not current_user.is_authenticated() %}
+            <li><a href="{{ url_for('auth.login') }}">Innskráning</a></li>
+            {% elif current_user.is_authenticated() %}
+            <li><a href="{{ url_for('admin.profile_index') }}">Stjórnborð</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">Útskráning</a></li>
+            {% endif %}
+          </ul>
+        </li>
 
-</div> <!-- navbar -->
+        <li class="dropdown pull-right">
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-search"></span><b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li>
+              <form class="navbar-form" role="search">
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Leita" name="srch-term" id="srch-term">
+                  <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                  </div> <!-- ./input-group-brn -->
+                </div> <!-- ./input-group -->
+              </form>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+
+      <!-- Required bootstrap placeholder for the collapsed menu -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Opna/Loka Valmynd</span>
+        <span class="glyphicon glyphicon-list"></span>
+      </button> 
+    </div>
+
+    <!-- The Collapsing items navbar-left or navbar-right -->
+    <div class="collapse navbar-collapse navbar-left">
+      <!--                      pull-right keeps the drop-down in line -->
+      <ul class="nav navbar-nav pull-right">
+        <li><a href="{{ url_for('aflafrettir.index') }}">Forsíða</a></li>
+        <li><a href="{{ url_for('aflafrettir.index') }}">Hafa samband</a></li>
+        <li><a href="{{ url_for('aflafrettir.index') }}">Um síðuna</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
 {% endblock %}
-
 
 {% block content %}
 
-<div class="row">
-  <div class="col-sm-2">
-    <div class="navbar navbar-default" role="navigation">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <span class="visible-xs navbar-brand">Sidebar menu</span>
-      </div><!-- ./navbar-header -->
-      
-      <div class="navbar-collapse collapse sidebar-navbar-collapse">
-        {% block sidebar %} {% endblock %}
-      </div> <!-- ./navbar-collapse -->
-    </div><!-- ./navbar-default -->
-  </div><!-- ./col-sm-2 -->
-  
-  <div class="col-sm-8">
-    <div class="well">
-      {% for message in get_flashed_messages() %}
-      <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-      </div> <!-- alert-warning -->
-      {% endfor %}
-      
-      {% block page_content %} {% endblock %}
-    </div> <!-- ./well -->
-  </div> <!-- ./col-sm-9 -->
-</div> <!-- ./row -->
+{% block header %}
+{% endblock %}
+
+<!-- Main content of site -->
+<div class="container">
+  <div class="no-gutter row">
+    <!-- Beginning of left side of main content -->
+    {% block content_left %} {% endblock %}
+    <!-- End of left side of main content -->
+
+    <!-- Beginning of main content -->
+    {% block content_main %} {% endblock %}
+    <!-- End of main content -->
+
+  </div> <!-- ./no-gutter row -->
+</div> <!-- ./container -->
+
+{% block footer %} 
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">©Company 2014</div>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
 {% endblock %}
 
 {% block scripts %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/holder/holder.js') }}"></script>
 {% endblock %}

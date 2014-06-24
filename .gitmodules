@@ -1,3 +1,9 @@
 [submodule "app/static/js/NicEdit"]
 	path = app/static/js/NicEdit
 	url = https://github.com/danishkhan/NicEdit.git
+[submodule "app/static/js/holder"]
+	path = app/static/js/holder
+	url = https://github.com/imsky/holder.git
+[submodule "app/static/js/Respond"]
+	path = app/static/js/Respond
+	url = https://github.com/scottjehl/Respond.git

@@ -4,6 +4,8 @@ from flask import render_template, redirect, url_for, flash, request
 from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
+from helpers.text import remove_html_tags
+
 from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm
 
@@ -68,7 +70,7 @@ def news_post():
     category = Category.get_by_name(name)
 
     post = Post(title=form.title.data,
-                body=form.post.data, 
+                body=remove_html_tags(form.post.data),
                 body_html=form.post.data, 
                 timestamp=form.created.data, 
                 author=current_user,
@@ -100,7 +102,7 @@ def news_edit(post_id):
     category = Category.get_by_name(name)
 
     post.title      = form.title.data
-    post.body       = form.post.data
+    post.body       = remove_html_tags(form.post.data)
     post.body_html  = form.post.data
     post.timestamp  = form.created.data
     post.author     = current_user

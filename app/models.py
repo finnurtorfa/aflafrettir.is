@@ -88,6 +88,10 @@ class Post(db.Model):
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first()
 
+  @classmethod
+  def get_by_category(cls, cid):
+    return cls.query.filter(cls.category_id == cid).all()
+
 class Category(db.Model):
   __tablename__ = 'categories'
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -107,7 +111,7 @@ class Category(db.Model):
   @classmethod
   def get_by_name(cls, name):
     return cls.query.filter_by(name=name).first()
-
+  
 class Ad(db.Model):
   __tablename__  = 'ads'
   id             = db.Column(db.Integer, primary_key=True, autoincrement=True)

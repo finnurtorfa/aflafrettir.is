@@ -1,11 +1,18 @@
 {% extends "admin/index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block page_content %}
-<div class="page-header">
-  <h1> Breyta Prófíl </h1>
-</div>
+{% block content_main %}
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
 
-{{ wtf.quick_form(form) }}
+  <div class="panel">
+    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-body">
+      <h1> Breyta Prófíl </h1>
+
+      {{ wtf.quick_form(form) }}
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
 {% endblock %}
 

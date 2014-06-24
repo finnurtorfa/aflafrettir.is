@@ -1,7 +1,7 @@
 {% extends "admin/index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block page_content %}
+{% block content_main %}
 <script src="{{ url_for('static', filename='js/NicEdit/nicEdit.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
@@ -9,29 +9,38 @@ bkLib.onDomLoaded(function() {
 });
 </script>
 
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
 
-<div class="page-header">
-  <h1> Bæta við nýrri frétt </h1>
-</div>
+  <div class="panel">
+    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-body">
 
-<form class="form form-horizontal" method="post" role="form">
-  {{ form.hidden_tag() }}
-  {{ wtf.form_errors(form, hiddens="only") }} 
-
-  <div class="col-xs-4">
-  {{ wtf.form_field(form.title) }}
-  {{ wtf.form_field(form.created) }}
-  {{ wtf.form_field(form.category) }}
-  </div>
-  <div class="form-group {% if form.post.errors %}has-error{% endif %}">
-    {{ form.post(**{'class':'form-control', 'style':'height: 300px;'}) }}
-    {% for message in form.post.errors %}
-      <p class="help-block">{{ message }}</p>
-    {% endfor %}
-  </div>
-  <br>
-  {{ wtf.form_field(form.submit) }}
-</form>
+      <div class="page-header">
+        <h1> Bæta við nýrri frétt </h1>
+      </div>
+      
+      <form class="form form-horizontal" method="post" role="form">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }} 
+      
+        <div class="col-xs-4">
+        {{ wtf.form_field(form.title) }}
+        {{ wtf.form_field(form.created) }}
+        {{ wtf.form_field(form.category) }}
+        </div>
+        <div class="form-group {% if form.post.errors %}has-error{% endif %}">
+          {{ form.post(**{'class':'form-control', 'style':'height: 300px;'}) }}
+          {% for message in form.post.errors %}
+            <p class="help-block">{{ message }}</p>
+          {% endfor %}
+        </div>
+        <br>
+        {{ wtf.form_field(form.submit) }}
+      </form>
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
 
 {% endblock %}
 

@@ -1,39 +1,48 @@
 {% extends "admin/index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block page_content %}
-<div class="row">
-  <form class="form form-horizontal" method="post" role="form">
-    <div class="col-xs-4">
-      {{ wtf.form_field(form.category) }}
-      {{ wtf.form_field(form.submit) }}
-    </div>
-  </form>
-</div>
+{% block content_main %}
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
 
-<br>
-
-<div class="row">
-  <form class="form-horizontal" role="form" action="{{ request.path }}" method=post>
-    <div class="form form-group">
-        <div class="col-xs-3">
-          {{ form.inactive(**{'size':'10'}) }}
-        </div>
-
-        <div class="col-xs-1">
-          <div style="padding-top: 40px;">
-            {{ form.right(**{'class':'btn btn-default'}) }}
+  <div class="panel">
+    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-body">
+      <div class="row">
+        <form class="form form-horizontal" method="post" role="form">
+          <div class="col-xs-4">
+            {{ wtf.form_field(form.category) }}
+            {{ wtf.form_field(form.submit) }}
           </div>
-          <div>
-            {{ form.left(**{'class':'btn btn-default'}) }}
-          </div>
-        </div> <!-- ./col-xs-1 -->
-
-        <div class="col-xs-3">
-          {{ form.active(**{'size':'10'}) }}
-        </div> <!-- ./col-xs-2 -->
-    </div> <!-- ./form-group -->
-  </form> 
-</div> <!-- ./row -->
+        </form>
+      </div>
+      
+      <br>
+      
+      <div class="row">
+        <form class="form-horizontal" role="form" action="{{ request.path }}" method=post>
+          <div class="form form-group">
+              <div class="col-xs-3">
+                {{ form.inactive(**{'size':'10'}) }}
+              </div>
+      
+              <div class="col-xs-1">
+                <div style="padding-top: 40px;">
+                  {{ form.right(**{'class':'btn btn-default'}) }}
+                </div>
+                <div>
+                  {{ form.left(**{'class':'btn btn-default'}) }}
+                </div>
+              </div> <!-- ./col-xs-1 -->
+      
+              <div class="col-xs-3">
+                {{ form.active(**{'size':'10'}) }}
+              </div> <!-- ./col-xs-2 -->
+          </div> <!-- ./form-group -->
+        </form> 
+      </div> <!-- ./row -->
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
 
 {% endblock %}
