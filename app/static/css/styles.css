@@ -111,7 +111,18 @@ li.dropdown:hover {
   color:#768c91;
 }
 .dropdown-menu {
+	background-color:#77CCDD;
+  color:#fff;
 	min-width: 250px;
+}
+
+.dropdown-menu li > a {
+  color: #fff;
+}
+
+.dropdown-menu li > a:hover {
+	background-color:#77CCDD;
+  color:#768c91;
 }
 
 .dropdown-toggle {
@@ -126,10 +137,6 @@ li.dropdown:hover {
 	background-color:#77CCDD;
 	background-image:none;
   transition: color 0.2s ease-in, background-color 0.2s ease-in;
-}
-
-.dropdown:hover .dropdown-menu {
-  display:block;
 }
 
 .caret {
@@ -187,6 +194,9 @@ li.dropdown:hover {
 }
 
 footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
 	height:50px;
 	background-color:#dfdfdf;
 	color:#888;
