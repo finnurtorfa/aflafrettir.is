@@ -1,8 +1,8 @@
 $('#content_left').affix({
-      offset: {
-        top: 510,
-        bottom: function() {
-          return (this.bottom = $('footer').outerHeight(true))
-        }
-      }
+  offset: {
+    top: 310,
+    bottom: function() {
+      return (this.bottom = $('footer').outerHeight(true))
+    }
+  }
 });	
