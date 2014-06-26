@@ -53,6 +53,9 @@ a,a:hover {
   text-decoration:none;
 }
 
+.btn-default a, .btn-default a:hover {
+  color:black;
+}
 .label-default a, .label-default a:hover {
 	color:#fff;
   text-decoration:none;

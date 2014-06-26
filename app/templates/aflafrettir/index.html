@@ -72,7 +72,11 @@
         <div class="col-xs-12">
           <h2> {{ post.title }} </h2>
           <p> {{ post.body }} </p>
-          <p class="lead"><button class="btn btn-default">Lesa meira</button></p>
+          <p class="lead">
+            <button class="btn btn-default">
+              <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira</a>
+            </button>
+          </p>
           <p class="pull-right">
             <span class="label label-default">
               <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
