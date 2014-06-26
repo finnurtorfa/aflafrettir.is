@@ -4,6 +4,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
 
+from helpers.text import slugify
+
 from config import config
 
 bootstrap = Bootstrap()
@@ -15,6 +17,7 @@ ads = UploadSet('ads', IMAGES)
 def create_app(config_name):
   app = Flask(__name__)
   app.config.from_object(config[config_name])
+  app.jinja_env.globals.update(slugify=slugify)
 
   bootstrap.init_app(app)
   db.init_app(app)
