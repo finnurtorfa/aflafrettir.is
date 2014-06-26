@@ -24,7 +24,12 @@ class HTMLStripper(HTMLParser):
     return ''.join(self.fed)
 
 def slugify(string):
-  string = string.replace('æ', 'ae').replace('ð','d').replace('þ','th')
+  string = string.replace('æ', 'ae').replace('ð','d').replace('þ','th')\
+                 .replace('!','').replace('?', '').replace('"', '')\
+                 .replace('#', '').replace('%', '').replace('%', '')\
+                 .replace('(', '').replace(')', '').replace('*', '')\
+                 .replace("'", '').replace(',', '').replace('.', '')\
+                 .replace('/', '').replace(':', '').replace(';', '')
   return unicodedata.normalize('NFKD', string)\
           .lower().replace(' ', '-').encode('ascii', 'ignore')
 
