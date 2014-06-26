@@ -49,8 +49,9 @@
     <div class="panel-heading">Flokkar</div>
     <div class="panel-body">
       <ul class="nav nav-stacked">
+        <li><a href="{{ url_for('aflafrettir.category', cid=1) }}">Almenn frétt</a></li>
         {% for category in categories %}
-          <li><a href="#">{{ category.name }}</a></li>
+          <li><a href="{{ url_for('aflafrettir.category', cid=category.id) }}">{{ category.name }}</a></li>
         {% endfor %}
       </ul>
     </div> <!-- ./panel-body -->
@@ -73,7 +74,9 @@
           <p> {{ post.body }} </p>
           <p class="lead"><button class="btn btn-default">Lesa meira</button></p>
           <p class="pull-right">
-            <span class="label label-default">{{ post.category.name }}</span>
+            <span class="label label-default">
+              <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
+            </span>
           </p>
           <ul class="list-inline">
             <li><a href="#">2 Days Ago</a></li>

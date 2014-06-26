@@ -53,6 +53,11 @@ a,a:hover {
   text-decoration:none;
 }
 
+.label-default a, .label-default a:hover {
+	color:#fff;
+  text-decoration:none;
+}
+
 .highlight-bk {
 	background-color:#77CCDD;
   padding:1px;
