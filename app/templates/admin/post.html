@@ -5,7 +5,10 @@
 <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
-        new nicEditor({iconsPath : "{{ url_for('static', filename='js/NicEdit/nicEditorIcons.gif') }}"}).panelInstance("post");
+    new nicEditor(
+      {iconsPath : "{{ url_for('static', filename='js/NicEdit/nicEditorIcons.gif') }}",
+       uploadURI : "{{ url_for('admin.nicedit_upload') }}"
+      }).panelInstance("post");
 });
 </script>
 
