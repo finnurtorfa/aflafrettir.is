@@ -85,6 +85,14 @@ def news_post():
 
   return render_template('admin/post.html', form=form)
   
+@admin.route('/news/post/upload', methods=['GET', 'POST'])
+@login_required
+def nicedit_upload():
+  print(request)
+  print(dir(request))
+  print(request.files)
+  pass
+
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def news_edit(post_id):
@@ -251,5 +259,7 @@ def ad_delete(ad_id):
 
   db.session.delete(ad)
   db.session.commit()
+
+  flash("Auglýsingin hefur verið fjarlægð")
 
   return redirect(url_for('admin.ad_index'))
