@@ -4,6 +4,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
 
+from helpers.text import slugify
+
 from config import config
 
 bootstrap = Bootstrap()
@@ -11,15 +13,17 @@ db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 ads = UploadSet('ads', IMAGES)
+imgs = UploadSet('imgs', IMAGES)
 
 def create_app(config_name):
   app = Flask(__name__)
   app.config.from_object(config[config_name])
+  app.jinja_env.globals.update(slugify=slugify)
 
   bootstrap.init_app(app)
   db.init_app(app)
   login_manager.init_app(app)
-  configure_uploads(app, ads)
+  configure_uploads(app, (ads, imgs))
 
   from .aflafrettir import aflafrettir as afla_blueprint
   from .auth import auth as auth_blueprint

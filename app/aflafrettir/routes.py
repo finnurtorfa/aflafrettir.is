@@ -20,6 +20,14 @@ def category(cid):
                           categories=categories,
                           posts=posts)
 
+@aflafrettir.route('/frettir/grein/<title>/<int:pid>')
+def post(title, pid):
+  post = Post.get_by_id(pid)
+  categories = Category.get_all_active()
+  return render_template('aflafrettir/post.html', 
+                          categories=categories,
+                          post=post)
+
 @aflafrettir.route('/user/<username>')
 def user(username):
   user = User.query.filter_by(username=username).first_or_404()

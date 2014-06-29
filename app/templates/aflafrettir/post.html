@@ -1,0 +1,39 @@
+{% extends "aflafrettir/index.html" %}
+
+{% block header %}
+{% endblock %}
+
+{% block content_left %}
+<div class="col-md-2" id="sidebar">
+  <div class="panel panel-default" id="content_left">
+    <div class="panel-heading">Flokkar</div>
+    <div class="panel-body">
+      <ul class="nav nav-stacked">
+        <li><a href="{{ url_for('aflafrettir.category', cid=1) }}">Almenn frétt</a></li>
+        {% for category in categories %}
+          <li><a href="{{ url_for('aflafrettir.category', cid=category.id) }}">{{ category.name }}</a></li>
+        {% endfor %}
+      </ul>
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel panel-default -->
+</div> <!-- ./col-md-2 -->
+{% endblock %}
+
+{% block content_main %}
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
+
+  <div class="panel">
+    <div class="panel-heading">{{ post.title }}</div> 
+    <div class="panel-body"> 
+      <div class="row">
+        <div class="col-xs-12">
+          <p> {{ post.body_html|safe }} </p>
+        </div> <!-- ./col-xs-12 -->
+      </div> <!-- ./row -->
+
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
+{% endblock %}
+
