@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, json
 from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
@@ -9,7 +9,7 @@ from helpers.text import remove_html_tags
 from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm
 
-from .. import db, ads
+from .. import db, ads, imgs
 from ..models import User, Post, Category, Ad
 
 ### Profile Related Routes
@@ -88,10 +88,15 @@ def news_post():
 @admin.route('/news/post/upload', methods=['GET', 'POST'])
 @login_required
 def nicedit_upload():
-  print(request)
-  print(dir(request))
-  print(request.files)
-  pass
+  file = request.files.get('image')
+  filename = imgs.save(file)
+
+  links_dict  = {'original' : url_for('static', 
+                                      filename='uploads/imgs/' + filename)}
+  set_dict    = {'links' : links_dict}
+  upload_dict = {'upload' : set_dict }
+
+  return json.dumps(upload_dict)
 
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
