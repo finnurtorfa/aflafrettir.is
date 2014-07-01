@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
 
-from helpers.text import slugify
+from helpers.text import slugify, truncate
 
 from config import config
 
@@ -19,6 +19,7 @@ def create_app(config_name):
   app = Flask(__name__)
   app.config.from_object(config[config_name])
   app.jinja_env.globals.update(slugify=slugify)
+  app.jinja_env.globals.update(truncate=truncate)
 
   bootstrap.init_app(app)
   db.init_app(app)
