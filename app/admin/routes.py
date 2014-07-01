@@ -10,7 +10,7 @@ from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm
 
 from .. import db, ads, imgs
-from ..models import User, Post, Category, Ad
+from ..models import User, Post, Category, Image
 
 ### Profile Related Routes
 ##############################
@@ -91,6 +91,14 @@ def nicedit_upload():
   file = request.files.get('image')
   filename = imgs.save(file)
 
+  img = Image(filename=filename,
+              location=url_for('static', filename='uploads/imgs/'),
+              type=4,
+              active=False)
+
+  db.session.add(img)
+  db.session.commit()
+        
   links_dict  = {'original' : url_for('static', 
                                       filename='uploads/imgs/' + filename)}
   set_dict    = {'links' : links_dict}
@@ -202,7 +210,8 @@ def news_category():
 @login_required
 def ad_index():
   form = AdForm()
-  ads = Ad.get_all()
+  ads = Image.get_all_ads()
+
   return render_template('admin/ads.html', form=form, ads=ads)
 
 @admin.route('/ad/upload', methods=['GET', 'POST'])
@@ -221,9 +230,10 @@ def ad_upload():
 
         return redirect(url_for('admin.ad_index'))
       else:
-        ad = Ad(filename=filename,
-                placement=form.placement.data,
-                active=form.active.data)
+        ad = Image(filename=filename,
+                   location=url_for('static', filename='uploads/ads/'),
+                   type=form.placement.data,
+                   active=form.active.data)
 
         db.session.add(ad)
         db.session.commit()
@@ -236,10 +246,10 @@ def ad_upload():
 @login_required
 def ad_edit(ad_id):
   form = AdForm()
-  ad = Ad.get_by_id(ad_id)
+  ad = Image.get_by_id(ad_id)
 
   if request.method == 'POST':
-    ad.placement = form.placement.data
+    ad.type      = form.placement.data
     ad.active    = form.active.data
 
     db.session.add(ad)
@@ -248,7 +258,7 @@ def ad_edit(ad_id):
     flash("Auglýsingin hefur verið uppfærð")
     return redirect(url_for('admin.ad_index'))
 
-  form.placement.data = ad.placement
+  form.placement.data = ad.type
   form.active.data    = ad.active
 
   return render_template('admin/upload.html', form=form)
@@ -258,7 +268,7 @@ def ad_edit(ad_id):
 def ad_delete(ad_id):
   import os
 
-  ad = Ad.get_by_id(ad_id)
+  ad = Image.get_by_id(ad_id)
 
   os.remove(ads.path(ad.filename))
 
