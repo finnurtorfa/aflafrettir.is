@@ -112,22 +112,34 @@ class Category(db.Model):
   def get_by_name(cls, name):
     return cls.query.filter_by(name=name).first()
   
-class Ad(db.Model):
-  __tablename__  = 'ads'
+class Image(db.Model):
+  __tablename__  = 'images'
   id             = db.Column(db.Integer, primary_key=True, autoincrement=True)
   filename       = db.Column(db.String(120), nullable=False)
-  placement      = db.Column(db.Integer, nullable=False)
+  location       = db.Column(db.String(120), nullable=False)
+  type           = db.Column(db.Integer, nullable=False)
   active         = db.Column(db.Boolean, default=False)
   timestamp      = db.Column(db.DateTime, 
                              nullable=False,
                              default=datetime.utcnow)
  
   @classmethod
-  def get_all(cls, descending=True):
+  def get_all_imgs(cls, descending=True):
     if descending:
-      return cls.query.order_by(cls.timestamp.desc()).all()
+      return cls.query.filter(cls.type >= 4)\
+                      .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.order_by(cls.timestamp).all()
+      return cls.query.filter(cls.type >= 4)\
+                      .order_by(cls.timestamp).all()
+
+  @classmethod
+  def get_all_ads(cls, descending=True):
+    if descending:
+      return cls.query.filter(cls.type < 4)\
+                      .order_by(cls.timestamp.desc()).all()
+    else:
+      return cls.query.filter(cls.type < 4)\
+                      .order_by(cls.timestamp).all()
 
   @classmethod
   def get_by_id(cls, aid):
