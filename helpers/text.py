@@ -38,7 +38,7 @@ def remove_html_tags(string):
   s.feed(string)
   return s.get_data()
 
-def truncate(string, length=250, suffix='...'):
+def truncate(string, length=250, suffix=''):
   if len(string) <= length:
     return string
   else:
