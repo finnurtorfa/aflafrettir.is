@@ -69,12 +69,12 @@
       
     {% for post in posts %}
       <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12 col-sm-12 col-md-12">
           <h2> {{ post.title }} </h2>
-          <div class="col-xs-2">
-            <img data-src="holder.js/140x140" class="img-rounded" alt="A generic square placeholder image with rounded corners">
+          <div class="img-resize col-xs-6 col-sm-4 col-md-2">
+            <img src="{{ url_for('static', filename='imgs_default/fish1.jpg') }}" class="img-resize img-rounded" alt="A generic square placeholder image with rounded corners">
           </div>
-          <div class="col-xs-10"> {{ truncate(post.body, 500) }} </div>
+          <div class="col-xs-6 col-sm-8 col-md-10"> <p class="post-body">{{ truncate(post.body, 500) }} </p></div>
           <p class="lead">
             <button class="btn btn-default">
               <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira</a>

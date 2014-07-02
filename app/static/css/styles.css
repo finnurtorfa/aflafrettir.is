@@ -16,15 +16,18 @@ header {
 
 /* only apply sticky columns on wider screens */
 @media (min-width: 1200px) {
-  #content_left {
+  #content_left,
+  #admin_left {
  	  margin-left:15px;
   }
 
-  #content_left.affix-top {
+  #content_left.affix-top,
+  #admin_left.affix-top {
     position: static;
   }
   
-  #content_left.affix {
+  #content_left.affix,
+  #admin_left.affix {
     position: fixed !important;
     top: 67px;
     width:200px;
@@ -147,6 +150,15 @@ li.dropdown:hover {
   transition: color 0.2s ease-in, background-color 0.2s ease-in;
 }
 
+.post-body:after {
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 2.25em;
+  content: '';
+}
 .caret {
 	color:#fff;
 }
@@ -173,7 +185,8 @@ li.dropdown:hover {
   font-size: 150%;
 }
 
-#content_left .panel-heading {
+#content_left .panel-heading,
+#admin_left .panel-heading {
   background-color:#a0dbe7;
   color:#fff;"
 }
