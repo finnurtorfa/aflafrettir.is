@@ -5,6 +5,7 @@ from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
 from helpers.text import remove_html_tags
+from helpers.image import crop_image
 
 from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm
@@ -98,6 +99,8 @@ def nicedit_upload():
 
   db.session.add(img)
   db.session.commit()
+
+  crop_image(imgs.path(filename))
         
   links_dict  = {'original' : url_for('static', 
                                       filename='uploads/imgs/' + filename)}
