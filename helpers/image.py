@@ -24,7 +24,9 @@ def crop_image(infile):
     b = h
 
   cropped = original.crop((l,t,r,b))
+  w, h = cropped.size
+
+  if w > 200 and h > 200:
+    cropped = cropped.resize((200, 200))
+
   cropped.save(outfile)
-
-  
-
