@@ -141,7 +141,7 @@ def news_edit(post_id):
     return redirect(url_for('admin.news_index'))
   
   form.title.data       = post.title
-  form.post.data        = post.body
+  form.post.data        = post.body_html
   form.created.data     = post.timestamp
   form.category.data    = [i for i, v in enumerate(form.category.choices)
                              if v[1] == post.category.name][0]
