@@ -25,7 +25,7 @@
           {% for ad in ads %}
           <tr>
             <td> {{ ad.filename }} </td>
-            <td> {{ form.placement.choices[ad.placement][1] }} </td>
+            <td> {{ form.placement.choices[ad.type][1] }} </td>
             <td> {% if ad.active %} Já {% else %} Nei {% endif %} </td>
             <td> {{ ad.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
             <td> 

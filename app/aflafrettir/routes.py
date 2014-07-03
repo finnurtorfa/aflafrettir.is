@@ -1,13 +1,26 @@
-from flask import render_template
+import os
+
+from flask import render_template, url_for
 
 from . import aflafrettir
 from ..models import User, Category, Post
+
+from helpers.text import get_thumbnail
 
 @aflafrettir.route('/frettir')
 @aflafrettir.route('/', alias=True)
 def index():
   categories = Category.get_all_active()
   posts = Post.get_all()
+  for post in posts:
+    f, e = get_thumbnail(post.body_html)
+    fn = f + '/' + e
+
+    if not e and not os.path.isfile(fn):
+      post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
+    else:
+      post.thumbnail = fn
+      
   return render_template('aflafrettir/index.html', 
                          categories=categories,
                          posts=posts)
