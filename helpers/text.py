@@ -57,11 +57,15 @@ def remove_html_tags(string):
   s.feed(string)
   return s.get_data()
 
-def truncate(string, length=250, suffix=''):
+def truncate(string, length=250, suffix=' ...'):
   if len(string) <= length:
     return string
   else:
-    return ' '.join(string[:length+1].split(' ')[0:-1]) + suffix
+    list_out = string[:length+1].split(' ')[0:-1]
+    last = list_out[-1]
+    last = '<span class="readmore">' + last + suffix + '</span>'
+    list_out[-1] = last
+    return ' '.join(list_out)
 
 def get_thumbnail(html):
   s = HTMLThumbnailExtractor()

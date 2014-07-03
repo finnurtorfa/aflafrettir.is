@@ -73,23 +73,20 @@
         <div class="img-resize col-xs-6 col-sm-4 col-md-2">
           <img src="{{ post.thumbnail }}" class="img-resize img-rounded" alt="A generic square placeholder image with rounded corners">
         </div>
-        <div class="col-xs-6 col-sm-8 col-md-10"> <p class="post-body">{{ truncate(post.body, 500) }} </p></div>
-        <p class="lead">
-          <button class="btn btn-default">
-            <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira</a>
-          </button>
-        </p>
-        <p class="pull-right">
-          <span class="label label-default">
-            <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
-          </span>
-        </p>
-        <ul class="list-inline">
-          <li><a href="#">2 Days Ago</a></li>
-          <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 2 Comments</a></li>
-          <li><a href="#"><i class="glyphicon glyphicon-share"></i> 14 Shares</a></li>
-        </ul>
+        <div class="col-xs-6 col-sm-8 col-md-10"> <p class="post-body">{{ truncate(post.body, 500)|safe }} <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a></p></div>
       </div> <!-- ./row -->
+
+      <p class="pull-right">
+        <span class="label label-default">
+          <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
+        </span>
+      </p>
+      <ul class="list-inline">
+        <li><a href="#">2 Days Ago</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 2 Comments</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-share"></i> 14 Shares</a></li>
+      </ul>
+
       <hr>
     {% endfor %}
 
