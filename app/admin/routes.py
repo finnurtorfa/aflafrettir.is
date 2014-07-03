@@ -5,7 +5,7 @@ from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
 from helpers.text import remove_html_tags
-from helpers.image import crop_image
+from helpers.image import crop_image, jpeg_convert
 
 from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm
@@ -91,6 +91,7 @@ def news_post():
 def nicedit_upload():
   file = request.files.get('image')
   filename = imgs.save(file)
+  filename = jpeg_convert(imgs.path(filename))
 
   img = Image(filename=filename,
               location=url_for('static', filename='uploads/imgs/'),
