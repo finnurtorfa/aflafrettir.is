@@ -12,7 +12,7 @@ def jpeg_convert(infile):
 
   try:
     img = Image.open(infile)
-    base_width = 980
+    base_width = 975
     w, h = img.size
 
     if w > base_width:
@@ -35,6 +35,7 @@ def crop_image(infile):
 
   original = Image.open(infile)
   w, h = original.size
+  max_width
 
   if w < h:
     l = 0
@@ -50,7 +51,7 @@ def crop_image(infile):
   cropped = original.crop((l,t,r,b))
   w, h = cropped.size
 
-  if w > 200 and h > 200:
-    cropped = cropped.resize((200, 200), Image.ANTIALIAS)
+  if w > max_width and h > max_width:
+    cropped = cropped.resize((max_width, max_width), Image.ANTIALIAS)
 
   cropped.save(outfile)
