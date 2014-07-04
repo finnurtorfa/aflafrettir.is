@@ -35,7 +35,7 @@ def crop_image(infile):
 
   original = Image.open(infile)
   w, h = original.size
-  max_width
+  max_width = 152
 
   if w < h:
     l = 0
