@@ -38,6 +38,9 @@ def category(cid):
     f, e = get_thumbnail(post.body_html)
     fn = f + '/' + e
 
+    distance_in_time = time_ago(post.timestamp)
+    post.distance_in_time = distance_in_time
+
     if not e and not os.path.isfile(fn):
       post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
     else:
