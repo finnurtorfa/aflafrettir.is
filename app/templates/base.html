@@ -32,6 +32,7 @@
 {% endblock %}
 
 {% block navbar %}
+<div id="wrap">
 <nav role="navigation" class="navbar navbar-fixed-top">
   <div class="container-fluid">
     <!-- Title -->
@@ -114,14 +115,18 @@
   </div> <!-- ./no-gutter row -->
 </div> <!-- ./container -->
 
+</div> <!-- /.wrap -->
 {% block footer %} 
-<footer class="footer">
+<div id="footer">
   <div class="container">
     <div class="row">
       <div class="col-md-6">©Company 2014</div>
     </div>
   </div>
 </footer>
+{% endblock %}
+
+{% block disqus_comments %}
 {% endblock %}
 
 {% endblock %}

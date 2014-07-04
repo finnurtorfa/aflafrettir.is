@@ -80,6 +80,14 @@ h3.highlight  {
   border-bottom:2px solid #77CCDD;
 }
 
+.wrap-text .img-resize {
+  float: left;
+  max-width: 152px;
+  padding: 5px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;  
+}
 .navbar {
 	background-color:#77CCDD;
   color:#ffffff;
@@ -221,13 +229,23 @@ li.dropdown:hover {
 	padding-left:1px;
 }
 
-footer {
-  bottom:0;
-  width:100%;
-	height:50px;
+#footer {
+  height: 60px;
+  margin-top:50px;
+  padding-top:20px;
+  padding-bottom:20px;
 	background-color:#dfdfdf;
 	color:#888;
-  margin-top:20px;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 70px;
 }
 
 @media (min-width: 992px) {

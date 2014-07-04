@@ -81,5 +81,37 @@ def get_thumbnail(html):
 
   return os.path.split(s.thumbnail)
     
+def time_ago(from_date, since_date=None, target_tz=None):
+  import datetime
 
+  if not since_date:
+    since_date = datetime.datetime.now(target_tz)
 
+  distance_in_time = since_date - from_date
+  distance_in_seconds = distance_in_time.days*86400 + distance_in_time.seconds
+  distance_in_minutes = distance_in_seconds//60
+
+  print(distance_in_time)
+  print(distance_in_seconds)
+  print(distance_in_minutes)
+
+  if distance_in_minutes <= 1:
+    return 'fyrir um mínútu'
+  elif distance_in_minutes <= 45:
+    return 'fyrir {0} mínútum'.format(distance_in_minutes)
+  elif distance_in_minutes <= 90:
+    return 'fyrir um klukkustund'
+  elif distance_in_minutes <= 1440:
+    return 'fyrir um {0} klukkustundum'.format(distance_in_minutes//60)
+  elif distance_in_minutes <= 2880:
+    return 'fyrir 1 degi'
+  elif distance_in_minutes <= 43220:
+    return 'fyrir {0} dögum'.format(distance_in_minutes//1440)
+  elif distance_in_minutes <= 86400:
+    return 'fyrir um 1 mánuði'
+  elif distance_in_minutes <= 525600:
+    return 'fyrir um {0} mánuðum'.format(distance_in_minutes//43200)
+  elif distance_in_minutes <= 1051200:
+    return 'fyrir um 1 ári'
+  else:
+    return 'fyrir um {0} árum'.format(distance_in_minutes//525600)

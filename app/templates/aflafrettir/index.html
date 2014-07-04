@@ -67,31 +67,50 @@
     <div class="panel-heading">Fréttir</div> 
     <div class="panel-body">
       
+    <div class="row">
     {% for post in posts %}
-      <div class="row">
+      <div class="col-6 col-sm-6 maxheight">
         <h2> {{ post.title }} </h2>
-        <div class="img-resize col-xs-6 col-sm-4 col-md-2">
-          <img src="{{ post.thumbnail }}" class="img-resize img-rounded" alt="A generic square placeholder image with rounded corners">
+        <div class="wrap-text"> 
+          <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+          <p> {{ truncate(post.body, 300)|safe }} 
+            <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
+          </p>
         </div>
-        <div class="col-xs-6 col-sm-8 col-md-10"> <p class="post-body">{{ truncate(post.body, 500)|safe }} <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a></p></div>
-      </div> <!-- ./row -->
-
-      <p class="pull-right">
-        <span class="label label-default">
-          <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
-        </span>
-      </p>
-      <ul class="list-inline">
-        <li><a href="#">2 Days Ago</a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-comment"></i> 2 Comments</a></li>
-        <li><a href="#"><i class="glyphicon glyphicon-share"></i> 14 Shares</a></li>
-      </ul>
-
-      <hr>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            <p class="pull-right">
+              <span class="label label-default">
+                <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
+              </span>
+            </p>
+            <ul class="list-inline">
+              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Birt {{ post.distance_in_time }}</a></li>
+              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
+            </ul>
+          </div> <!-- ./col-12 col-sm-12 -->
+        </div> <!-- ./row -->
+      </div> <!-- ./col-6 col-sm-6 col-lg-4 -->
     {% endfor %}
+    </div> <!-- ./row -->
 
     </div> <!-- ./panel-body -->
   </div> <!-- ./panel -->
 </div> <!-- ./col-md-7 -->
+{% endblock %}
+
+{% block disqus_comments %}
+<script type="text/javascript">
+  /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+  var disqus_shortname = 'aflafrettir'; 
+
+  /* * * DON'T EDIT BELOW THIS LINE * * */
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
 {% endblock %}
 
