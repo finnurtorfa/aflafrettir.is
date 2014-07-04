@@ -16,6 +16,15 @@ $('#admin_left').affix({
   }
 });	
 
+function set_height() {
+  boxes = $('.maxheight');
+  boxes.css({'height':''});
+  maxHeight = Math.max.apply(
+    Math, boxes.map(function() {
+      return $(this).outerHeight();
+    }).get());
+  boxes.outerHeight(maxHeight);
+}
 
 $(document).ready(function() {
   var windowHeight   = $(window).height();
@@ -34,4 +43,11 @@ $(document).ready(function() {
     var img_width = $('div.img-resize').width();
     $('img.img-resize').width(img_width);
   });
+
+  $(window).resize(function() {
+    set_height();
+  });
+
+  set_height();
+
 });

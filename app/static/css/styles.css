@@ -80,6 +80,14 @@ h3.highlight  {
   border-bottom:2px solid #77CCDD;
 }
 
+.wrap-text .img-resize {
+  float: left;
+  max-width: 152px;
+  padding: 5px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;  
+}
 .navbar {
 	background-color:#77CCDD;
   color:#ffffff;
