@@ -12,7 +12,7 @@ def jpeg_convert(infile):
 
   try:
     img = Image.open(infile)
-    base_width = 975
+    base_width = 932
     w, h = img.size
 
     if w > base_width:
