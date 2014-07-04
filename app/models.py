@@ -89,8 +89,13 @@ class Post(db.Model):
     return cls.query.filter_by(id=aid).first()
 
   @classmethod
-  def get_by_category(cls, cid):
-    return cls.query.filter(cls.category_id == cid).all()
+  def get_by_category(cls, cid, descending=True):
+    if descending:
+      return cls.query.filter(cls.category_id == cid)\
+                .order_by(cls.timestamp.desc()).all()
+    else:
+      return cls.query.filter(cls.category_id == cid)\
+                .order_by(cls.timestamp).all()
 
 class Category(db.Model):
   __tablename__ = 'categories'
