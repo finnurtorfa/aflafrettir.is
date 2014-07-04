@@ -85,8 +85,8 @@
               </span>
             </p>
             <ul class="list-inline">
-              <li><a href="#">2 Days Ago</a></li>
-              <li><a href="#"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
+              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Birt {{ post.distance_in_time }}</a></li>
+              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
             </ul>
           </div> <!-- ./col-12 col-sm-12 -->
         </div> <!-- ./row -->
