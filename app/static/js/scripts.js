@@ -16,6 +16,10 @@ $('#admin_left').affix({
   }
 });	
 
+$('.post-body table').addClass('table table-striped table-hover table-condensed')
+$('.post-body table').find('colgroup').remove().end().html()
+$('.post-body table td').css('text-align', 'left')
+
 function set_height() {
   boxes = $('.maxheight');
   boxes.css({'height':''});

@@ -81,19 +81,15 @@ def get_thumbnail(html):
 
   return os.path.split(s.thumbnail)
     
-def time_ago(from_date, since_date=None, target_tz=None):
+def time_ago(from_date, since_date=None):
   import datetime
 
   if not since_date:
-    since_date = datetime.datetime.now(target_tz)
+    since_date = datetime.datetime.utcnow()
 
   distance_in_time = since_date - from_date
   distance_in_seconds = distance_in_time.days*86400 + distance_in_time.seconds
   distance_in_minutes = distance_in_seconds//60
-
-  print(distance_in_time)
-  print(distance_in_seconds)
-  print(distance_in_minutes)
 
   if distance_in_minutes <= 1:
     return 'fyrir um mínútu'

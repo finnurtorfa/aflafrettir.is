@@ -249,6 +249,9 @@ li.dropdown:hover {
 }
 
 @media (min-width: 992px) {
+  .no-gutter.row {
+    margin-right: 0px;
+  }
   .no-gutter.row > div[class*='col-md'] {
     padding-left:  0;
     padding-right: 0;
