@@ -16,9 +16,16 @@ $('#admin_left').affix({
   }
 });	
 
-$('.post-body table').addClass('table table-striped table-hover table-condensed')
-$('.post-body table').find('colgroup').remove().end().html()
-$('.post-body table td').css('text-align', 'left')
+$('.post-body table').each(function(){
+  $(this).prepend('<thead></thead>')
+  $(this).find('thead').append($(this).find("tr:eq(0)"));
+});
+$('.post-body table').addClass('table table-striped table-hover table-condensed table-responsive');
+$('.post-body table').find('colgroup').remove().end().html();
+$('.post-body table thead').css({'font-weight': 'bold'});
+$('.post-body table td').css({'text-align': 'left',
+                              'font-size': '10pt',
+                              'font-family': 'sans-serif'});
 
 function set_height() {
   boxes = $('.maxheight');

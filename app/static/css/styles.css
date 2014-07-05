@@ -178,6 +178,18 @@ li.dropdown:hover {
 	color:#fff;
 }
 
+.post-body .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #f1f1f1;
+}
+
+.post-body img {
+  max-width: 100%;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #f5f5f5;
+}
+
 .navbar-toggle {
 	color:#fff;
   border-width:0;
