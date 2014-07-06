@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
+import os, time
+from threading import Thread
 
 from PIL import Image
+from flask import current_app
+
+from app.models import Image
+
+_image_thread = None
 
 def jpeg_convert(infile):
   """ Try to convert and compress an image to jpeg"""
@@ -55,3 +61,23 @@ def crop_image(infile):
     cropped = cropped.resize((max_width, max_width), Image.ANTIALIAS)
 
   cropped.save(outfile)
+
+def remove_images(app):
+  from datetime import datetime
+
+  while True:
+    time.sleep(3600)
+    conf = app.config['IMAGE_DELETE']
+    with app.app_context():
+      if ( datetime.utcnow().hour in conf['TIME_OF_DAY'] and 
+           datetime.utcnow().weekday() in conf['WEEKDAY'] ):
+        print("DELETE IMAGES")
+
+def start_image_deletion_thread():
+  if not current_app.config['TESTING']:
+    global _image_thread
+    
+    if _image_thread is None:
+      _image_thread = Thread(target=remove_images,
+                             args=[current_app._get_current_object()])
+      _image_thread.start()

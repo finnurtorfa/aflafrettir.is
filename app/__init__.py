@@ -33,4 +33,9 @@ def create_app(config_name):
   app.register_blueprint(auth_blueprint, url_prefix='/auth')
   app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
+  from helpers.image import start_image_deletion_thread
+  @app.before_first_request
+  def before_first_request():
+    start_image_deletion_thread()
+
   return app
