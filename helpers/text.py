@@ -33,22 +33,20 @@ class HTMLStripper(HTMLParser):
     """ Return the data collected by the parser """
     return ''.join(self.fed)
 
-class HTMLThumbnailExtractor(HTMLParser):
-  """ HTMLThumbnailExtractor class to get the url for the first image in a HTML
-  document """
+class HTMLImageExtractor(HTMLParser):
+  """ HTMLImageExtractor class to get the url for the first or all images in
+  a HTML document """
   def __init__(self):
-    super(HTMLThumbnailExtractor, self).__init__()
+    super(HTMLImageExtractor, self).__init__()
     self.reset()
-    self.thumbnail = ''
+    self.imgs = []
 
   def handle_starttag(self, tag, attrs):
     """ Handler for a opening of a tag like body, img, a, p etc. """
-    if not self.thumbnail and tag == 'img':
+    if tag == 'img':
       for attr in attrs:
         if attr[0] == 'src':
-          self.thumbnail = attr[1]
-          raise StopIteration
-
+          self.imgs.append(attr[1])
 
 def slugify(string):
   """ Returns a URL friendly representation of a string """
@@ -79,20 +77,26 @@ def truncate(string, length=250, suffix=' ...'):
     list_out[-1] = last
     return ' '.join(list_out)
 
+def get_all_imgs(html):
+  """ Extracts all images from a HTML document """
+  s = HTMLImageExtractor()
+
+  for h in html:
+    s.feed(h)
+
+  return s.imgs
+
 def get_thumbnail(html):
   """ Extracts the first image from a HTML document """
-  s = HTMLThumbnailExtractor()
-  try:
-    s.feed(html)
-  except StopIteration:
-    pass
+  s = HTMLImageExtractor()
+  s.feed(html)
 
-  if s.thumbnail:
-    f, e = os.path.splitext(s.thumbnail)
+  if s.imgs:
+    f, e = os.path.splitext(s.imgs[0])
     thumbnail = f + '_crop' + e
     return os.path.split(thumbnail)
 
-  return os.path.split(s.thumbnail)
+  return os.path.split('')
     
 def time_ago(from_date, since_date=None):
   """ Returns distance in time between two datetime objects in words """
