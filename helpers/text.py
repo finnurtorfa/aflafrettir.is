@@ -7,6 +7,7 @@ import unicodedata
 from html.parser import HTMLParser
 
 class HTMLStripper(HTMLParser):
+  """ HTMLStripper class to strip HTML tags from a HTML document """
   def __init__(self):
     super(HTMLStripper, self).__init__()
     self.reset()
@@ -14,35 +15,41 @@ class HTMLStripper(HTMLParser):
     self.escape = False
 
   def handle_starttag(self, tag, attrs):
+    """ Handler for a opening of a tag like body, img, a, p etc. """
     if tag == 'table':
       self.escape = True
 
   def handle_endtag(self, tag):
+    """ Handler for a closing of a tag like body, img, a, p etc. """
     if tag == 'table':
       self.escape = False
 
   def handle_data(self, d):
+    """ Handler for the data inside tags """
     if not self.escape:
       self.fed.append(d)
 
   def get_data(self):
+    """ Return the data collected by the parser """
     return ''.join(self.fed)
 
-class HTMLThumbnailExtractor(HTMLParser):
+class HTMLImageExtractor(HTMLParser):
+  """ HTMLImageExtractor class to get the url for the first or all images in
+  a HTML document """
   def __init__(self):
-    super(HTMLThumbnailExtractor, self).__init__()
+    super(HTMLImageExtractor, self).__init__()
     self.reset()
-    self.thumbnail = ''
+    self.imgs = []
 
   def handle_starttag(self, tag, attrs):
-    if not self.thumbnail and tag == 'img':
+    """ Handler for a opening of a tag like body, img, a, p etc. """
+    if tag == 'img':
       for attr in attrs:
         if attr[0] == 'src':
-          self.thumbnail = attr[1]
-          raise StopIteration
-
+          self.imgs.append(attr[1])
 
 def slugify(string):
+  """ Returns a URL friendly representation of a string """
   string = string.replace('æ', 'ae').replace('ð','d').replace('þ','th')\
                  .replace('!','').replace('?', '').replace('"', '')\
                  .replace('#', '').replace('%', '').replace('%', '')\
@@ -53,11 +60,14 @@ def slugify(string):
           .lower().replace(' ', '-').encode('ascii', 'ignore')
 
 def remove_html_tags(string):
+  """ Removes all HTML tags from a HTML document """
   s = HTMLStripper()
   s.feed(string)
+
   return s.get_data()
 
 def truncate(string, length=250, suffix=' ...'):
+  """ Returns the first 'length' characters from a string plus a suffix """
   if len(string) <= length:
     return string
   else:
@@ -67,21 +77,29 @@ def truncate(string, length=250, suffix=' ...'):
     list_out[-1] = last
     return ' '.join(list_out)
 
-def get_thumbnail(html):
-  s = HTMLThumbnailExtractor()
-  try:
-    s.feed(html)
-  except StopIteration:
-    pass
+def get_all_imgs(html):
+  """ Extracts all images from a HTML document """
+  s = HTMLImageExtractor()
 
-  if s.thumbnail:
-    f, e = os.path.splitext(s.thumbnail)
+  for h in html:
+    s.feed(h)
+
+  return s.imgs
+
+def get_thumbnail(html):
+  """ Extracts the first image from a HTML document """
+  s = HTMLImageExtractor()
+  s.feed(html)
+
+  if s.imgs:
+    f, e = os.path.splitext(s.imgs[0])
     thumbnail = f + '_crop' + e
     return os.path.split(thumbnail)
 
-  return os.path.split(s.thumbnail)
+  return os.path.split('')
     
 def time_ago(from_date, since_date=None):
+  """ Returns distance in time between two datetime objects in words """
   import datetime
 
   if not since_date:
