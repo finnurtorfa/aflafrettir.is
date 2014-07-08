@@ -98,24 +98,31 @@
 
 {% block content %}
 
-{% block header %}
-{% endblock %}
-
 <!-- Main content of site -->
-<div class="container">
-  <div class="no-gutter row">
-    <!-- Beginning of left side of main content -->
-    {% block content_left %} {% endblock %}
-    <!-- End of left side of main content -->
+<div class="container-fluid">
+  {% block header %}
+  {% endblock %}
 
-    <!-- Beginning of main content -->
-    {% block content_main %} {% endblock %}
-    <!-- End of main content -->
+  <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
+    <div class="no-gutter row">
+      <!-- Beginning of left side of main content -->
+      {% block content_left %} {% endblock %}
+      <!-- End of left side of main content -->
+  
+      <!-- Beginning of main content -->
+      {% block content_main %} {% endblock %}
+      <!-- End of main content -->
+    </div> <!-- ./no-gutter row -->
+  </div> <!-- ./col-span -->
 
-  </div> <!-- ./no-gutter row -->
-</div> <!-- ./container -->
+  <div class="col-md-2 ad-right hidden-xs hidden-sm">
+    {% block adbar %}
+    {% endblock %}
+  </div> <!-- ./col-span -->
+</div> <!-- ./container-fluid -->
 
 </div> <!-- /.wrap -->
+
 {% block footer %} 
 <div id="footer">
   <div class="container">
