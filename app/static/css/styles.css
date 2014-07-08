@@ -49,6 +49,8 @@ nav {
   font-family:'Raleway',sans-serif;
   font-weight:800;
   font-size:125%;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 a,a:hover {
@@ -59,6 +61,7 @@ a,a:hover {
 .btn-default a, .btn-default a:hover {
   color:black;
 }
+
 .label-default a, .label-default a:hover {
 	color:#fff;
   text-decoration:none;
@@ -74,6 +77,21 @@ a,a:hover {
 	color:#77CCDD;
 }
   
+.container-fluid,
+.container {
+  padding: 0;
+}
+
+.ad-right {
+  padding-left: 0;
+}
+
+.ad-right img {
+  padding: 0;
+  max-width: 100%;
+  min-width: 100%;
+}
+
 h3.highlight  {
 	padding-top:13px;
   padding-bottom:14px;
