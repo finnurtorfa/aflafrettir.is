@@ -1,0 +1,38 @@
+{% extends "admin/index.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content_main %}
+<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+<script type="text/javascript">
+bkLib.onDomLoaded(function() {
+    new nicEditor(
+      {iconsPath : "{{ url_for('static', filename='js/NicEdit/nicEditorIcons.gif') }}",
+       uploadURI : "{{ url_for('admin.nicedit_upload') }}"
+      }).panelInstance("body");
+});
+</script>
+
+<div class="col-md-10" id="content">
+  {% include "_warnings.html" %}
+
+  <div class="panel">
+    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-body">
+      <form class="form form-horizontal" method="post" role="form">
+        {{ form.hidden_tag() }}
+        {{ wtf.form_errors(form, hiddens="only") }} 
+
+        <div class="form-group {% if form.body.errors %}has-error{% endif %}">
+          {{ form.body(**{'class':'form-control', 'style':'height: 300px;'}) }}
+          {% for message in form.body.errors %}
+            <p class="help-block">{{ message }}</p>
+          {% endfor %}
+        </div>
+        <br>
+        {{ wtf.form_field(form.submit) }}
+      </form>
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
+{% endblock %}
+

@@ -8,10 +8,10 @@ from helpers.text import remove_html_tags
 from helpers.image import crop_image, jpeg_convert
 
 from . import admin
-from .forms import ProfileForm, PostForm, CategoryForm, AdForm
+from .forms import ProfileForm, PostForm, CategoryForm, AdForm, AboutForm
 
 from .. import db, ads, imgs
-from ..models import User, Post, Category, Image
+from ..models import User, Post, Category, Image, About
 
 ### Profile Related Routes
 ##############################
@@ -282,3 +282,21 @@ def ad_delete(ad_id):
   flash("Auglýsingin hefur verið fjarlægð")
 
   return redirect(url_for('admin.ad_index'))
+
+### About the page related routes
+##############################
+@admin.route('/about', methods=['GET', 'POST'])
+def about():
+  form = AboutForm()
+  about = About().query.first() or About()
+
+  if request.method == 'POST':
+    about.body = form.body.data
+    about.timestamp = datetime.utcnow()
+
+    db.session.add(about)
+    db.session.commit()
+
+  form.body.data = about.body
+  
+  return render_template('admin/about.html', form=form)

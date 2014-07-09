@@ -3,7 +3,7 @@ import os
 from flask import render_template, url_for
 
 from . import aflafrettir
-from ..models import User, Category, Post
+from ..models import User, Category, Post, About
 
 from helpers.text import get_thumbnail, time_ago
 
@@ -58,7 +58,12 @@ def post(title, pid):
                           categories=categories,
                           post=post)
 
-@aflafrettir.route('/user/<username>')
+@aflafrettir.route('/um-siduna')
+def about():
+  about = About.query.first()
+  return render_template('aflafrettir/about.html', about=about)
+
+@aflafrettir.route('/notandi/<username>')
 def user(username):
   user = User.query.filter_by(username=username).first_or_404()
   return render_template('aflafrettir/user.html', user=user)

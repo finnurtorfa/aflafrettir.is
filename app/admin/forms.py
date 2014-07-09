@@ -39,3 +39,6 @@ class AdForm(Form):
   active    = BooleanField('Auglýsing virk?', validators=[Required()])
   submit    = SubmitField('Vista')
 
+class AboutForm(Form):
+  body   = TextAreaField('Um síðuna', validators=[Required()])
+  submit = SubmitField('Vista')
