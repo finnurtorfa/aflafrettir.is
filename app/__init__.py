@@ -3,17 +3,23 @@ from flask.ext.bootstrap import Bootstrap
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
+from flask.ext.mail import Mail
 
 from helpers.text import slugify, truncate
 
 from config import config
 
 bootstrap = Bootstrap()
+
 db = SQLAlchemy()
+
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+
 ads = UploadSet('ads', IMAGES)
 imgs = UploadSet('imgs', IMAGES)
+
+mail = Mail()
 
 def create_app(config_name):
   app = Flask(__name__)
@@ -25,6 +31,7 @@ def create_app(config_name):
   db.init_app(app)
   login_manager.init_app(app)
   configure_uploads(app, (ads, imgs))
+  mail.init_app(app)
 
   from .aflafrettir import aflafrettir as afla_blueprint
   from .auth import auth as auth_blueprint
