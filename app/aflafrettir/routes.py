@@ -1,15 +1,19 @@
 import os
 
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, g
 from flask.ext.mail import Message
 
 from . import aflafrettir
-from .forms import ContactForm
+from .forms import ContactForm, SearchForm
 from ..models import User, Category, Post, About
 
 from .. import mail
 
 from helpers.text import get_thumbnail, time_ago
+
+@aflafrettir.before_app_request
+def before_app_request():
+  g.search_form = SearchForm()
 
 @aflafrettir.route('/frettir')
 @aflafrettir.route('/', alias=True)
