@@ -1,4 +1,5 @@
 {% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block html_attribs %} lang="is" {% endblock %}
 
@@ -61,9 +62,10 @@
           <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-search"></span><b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li>
-              <form class="navbar-form" role="search">
+              <form action="{{ url_for('aflafrettir.search') }}" method="post" class="navbar-form" role="search">
+                {{ g.search_form.hidden_tag() }}
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Leita" name="srch-term" id="srch-term">
+                  {{ g.search_form.search(**{'class':'form-control', 'placeholder':'Leita'}) }}
                   <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                   </div> <!-- ./input-group-brn -->

@@ -66,6 +66,35 @@ def post(title, pid):
                           categories=categories,
                           post=post)
 
+@aflafrettir.route('/frettir/leita', methods=['POST'])
+def search():
+  if not g.search_form.validate_on_submit():
+    return redirect(url_for('index'))
+
+  return redirect(url_for('aflafrettir.results', query=g.search_form.search.data))
+
+@aflafrettir.route('/frettir/leita/<query>')
+def results(query):
+  categories = Category.get_all_active()
+  posts = Post.query.whoosh_search(query).all()
+
+  for post in posts:
+    f, e = get_thumbnail(post.body_html)
+    fn = f + '/' + e
+
+    distance_in_time = time_ago(post.timestamp)
+    post.distance_in_time = distance_in_time
+
+    if not e and not os.path.isfile(fn):
+      post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
+    else:
+      post.thumbnail = fn
+      
+  return render_template('aflafrettir/index.html', 
+                         categories=categories,
+                         posts=posts)
+
+
 @aflafrettir.route('/um-siduna')
 def about():
   about = About.query.first()
