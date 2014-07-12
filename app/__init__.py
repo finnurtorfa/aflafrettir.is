@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
 from flask.ext.mail import Mail
+from flask.ext.whooshalchemy import whoosh_index
 
 from helpers.text import slugify, truncate
 
@@ -32,6 +33,9 @@ def create_app(config_name):
   login_manager.init_app(app)
   configure_uploads(app, (ads, imgs))
   mail.init_app(app)
+
+  from .models import Post
+  whoosh_index(app, Post)
 
   from .aflafrettir import aflafrettir as afla_blueprint
   from .auth import auth as auth_blueprint

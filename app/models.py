@@ -5,6 +5,8 @@ from datetime import datetime
 from flask import request
 from flask.ext.login import UserMixin
 
+import flask.ext.whooshalchemy
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from sqlalchemy import desc
@@ -69,6 +71,8 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
   __tablename__ = 'posts'
+  __searchable__ = ['title', 'body_html']
+
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
   title         = db.Column(db.String(64))
   body          = db.Column(db.Text)
