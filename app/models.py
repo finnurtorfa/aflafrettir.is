@@ -5,6 +5,8 @@ from datetime import datetime
 from flask import request
 from flask.ext.login import UserMixin
 
+import flask.ext.whooshalchemy
+
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from sqlalchemy import desc
@@ -25,7 +27,7 @@ class User(UserMixin, db.Model):
   is_admin      = db.Column(db.Boolean)
   name          = db.Column(db.String(64))
   location      = db.Column(db.String(64))
-  bio           = db.Column(db.Text())
+  bio           = db.Column(db.Text)
   password_hash = db.Column(db.String(128))
   avatar_hash   = db.Column(db.String(32))
   member_since  = db.Column(db.DateTime(), default = datetime.utcnow)
@@ -69,6 +71,8 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
   __tablename__ = 'posts'
+  __searchable__ = ['title', 'body_html']
+
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
   title         = db.Column(db.String(64))
   body          = db.Column(db.Text)
@@ -150,3 +154,10 @@ class Image(db.Model):
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first()
 
+class About(db.Model):
+  __tablename__ = 'about'
+  id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  body          = db.Column(db.Text)
+  timestamp     = db.Column(db.DateTime,
+                            nullable=False,
+                            default=datetime.utcnow)

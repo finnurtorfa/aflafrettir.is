@@ -3,8 +3,8 @@
 {% block body_attribs %} {% endblock %}
 
 {% block header %} 
-<div class="row"> <div class="col-md-12"> </div> </div> 
 {% endblock %}
+
 {% block content_left %}
 <div class="col-md-2" id="sidebar">
   <div class="panel panel-default" id="admin_left">
@@ -39,6 +39,15 @@
           <ul class="list-unstyled collapse {% if request.path in [url_for('admin.ad_index'), url_for('admin.ad_upload')] %} in {% endif %}" id="ads-menu">
             <li><a href="{{ url_for('admin.ad_index') }}"> Yfirlit </a></li>
             <li><a href="{{ url_for('admin.ad_upload') }}"> Ný Auglýsing </a></li>
+          </ul> <!-- ./list-unstyled collapse in -->
+        </li> <!-- ./nav-header -->
+        
+        <li class="nav-header">
+          <a class="collapsible" href="#" data-toggle="collapse" data-target="#about-menu">
+            <h3> Um Síðuna </h3>
+          </a>
+          <ul class="list-unstyled collapse {% if request.path in [url_for('admin.about')] %} in {% endif %}" id="about-menu">
+            <li><a href="{{ url_for('admin.about') }}"> Yfirlit </a></li>
           </ul> <!-- ./list-unstyled collapse in -->
         </li> <!-- ./nav-header -->
         

@@ -61,3 +61,6 @@ uploads/
 # Backup directories
 bak/
 backup/
+
+# whoosh stuff
+whoosh*
