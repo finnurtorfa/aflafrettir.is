@@ -9,3 +9,6 @@ class ContactForm(Form):
   subject = TextField('Efni', validators=[Required()])
   message = TextAreaField('Skilaboð', validators=[Required()])
   submit  = SubmitField('Senda')
+
+class SearchForm(Form):
+  search = TextField('Leita', validators=[Required()])
