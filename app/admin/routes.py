@@ -1,8 +1,11 @@
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash, request, json, session
+from flask import (render_template, redirect, url_for, flash, request, json,
+                   session, current_app)
 from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
+
+from facebook import FacebookAPI, GraphAPI
 
 from helpers.text import remove_html_tags
 from helpers.image import crop_image, jpeg_convert
@@ -15,14 +18,6 @@ from ..models import User, Post, Category, Image, About
 
 ### Profile Related Routes
 ##############################
-
-@admin.before_request
-def get_current_user():
-  if session.get('user'):
-    print(session.get('user'))
-  else:
-    print(session)
-
 @admin.route('/')
 @admin.route('/profile', alias=True)
 @login_required
@@ -55,6 +50,20 @@ def profile_edit():
 ### News Related Routes
 ##############################
 
+@admin.route('/token', methods=['GET', 'POST'])
+@login_required
+def get_access_token():
+  f = FacebookAPI(current_app.config['FB_APP_ID'],
+                  current_app.config['FB_APP_SECRET'],
+                  url_for('admin.get_access_token', _external=True))
+  access_token = f.get_access_token(request.args.get('code'))
+  print(access_token)
+  final_access_token = access_token[b'access_token']
+  print("HERE")
+  print(final_access_token)
+  api = GraphAPI(final_access_token.decode('utf-8'))
+  print(api.get('me'))
+
 @admin.route('/news')
 @login_required
 def news_index():
@@ -74,6 +83,13 @@ def news_post():
   form.category.choices.extend([(n+1, i.name) for n, i in enumerate(active)])
 
   if form.validate_on_submit():
+    f = FacebookAPI(current_app.config['FB_APP_ID'],
+                    current_app.config['FB_APP_SECRET'],
+                    url_for('admin.get_access_token', _external=True))
+    auth_url = f.get_auth_url(scope=['public_profile', 'email', 'manage_pages',
+                                     'publish_actions'])
+
+
     name = form.category.choices[int(form.category.data)][1]
     category = Category.get_by_name(name)
 
@@ -88,8 +104,8 @@ def news_post():
     db.session.commit()
 
     flash("Fréttin hefur verið vistuð!")
-
-    return redirect(url_for('admin.news_index'))
+    
+    return redirect(auth_url)
 
   return render_template('admin/post.html', form=form)
   
