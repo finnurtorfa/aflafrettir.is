@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash, request, json
+from flask import render_template, redirect, url_for, flash, request, json, session
 from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
@@ -15,6 +15,13 @@ from ..models import User, Post, Category, Image, About
 
 ### Profile Related Routes
 ##############################
+
+@admin.before_request
+def get_current_user():
+  if session.get('user'):
+    print(session.get('user'))
+  else:
+    print(session)
 
 @admin.route('/')
 @admin.route('/profile', alias=True)
