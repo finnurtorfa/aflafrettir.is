@@ -39,6 +39,9 @@ bkLib.onDomLoaded(function() {
           {% endfor %}
         </div>
         <br>
+<fb:login-button scope="public_profile,email" onlogin="checkLoginState();" max_rows="1" size="large" show_faces="false" auto_logout_link="true"></fb:login-button>
+        <br>
+        <br>
         {{ wtf.form_field(form.submit) }}
       </form>
     </div> <!-- ./panel-body -->
