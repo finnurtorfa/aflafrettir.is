@@ -166,7 +166,7 @@
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
+    js.src = "//connect.facebook.net/is_IS/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
 
@@ -174,10 +174,21 @@
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
+    var my_id = 0;
+    var my_token = 0;
     FB.api('/me', function(response) {
+      console.log(response);
       console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+    });
+    FB.api('/me/accounts', function(response) {
+      my_id = response.data[0].id;
+      my_token = response.data[0].access_token;
+      console.log(my_id);
+      console.log(my_token);
+      /*FB.api('/'+ my_id +'/feed', "post", {message:"Hello, World!", access_token:my_token }, function(resp) {
+        console.log("Posting on page!");
+        console.log(resp);
+      });*/
     });
   }
 </script>
