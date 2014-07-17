@@ -31,6 +31,7 @@ class User(UserMixin, db.Model):
   password_hash = db.Column(db.String(128))
   avatar_hash   = db.Column(db.String(32))
   member_since  = db.Column(db.DateTime(), default = datetime.utcnow)
+  fb_token      = db.Column(db.Text)
   posts         = db.relationship('Post', backref='author', lazy='dynamic')
 
   def __init__(self, **kwargs):
