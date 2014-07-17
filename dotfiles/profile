@@ -7,3 +7,4 @@ export MAIL_USERNAME=user@email.com
 export MAIL_PASSWORD=password
 export FB_APP_ID=app_id
 export FB_APP_SECRET=app_secret
+export FB_PAGE_ID=page_id
