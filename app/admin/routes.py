@@ -50,19 +50,47 @@ def profile_edit():
 ### News Related Routes
 ##############################
 
-@admin.route('/token', methods=['GET', 'POST'])
+@admin.route('/facebook/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def get_access_token():
-  f = FacebookAPI(current_app.config['FB_APP_ID'],
-                  current_app.config['FB_APP_SECRET'],
-                  url_for('admin.get_access_token', _external=True))
-  access_token = f.get_access_token(request.args.get('code'))
-  print(access_token)
-  final_access_token = access_token[b'access_token']
-  print("HERE")
-  print(final_access_token)
-  api = GraphAPI(final_access_token.decode('utf-8'))
-  print(api.get('me'))
+def post_to_fb(post_id):
+  if current_user.fb_token:
+    api = GraphAPI(current_user.fb_token)
+  elif request.args.get('code'):
+    f = FacebookAPI(current_app.config['FB_APP_ID'],
+                    current_app.config['FB_APP_SECRET'],
+                    url_for('admin.post_to_fb', 
+                            post_id=post_id,
+                            _external=True))
+    access_token = f.get_access_token(request.args.get('code'))
+    user_access_token = access_token[b'access_token'].decode('utf-8')
+
+    current_user.fb_token = user_access_token
+    db.session.add(current_user)
+    db.session.commit()
+
+    api = GraphAPI(user_access_token)
+  else:
+    flash("Ekki tókst að senda póst á Facebook!")
+    return redirect(url_for('admin.news_index'))
+
+  accounts = api.get('me/accounts')
+
+  for d in accounts['data']:
+    if d['id'] == current_app.config['FB_PAGE_ID']:
+      page_access_token = d['access_token']
+      break
+  else:
+    flash("Ekki tókst að senda póst á Facebook!")
+    return redirect(url_for('admin.news_index'))
+
+  api = GraphAPI(page_access_token)
+  post = api.post(current_app.config['FB_PAGE_ID'] + '/feed', 
+                  params={'message':'Hello, World2!',
+                          'link': 'http://www.aflafrettir.is/blog/2014/07/12/myndir-af-hinu-og-essu/'})
+
+  flash("Tókst að senda póst á Facebook")
+
+  return redirect(url_for('admin.news_index'))
 
 @admin.route('/news')
 @login_required
@@ -83,13 +111,6 @@ def news_post():
   form.category.choices.extend([(n+1, i.name) for n, i in enumerate(active)])
 
   if form.validate_on_submit():
-    f = FacebookAPI(current_app.config['FB_APP_ID'],
-                    current_app.config['FB_APP_SECRET'],
-                    url_for('admin.get_access_token', _external=True))
-    auth_url = f.get_auth_url(scope=['public_profile', 'email', 'manage_pages',
-                                     'publish_actions'])
-
-
     name = form.category.choices[int(form.category.data)][1]
     category = Category.get_by_name(name)
 
@@ -104,8 +125,23 @@ def news_post():
     db.session.commit()
 
     flash("Fréttin hefur verið vistuð!")
+
+    if current_user.fb_token:
+      return redirect(url_for('admin.post_to_fb', post_id=post.id))
+    else:
+      f = FacebookAPI(current_app.config['FB_APP_ID'],
+                      current_app.config['FB_APP_SECRET'],
+                      url_for('admin.post_to_fb', 
+                              post_id=post.id,
+                              _external=True))
+      auth_url = f.get_auth_url(scope=['public_profile', 
+                                       'email', 
+                                       'manage_pages',
+                                       'publish_actions'])
+  
+      return redirect(auth_url)
     
-    return redirect(auth_url)
+    return redirect(url_for('admin.news_index'))
 
   return render_template('admin/post.html', form=form)
   
