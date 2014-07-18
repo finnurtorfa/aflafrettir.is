@@ -17,6 +17,7 @@ class PostForm(Form):
   created   = DateTimeField('Dagsetning', validators=[Optional()])
   post      = TextAreaField('Frétt', validators=[Required()])
   category  = SelectField('Flokkur', coerce=int, validators=[Optional()])
+  facebook  = TextAreaField('Skilaboð á Facebook', validators=[Optional()])
   submit    = SubmitField('Senda')
 
 class CategoryForm(Form):

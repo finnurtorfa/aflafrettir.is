@@ -1,10 +1,13 @@
 from datetime import datetime
 
-from flask import render_template, redirect, url_for, flash, request, json
+from flask import (render_template, redirect, url_for, flash, request, json,
+                   session, current_app)
 from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
-from helpers.text import remove_html_tags
+from facebook import FacebookAPI, GraphAPI
+
+from helpers.text import remove_html_tags, slugify
 from helpers.image import crop_image, jpeg_convert
 
 from . import admin
@@ -15,7 +18,6 @@ from ..models import User, Post, Category, Image, About
 
 ### Profile Related Routes
 ##############################
-
 @admin.route('/')
 @admin.route('/profile', alias=True)
 @login_required
@@ -47,6 +49,48 @@ def profile_edit():
 
 ### News Related Routes
 ##############################
+
+@admin.route('/facebook', methods=['GET', 'POST'])
+@login_required
+def post_to_fb():
+  print(session)
+  if current_user.fb_token:
+    api = GraphAPI(current_user.fb_token)
+  elif request.args.get('code'):
+    f = FacebookAPI(current_app.config['FB_APP_ID'],
+                    current_app.config['FB_APP_SECRET'],
+                    url_for('admin.post_to_fb', 
+                            _external=True))
+    access_token = f.get_access_token(request.args.get('code'))
+    user_access_token = access_token[b'access_token'].decode('utf-8')
+
+    current_user.fb_token = user_access_token
+    db.session.add(current_user)
+    db.session.commit()
+
+    api = GraphAPI(user_access_token)
+  else:
+    flash("Ekki tókst að senda póst á Facebook!")
+    return redirect(url_for('admin.news_index'))
+
+  accounts = api.get('me/accounts')
+
+  for d in accounts['data']:
+    if d['id'] == current_app.config['FB_PAGE_ID']:
+      page_access_token = d['access_token']
+      break
+  else:
+    flash("Ekki tókst að senda póst á Facebook!")
+    return redirect(url_for('admin.news_index'))
+
+  api = GraphAPI(page_access_token)
+  post = api.post(current_app.config['FB_PAGE_ID'] + '/feed', 
+                  params={'message': session.pop('body', None),
+                          'link': session.pop('link', None)})
+  
+  flash("Tókst að senda póst á Facebook")
+
+  return redirect(url_for('admin.news_index'))
 
 @admin.route('/news')
 @login_required
@@ -82,6 +126,33 @@ def news_post():
 
     flash("Fréttin hefur verið vistuð!")
 
+    if form.facebook.data:
+      if current_user.fb_token:
+        session['link'] = url_for('aflafrettir.post', 
+                                  title=slugify(post.title),
+                                  pid=post.id,
+                                  _external=True)
+        session['body'] = form.facebook.data
+  
+        return redirect(url_for('admin.post_to_fb'))
+      else:
+        f = FacebookAPI(current_app.config['FB_APP_ID'],
+                        current_app.config['FB_APP_SECRET'],
+                        url_for('admin.post_to_fb', 
+                                _external=True))
+        auth_url = f.get_auth_url(scope=['public_profile', 
+                                         'email', 
+                                         'manage_pages',
+                                         'publish_actions'])
+
+        session['link'] = url_for('aflafrettir.post', 
+                                  title=slugify(post.title),
+                                  pid=post.id,
+                                  _external=True)
+        session['body'] = form.facebook.data
+  
+        return redirect(auth_url)
+    
     return redirect(url_for('admin.news_index'))
 
   return render_template('admin/post.html', form=form)

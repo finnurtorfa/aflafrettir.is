@@ -12,6 +12,9 @@ class Config(object):
   MAIL_USE_SSL  = os.environ.get('MAIL_USE_SSL') or True
   MAIL_USERNAME = os.environ.get('MAIL_USERNAME') or 'user@mail.com'
   MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') or 'some_password'
+  FB_APP_ID     = os.environ.get('FB_APP_ID') or 'my_app_id'
+  FB_APP_SECRET = os.environ.get('FB_APP_SECRET') or 'my_app_secret'
+  FB_PAGE_ID    = os.environ.get('FB_PAGE_ID') or 'my_page_id'
 
 class DevelopmentConfig(Config):
   DEBUG = True

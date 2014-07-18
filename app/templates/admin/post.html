@@ -31,6 +31,7 @@ bkLib.onDomLoaded(function() {
         {{ wtf.form_field(form.title) }}
         {{ wtf.form_field(form.created) }}
         {{ wtf.form_field(form.category) }}
+        {{ wtf.form_field(form.facebook) }}
         </div>
         <div class="form-group {% if form.post.errors %}has-error{% endif %}">
           {{ form.post(**{'class':'form-control', 'style':'height: 300px;'}) }}
@@ -38,7 +39,6 @@ bkLib.onDomLoaded(function() {
             <p class="help-block">{{ message }}</p>
           {% endfor %}
         </div>
-        <br>
         {{ wtf.form_field(form.submit) }}
       </form>
     </div> <!-- ./panel-body -->
