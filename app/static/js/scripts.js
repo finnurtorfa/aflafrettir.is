@@ -62,18 +62,3 @@ $(document).ready(function() {
                                 'font-family': 'sans-serif'});
 });
 
-$(function() {
-  $(".fb-login-button").click(function() {
-    console.log("Clicked");
-    FB.login(function(response) {
-      if (response.authResponse) {
-        console.log("Welcome! Fetching your information...");
-        $.cookie("user_id", response.authResponse.userID);
-        $.cookie("access_token", response.authResponse.accessToken);
-        window.location = "#{oauth_facebook_callback_url}";
-      } else {
-        console.log("User cancelled login or did not fully authorize.");
-      }
-    }, {scope: 'publish_stream,offline_access,email,user_events,create_event,user_location'});
-  });
-});
