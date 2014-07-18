@@ -53,7 +53,6 @@ def profile_edit():
 @admin.route('/facebook', methods=['GET', 'POST'])
 @login_required
 def post_to_fb():
-  print(session)
   if current_user.fb_token:
     api = GraphAPI(current_user.fb_token)
   elif request.args.get('code'):

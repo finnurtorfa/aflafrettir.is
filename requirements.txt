@@ -19,3 +19,5 @@ Whoosh==2.6.0
 alembic==0.6.5
 blinker==1.3
 itsdangerous==0.24
+requests==2.3.0
+requests-facebook==0.2.1
