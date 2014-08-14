@@ -1,6 +1,6 @@
 import os
 
-from flask import render_template, url_for, redirect, request, g
+from flask import render_template, url_for, redirect, request, g, current_app
 from flask.ext.mail import Message
 
 from . import aflafrettir
@@ -15,13 +15,14 @@ from helpers.text import get_thumbnail, time_ago
 def before_app_request():
   g.search_form = SearchForm()
 
-@aflafrettir.route('/frettir')
 @aflafrettir.route('/', alias=True)
-def index():
+@aflafrettir.route('/frettir')
+@aflafrettir.route('/frettir/<int:page>')
+def index(page=1):
   categories = Category.get_all_active()
-  posts = Post.get_all()
+  posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
 
-  for post in posts:
+  for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = f + '/' + e
 
