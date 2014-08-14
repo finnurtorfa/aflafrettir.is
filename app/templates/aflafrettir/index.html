@@ -72,7 +72,7 @@
     <div class="panel-body">
       
     <div class="row">
-    {% for post in posts %}
+    {% for post in posts.items %}
       <div class="col-6 col-sm-6 maxheight">
         <h2> {{ post.title }} </h2>
         <div class="wrap-text"> 
@@ -99,6 +99,13 @@
     </div> <!-- ./row -->
 
     </div> <!-- ./panel-body -->
+
+    <div class="panel-footer text-center">
+      <ul class="pager">
+        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for('aflafrettir.index', page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
+        <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for('aflafrettir.index', page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+      </ul> <!-- ./pagination -->
+    </div> <!-- ./panel-footer -->
   </div> <!-- ./panel -->
 </div> <!-- ./col-md-7 -->
 {% endblock %}
