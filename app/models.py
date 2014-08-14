@@ -90,6 +90,15 @@ class Post(db.Model):
       return cls.query.order_by(cls.timestamp).all()
 
   @classmethod
+  def get_per_page(cls, page, per_page=5, descending=True):
+    if descending:
+      return cls.query.order_by(cls.timestamp.desc())\
+              .paginate(page, 4, False)
+    else:
+      return cls.query.order_by(cls.timestamp)\
+              .paginate(page, 4, False)
+
+  @classmethod
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first()
 
