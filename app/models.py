@@ -93,10 +93,10 @@ class Post(db.Model):
   def get_per_page(cls, page, per_page=5, descending=True):
     if descending:
       return cls.query.order_by(cls.timestamp.desc())\
-              .paginate(page, 4, False)
+              .paginate(page, per_page, False)
     else:
       return cls.query.order_by(cls.timestamp)\
-              .paginate(page, 4, False)
+              .paginate(page, per_page, False)
 
   @classmethod
   def get_by_id(cls, aid):

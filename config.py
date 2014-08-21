@@ -24,7 +24,7 @@ class DevelopmentConfig(Config):
           os.path.join(basedir, 'whoosh-dev.db')
   IMAGE_DELETE = { 'TIME_OF_DAY': [i for i in range(24)],
                    'WEEKDAY': [i for i in range(7)] }
-  POSTS_PER_PAGE = 4
+  POSTS_PER_PAGE = 30
 
 class TestingConfig(Config):
   TESTING = True
@@ -41,7 +41,7 @@ class ProductionConfig(Config):
           os.path.join(basedir, 'whoosh.db')
   IMAGE_DELETE = { 'TIME_OF_DAY': [3, 4],
                    'WEEKDAY': [0] }
-  POSTS_PER_PAGE = 20
+  POSTS_PER_PAGE = 30
 
 config = {
   'development': DevelopmentConfig,
