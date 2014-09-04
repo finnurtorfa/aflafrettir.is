@@ -145,19 +145,19 @@ class Image(db.Model):
   @classmethod
   def get_all_imgs(cls, descending=True):
     if descending:
-      return cls.query.filter(cls.type >= 4)\
+      return cls.query.filter(cls.type >= 10)\
                       .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.filter(cls.type >= 4)\
+      return cls.query.filter(cls.type >= 10)\
                       .order_by(cls.timestamp).all()
 
   @classmethod
   def get_all_ads(cls, descending=True):
     if descending:
-      return cls.query.filter(cls.type < 4)\
+      return cls.query.filter(cls.type < 10)\
                       .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.filter(cls.type < 4)\
+      return cls.query.filter(cls.type < 10)\
                       .order_by(cls.timestamp).all()
 
   @classmethod

@@ -165,7 +165,7 @@ def nicedit_upload():
 
   img = Image(filename=filename,
               location=url_for('static', filename='uploads/imgs/'),
-              type=4,
+              type=10,
               active=False)
 
   db.session.add(img)
@@ -298,6 +298,7 @@ def ad_upload():
       try:
         file = request.files.get('ad')
         filename = ads.save(file)
+        #filename = do_something(ads.path(filename))
         flash("Skráin hefur verið vistuð!")
       except UploadNotAllowed:
         flash("Ekki leyfileg tegund af skrá!")
