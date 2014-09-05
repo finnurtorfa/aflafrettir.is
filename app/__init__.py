@@ -27,6 +27,7 @@ def create_app(config_name):
   app.config.from_object(config[config_name])
   app.jinja_env.globals.update(slugify=slugify)
   app.jinja_env.globals.update(truncate=truncate)
+  app.jinja_env.globals.update(url=ads.url)
 
   bootstrap.init_app(app)
   db.init_app(app)

@@ -32,9 +32,10 @@ class AdForm(Form):
   ad        = FileField('Skrá', validators=[Required()])
   placement = SelectField('Staðsetning', 
                           choices=[(0, 'Efst'),
-                                   (1, 'Aðalhluti'),
-                                   (2, 'Til vinstri'),
-                                   (3, 'Til hægri')],
+                                   (1, 'Aðalhluti - Stór'),
+                                   (2, 'Aðalhluti - Lítil'),
+                                   (3, 'Til hægri'),
+                                   (4, 'Til vinstri')],
                           coerce=int,
                           validators=[Required()])
   active    = BooleanField('Auglýsing virk?', validators=[Required()])

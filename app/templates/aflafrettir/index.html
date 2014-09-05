@@ -4,41 +4,39 @@
 <header class="masthead">
   <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
     <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
+    {% if top_ads %}
+      <ol class="carousel-indicators">
+        {% for ad in top_ads %}
+        <li data-target="#carousel-example-captions" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+        {% endfor %}
+      </ol>
+      <div class="carousel-inner">
+        {% for ad in top_ads %}
+        <div class="item {% if loop.first %}active{% endif %}">
+          <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+        </div> <!-- ./item -->
+        {% endfor %}
+      </div> <!-- ./carousel-inner -->
+    {% else %}
       <ol class="carousel-indicators">
         <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-captions" data-slide-to="1"></li>
-        <li data-target="#carousel-example-captions" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
         <div class="item active">
-          <img data-src="holder.js/1140x300/auto/#777:#777" alt="First slide image">
+          <img data-src="holder.js/1140x300/auto/#777:#7777" alt="Laust auglýsingapláss">
           <div class="carousel-caption">
-            <h3>First slide label</h3>
-            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            <p>Pláss fyrir auglýsingu</p>
           </div>
-        </div>
-        <div class="item">
-          <img data-src="holder.js/1140x300/auto/#666:#666" alt="Second slide image">
-          <div class="carousel-caption">
-            <h3>Second slide label</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          </div>
-        </div>
-        <div class="item">
-          <img data-src="holder.js/1140x300/auto/#555:#5555" alt="Third slide image">
-          <div class="carousel-caption">
-            <h3>Third slide label</h3>
-            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-          </div>
-        </div>
-      </div>
+        </div> <!-- ./item -->
+      </div> <!-- ./carousel-inner -->
+    {% endif %}
       <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
       </a>
       <a class="right carousel-control" href="#carousel-example-captions" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
       </a>
-    </div>
+    </div> <!-- ./carousel-example-captions -->
   </div> <!-- ./col-span -->
 </header>
 {% endblock %}
@@ -72,7 +70,7 @@
     <div class="panel-body">
       
     <div class="row">
-    {% for post in posts %}
+    {% for post in posts.items %}
       <div class="col-6 col-sm-6 maxheight">
         <h2> {{ post.title }} </h2>
         <div class="wrap-text"> 
@@ -99,6 +97,13 @@
     </div> <!-- ./row -->
 
     </div> <!-- ./panel-body -->
+
+    <div class="panel-footer text-center">
+      <ul class="pager">
+        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for('aflafrettir.index', page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
+        <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for('aflafrettir.index', page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+      </ul> <!-- ./pagination -->
+    </div> <!-- ./panel-footer -->
   </div> <!-- ./panel -->
 </div> <!-- ./col-md-7 -->
 {% endblock %}

@@ -1,11 +1,11 @@
 import os
 
-from flask import render_template, url_for, redirect, request, g
+from flask import render_template, url_for, redirect, request, g, current_app
 from flask.ext.mail import Message
 
 from . import aflafrettir
 from .forms import ContactForm, SearchForm
-from ..models import User, Category, Post, About
+from ..models import User, Category, Post, About, Image
 
 from .. import mail
 
@@ -15,13 +15,16 @@ from helpers.text import get_thumbnail, time_ago
 def before_app_request():
   g.search_form = SearchForm()
 
-@aflafrettir.route('/frettir')
 @aflafrettir.route('/', alias=True)
-def index():
+@aflafrettir.route('/frettir')
+@aflafrettir.route('/frettir/<int:page>')
+def index(page=1):
   categories = Category.get_all_active()
-  posts = Post.get_all()
+  posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
 
-  for post in posts:
+  for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = f + '/' + e
 
@@ -34,13 +37,16 @@ def index():
       post.thumbnail = fn
       
   return render_template('aflafrettir/index.html', 
-                         categories=categories,
-                         posts=posts)
+                          categories=categories,
+                          posts=posts,
+                          top_ads=top_ads)
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
 def category(cid):
   categories = Category.get_all_active()
   posts = Post.get_by_category(cid)
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
 
   for post in posts:
     f, e = get_thumbnail(post.body_html)
@@ -56,7 +62,8 @@ def category(cid):
       
   return render_template('aflafrettir/index.html', 
                           categories=categories,
-                          posts=posts)
+                          posts=posts,
+                          top_ads=top_ads)
 
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
 def post(title, pid):
@@ -77,6 +84,8 @@ def search():
 def results(query):
   categories = Category.get_all_active()
   posts = Post.query.whoosh_search(query).all()
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
 
   for post in posts:
     f, e = get_thumbnail(post.body_html)
@@ -92,7 +101,8 @@ def results(query):
       
   return render_template('aflafrettir/index.html', 
                          categories=categories,
-                         posts=posts)
+                         posts=posts,
+                         top_ads=top_ads)
 
 
 @aflafrettir.route('/um-siduna')

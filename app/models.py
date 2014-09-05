@@ -90,6 +90,15 @@ class Post(db.Model):
       return cls.query.order_by(cls.timestamp).all()
 
   @classmethod
+  def get_per_page(cls, page, per_page=5, descending=True):
+    if descending:
+      return cls.query.order_by(cls.timestamp.desc())\
+              .paginate(page, per_page, False)
+    else:
+      return cls.query.order_by(cls.timestamp)\
+              .paginate(page, per_page, False)
+
+  @classmethod
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first()
 
@@ -136,19 +145,19 @@ class Image(db.Model):
   @classmethod
   def get_all_imgs(cls, descending=True):
     if descending:
-      return cls.query.filter(cls.type >= 4)\
+      return cls.query.filter(cls.type >= 10)\
                       .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.filter(cls.type >= 4)\
+      return cls.query.filter(cls.type >= 10)\
                       .order_by(cls.timestamp).all()
 
   @classmethod
   def get_all_ads(cls, descending=True):
     if descending:
-      return cls.query.filter(cls.type < 4)\
+      return cls.query.filter(cls.type < 10)\
                       .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.filter(cls.type < 4)\
+      return cls.query.filter(cls.type < 10)\
                       .order_by(cls.timestamp).all()
 
   @classmethod

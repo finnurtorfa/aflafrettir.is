@@ -24,6 +24,7 @@ class DevelopmentConfig(Config):
           os.path.join(basedir, 'whoosh-dev.db')
   IMAGE_DELETE = { 'TIME_OF_DAY': [i for i in range(24)],
                    'WEEKDAY': [i for i in range(7)] }
+  POSTS_PER_PAGE = 30
 
 class TestingConfig(Config):
   TESTING = True
@@ -31,6 +32,7 @@ class TestingConfig(Config):
           'sqlite:///' + os.path.join(basedir, 'test-dev.sqlite')
   WHOOSH_BASE = os.environ.get('WHOOSH_BASE_TEST') or \
           os.path.join(basedir, 'whoosh-test.db')
+  POSTS_PER_PAGE = 4
 
 class ProductionConfig(Config):
   SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
@@ -39,6 +41,7 @@ class ProductionConfig(Config):
           os.path.join(basedir, 'whoosh.db')
   IMAGE_DELETE = { 'TIME_OF_DAY': [3, 4],
                    'WEEKDAY': [0] }
+  POSTS_PER_PAGE = 30
 
 config = {
   'development': DevelopmentConfig,
