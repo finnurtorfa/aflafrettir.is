@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block header %}
-{% if top_ads %}
 <header class="masthead">
   <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
     <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
+    {% if top_ads %}
       <ol class="carousel-indicators">
         {% for ad in top_ads %}
         <li data-target="#carousel-example-captions" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
@@ -17,6 +17,19 @@
         </div> <!-- ./item -->
         {% endfor %}
       </div> <!-- ./carousel-inner -->
+    {% else %}
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img data-src="holder.js/1140x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+          <div class="carousel-caption">
+            <p>Pláss fyrir auglýsingu</p>
+          </div>
+        </div> <!-- ./item -->
+      </div> <!-- ./carousel-inner -->
+    {% endif %}
       <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
       </a>
@@ -26,7 +39,6 @@
     </div> <!-- ./carousel-example-captions -->
   </div> <!-- ./col-span -->
 </header>
-{% endif %}
 {% endblock %}
 
 {% block adbar %}
