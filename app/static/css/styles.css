@@ -260,6 +260,10 @@ li.dropdown:hover {
 	padding-left:1px;
 }
 
+#content_left a {
+  color:#676767;
+}
+
 #footer {
   height: 60px;
   margin-top:50px;
