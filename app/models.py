@@ -166,13 +166,23 @@ class Image(db.Model):
                       .order_by(cls.timestamp).all()
 
   @classmethod
-  def get_all_ads(cls, descending=True):
+  def get_all_ads(cls, descending=True, only_active=True):
     if descending:
-      return cls.query.filter(cls.type < 10)\
-                      .order_by(cls.timestamp.desc()).all()
+      if only_active:
+        return cls.query.filter(cls.type < 10)\
+                        .filter(cls.active == True)\
+                        .order_by(cls.timestamp.desc()).all()
+      else:
+        return cls.query.filter(cls.type < 10)\
+                        .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.filter(cls.type < 10)\
-                      .order_by(cls.timestamp).all()
+      if only_active:
+        return cls.query.filter(cls.type < 10)\
+                        .filter(cls.active == True)\
+                        .order_by(cls.timestamp).all()
+      else:
+        return cls.query.filter(cls.type < 10)\
+                        .order_by(cls.timestamp).all()
 
   @classmethod
   def get_by_id(cls, aid):

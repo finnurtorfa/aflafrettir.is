@@ -284,7 +284,7 @@ def news_category():
 @login_required
 def ad_index():
   form = AdForm()
-  ads = Image.get_all_ads()
+  ads = Image.get_all_ads(only_active=False)
 
   return render_template('admin/ads.html', form=form, ads=ads)
 
