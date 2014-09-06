@@ -23,6 +23,7 @@ def index(page=1):
   posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
@@ -39,7 +40,8 @@ def index(page=1):
   return render_template('aflafrettir/index.html', 
                           categories=categories,
                           posts=posts,
-                          top_ads=top_ads)
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
 @aflafrettir.route('/frettir/flokkur/<int:cid>/sida/<int:page>')
@@ -48,6 +50,7 @@ def category(cid, page=1):
   posts = Post.get_by_category(cid, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
@@ -64,7 +67,8 @@ def category(cid, page=1):
   return render_template('aflafrettir/index.html', 
                           categories=categories,
                           posts=posts,
-                          top_ads=top_ads)
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
 def post(title, pid):
@@ -88,6 +92,7 @@ def results(query, page=1):
   posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
@@ -102,9 +107,10 @@ def results(query, page=1):
       post.thumbnail = fn
       
   return render_template('aflafrettir/index.html', 
-                         categories=categories,
-                         posts=posts,
-                         top_ads=top_ads)
+                          categories=categories,
+                          posts=posts,
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/um-siduna')
 def about():

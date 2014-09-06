@@ -42,7 +42,13 @@
 {% endblock %}
 
 {% block adbar %}
+  {% if right_ads %}
+    {% for ad in right_ads %}
+    <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+    {% endfor %}
+  {% else %}
   <img data-src="holder.js/250x300/auto/#555:#5555" alt="Third slide image">
+  {% endif %}
 {% endblock %}
 
 {% block content_left %}
