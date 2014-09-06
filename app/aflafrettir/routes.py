@@ -42,13 +42,14 @@ def index(page=1):
                           top_ads=top_ads)
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
-def category(cid):
+@aflafrettir.route('/frettir/flokkur/<int:cid>/sida/<int:page>')
+def category(cid, page=1):
   categories = Category.get_all_active()
-  posts = Post.get_by_category(cid)
+  posts = Post.get_by_category(cid, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
 
-  for post in posts:
+  for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = f + '/' + e
 
