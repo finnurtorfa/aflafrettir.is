@@ -42,7 +42,13 @@
 {% endblock %}
 
 {% block adbar %}
+  {% if right_ads %}
+    {% for ad in right_ads %}
+    <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+    {% endfor %}
+  {% else %}
   <img data-src="holder.js/250x300/auto/#555:#5555" alt="Third slide image">
+  {% endif %}
 {% endblock %}
 
 {% block content_left %}
@@ -69,39 +75,47 @@
     <div class="panel-heading">Fréttir</div> 
     <div class="panel-body">
       
-    <div class="row">
-    {% for post in posts.items %}
-      <div class="col-6 col-sm-6 maxheight">
-        <h2> {{ post.title }} </h2>
-        <div class="wrap-text"> 
-          <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
-          <p> {{ truncate(post.body, 300)|safe }} 
-            <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-12 col-sm-12">
-            <p class="pull-right">
-              <span class="label label-default">
-                <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
-              </span>
+      <div class="row">
+      {% for post in posts.items %}
+        <div class="col-6 col-sm-6 maxheight">
+          <h2> {{ post.title }} </h2>
+          <div class="wrap-text"> 
+            <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+            <p> {{ truncate(post.body, 300)|safe }} 
+              <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
             </p>
-            <ul class="list-inline">
-              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Birt {{ post.distance_in_time }}</a></li>
-              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
-            </ul>
-          </div> <!-- ./col-12 col-sm-12 -->
-        </div> <!-- ./row -->
-      </div> <!-- ./col-6 col-sm-6 col-lg-4 -->
-    {% endfor %}
-    </div> <!-- ./row -->
+          </div>
+          <div class="row">
+            <div class="col-12 col-sm-12">
+              <p class="pull-right">
+                <span class="label label-default">
+                  <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
+                </span>
+              </p>
+              <ul class="list-inline">
+                <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Birt {{ post.distance_in_time }}</a></li>
+                <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
+              </ul>
+            </div> <!-- ./col-12 col-sm-12 -->
+          </div> <!-- ./row -->
+        </div> <!-- ./col-6 col-sm-6 col-lg-4 -->
+      {% endfor %}
+      </div> <!-- ./row -->
 
     </div> <!-- ./panel-body -->
 
     <div class="panel-footer text-center">
       <ul class="pager">
-        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for('aflafrettir.index', page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
-        <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for('aflafrettir.index', page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+        {% if request.endpoint == 'aflafrettir.index' %}
+        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
+        <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+        {% elif request.endpoint == 'aflafrettir.category' %}
+        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, cid=request.view_args['cid'], page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
+          <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, cid=request.view_args['cid'], page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+        {% elif request.endpoint == 'aflafrettir.results' %}
+        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, query=request.view_args['query'], page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
+          <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, query=request.view_args['query'], page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+        {% endif %}
       </ul> <!-- ./pagination -->
     </div> <!-- ./panel-footer -->
   </div> <!-- ./panel -->

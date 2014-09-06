@@ -93,23 +93,37 @@ class Post(db.Model):
   def get_per_page(cls, page, per_page=5, descending=True):
     if descending:
       return cls.query.order_by(cls.timestamp.desc())\
-              .paginate(page, per_page, False)
+                .paginate(page, per_page, False)
     else:
       return cls.query.order_by(cls.timestamp)\
-              .paginate(page, per_page, False)
+                .paginate(page, per_page, False)
 
   @classmethod
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first()
 
   @classmethod
-  def get_by_category(cls, cid, descending=True):
+  def get_by_category(cls, cid, page, per_page=5, descending=True):
     if descending:
       return cls.query.filter(cls.category_id == cid)\
-                .order_by(cls.timestamp.desc()).all()
+                .order_by(cls.timestamp.desc())\
+                .paginate(page, per_page, False)
     else:
       return cls.query.filter(cls.category_id == cid)\
-                .order_by(cls.timestamp).all()
+                .order_by(cls.timestamp)\
+                .paginate(page, per_page, False)
+
+  @classmethod
+  def search(cls, query, page, per_page=4, descending=True):
+    if descending:
+      return cls.query.whoosh_search(query)\
+                .order_by(cls.timestamp.desc())\
+                .paginate(page, per_page, False)
+    else:
+      return cls.query.whoosh_search(query)\
+                .order_by(cls.timestamp)\
+                .paginate(page, per_page, False)
+
 
 class Category(db.Model):
   __tablename__ = 'categories'
@@ -152,13 +166,23 @@ class Image(db.Model):
                       .order_by(cls.timestamp).all()
 
   @classmethod
-  def get_all_ads(cls, descending=True):
+  def get_all_ads(cls, descending=True, only_active=True):
     if descending:
-      return cls.query.filter(cls.type < 10)\
-                      .order_by(cls.timestamp.desc()).all()
+      if only_active:
+        return cls.query.filter(cls.type < 10)\
+                        .filter(cls.active == True)\
+                        .order_by(cls.timestamp.desc()).all()
+      else:
+        return cls.query.filter(cls.type < 10)\
+                        .order_by(cls.timestamp.desc()).all()
     else:
-      return cls.query.filter(cls.type < 10)\
-                      .order_by(cls.timestamp).all()
+      if only_active:
+        return cls.query.filter(cls.type < 10)\
+                        .filter(cls.active == True)\
+                        .order_by(cls.timestamp).all()
+      else:
+        return cls.query.filter(cls.type < 10)\
+                        .order_by(cls.timestamp).all()
 
   @classmethod
   def get_by_id(cls, aid):
