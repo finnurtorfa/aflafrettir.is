@@ -106,6 +106,9 @@
         {% elif request.endpoint == 'aflafrettir.category' %}
         <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, cid=request.view_args['cid'], page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
           <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, cid=request.view_args['cid'], page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
+        {% elif request.endpoint == 'aflafrettir.results' %}
+        <li {% if  not posts.has_prev %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, query=request.view_args['query'], page=posts.page-1)}}">{% endif %}&laquo; Fyrri síða</a></li>
+          <li {% if not posts.has_next %}class="disabled"><a href="#">{% else %}><a href="{{url_for(request.endpoint, query=request.view_args['query'], page=posts.page+1)}}">{% endif %}Næsta síða &raquo;</a></li>
         {% endif %}
       </ul> <!-- ./pagination -->
     </div> <!-- ./panel-footer -->

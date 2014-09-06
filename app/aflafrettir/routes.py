@@ -82,13 +82,14 @@ def search():
   return redirect(url_for('aflafrettir.results', query=g.search_form.search.data))
 
 @aflafrettir.route('/frettir/leita/<query>')
-def results(query):
+@aflafrettir.route('/frettir/leita/<query>/sida/<int:page>')
+def results(query, page=1):
   categories = Category.get_all_active()
-  posts = Post.query.whoosh_search(query).all()
+  posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
 
-  for post in posts:
+  for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = f + '/' + e
 
@@ -104,7 +105,6 @@ def results(query):
                          categories=categories,
                          posts=posts,
                          top_ads=top_ads)
-
 
 @aflafrettir.route('/um-siduna')
 def about():

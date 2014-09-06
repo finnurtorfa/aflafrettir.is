@@ -113,6 +113,18 @@ class Post(db.Model):
                 .order_by(cls.timestamp)\
                 .paginate(page, per_page, False)
 
+  @classmethod
+  def search(cls, query, page, per_page=4, descending=True):
+    if descending:
+      return cls.query.whoosh_search(query)\
+                .order_by(cls.timestamp.desc())\
+                .paginate(page, per_page, False)
+    else:
+      return cls.query.whoosh_search(query)\
+                .order_by(cls.timestamp)\
+                .paginate(page, per_page, False)
+
+
 class Category(db.Model):
   __tablename__ = 'categories'
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
