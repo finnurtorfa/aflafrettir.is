@@ -129,6 +129,10 @@ def about():
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
 def contact():
   form = ContactForm()
+  categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
 
   if request.method == 'POST':
     if not form.validate():
@@ -150,7 +154,11 @@ def contact():
 
       return redirect(url_for('aflafrettir.contact'))
 
-  return render_template('aflafrettir/contact.html', form=form)
+  return render_template('aflafrettir/contact.html', 
+                          form=form,
+                          categories=categories,
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/notandi/<username>')
 def user(username):
