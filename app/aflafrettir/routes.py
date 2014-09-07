@@ -74,9 +74,13 @@ def category(cid, page=1):
 def post(title, pid):
   post = Post.get_by_id(pid)
   categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  right_ads = [ad for ad in ads if ad.type == 3]
+
   return render_template('aflafrettir/post.html', 
                           categories=categories,
-                          post=post)
+                          post=post,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 def search():
