@@ -117,7 +117,7 @@
     </div> <!-- ./no-gutter row -->
   </div> <!-- ./col-span -->
 
-  <div class="col-md-2 ad-right hidden-xs hidden-sm">
+  <div class="col-md-2 ad-right hidden-xs hidden-sm" {% if request.endpoint == 'aflafrettir.post' %} id="sidebar"{% endif %}>
     {% block adbar %}
     {% endblock %}
   </div> <!-- ./col-span -->
