@@ -44,7 +44,7 @@
 {% block adbar %}
   {% if right_ads %}
     {% for ad in right_ads %}
-    <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
     {% endfor %}
   {% else %}
   <img data-src="holder.js/250x300/auto/#555:#5555" alt="Third slide image">
