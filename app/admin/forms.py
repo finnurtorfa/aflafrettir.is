@@ -38,6 +38,7 @@ class AdForm(Form):
                                    (4, 'Til vinstri')],
                           coerce=int,
                           validators=[Required()])
+  url       = StringField('Tengill', validators=[Optional()])
   active    = BooleanField('Auglýsing virk?', validators=[Required()])
   submit    = SubmitField('Vista')
 

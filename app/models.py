@@ -151,6 +151,7 @@ class Image(db.Model):
   filename       = db.Column(db.String(120), nullable=False)
   location       = db.Column(db.String(120), nullable=False)
   type           = db.Column(db.Integer, nullable=False)
+  url            = db.Column(db.String(120))
   active         = db.Column(db.Boolean, default=False)
   timestamp      = db.Column(db.DateTime, 
                              nullable=False,

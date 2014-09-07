@@ -305,9 +305,14 @@ def ad_upload():
 
         return redirect(url_for('admin.ad_index'))
       else:
+        if form.url.data:
+          if not form.url.data.startswith('http'):
+            form.url.data = 'http://'+form.url.data
+
         ad = Image(filename=filename,
                    location=url_for('static', filename='uploads/ads/'),
                    type=form.placement.data,
+                   url=form.url.data,
                    active=form.active.data)
 
         db.session.add(ad)
@@ -324,7 +329,12 @@ def ad_edit(ad_id):
   ad = Image.get_by_id(ad_id)
 
   if request.method == 'POST':
+    if form.url.data:
+      if not form.url.data.startswith('http'):
+        form.url.data = 'http://'+form.url.data
+
     ad.type      = form.placement.data
+    ad.url       = form.url.data
     ad.active    = form.active.data
 
     db.session.add(ad)
@@ -334,6 +344,7 @@ def ad_edit(ad_id):
     return redirect(url_for('admin.ad_index'))
 
   form.placement.data = ad.type
+  form.url.data       = ad.url
   form.active.data    = ad.active
 
   return render_template('admin/upload.html', form=form)

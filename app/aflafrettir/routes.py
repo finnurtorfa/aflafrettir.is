@@ -74,9 +74,13 @@ def category(cid, page=1):
 def post(title, pid):
   post = Post.get_by_id(pid)
   categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  right_ads = [ad for ad in ads if ad.type == 3]
+
   return render_template('aflafrettir/post.html', 
                           categories=categories,
-                          post=post)
+                          post=post,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 def search():
@@ -115,11 +119,24 @@ def results(query, page=1):
 @aflafrettir.route('/um-siduna')
 def about():
   about = About.query.first()
-  return render_template('aflafrettir/about.html', about=about)
+  categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
+
+  return render_template('aflafrettir/about.html', 
+                          about=about,
+                          categories=categories,
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
 def contact():
   form = ContactForm()
+  categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
 
   if request.method == 'POST':
     if not form.validate():
@@ -141,7 +158,11 @@ def contact():
 
       return redirect(url_for('aflafrettir.contact'))
 
-  return render_template('aflafrettir/contact.html', form=form)
+  return render_template('aflafrettir/contact.html', 
+                          form=form,
+                          categories=categories,
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/notandi/<username>')
 def user(username):

@@ -1,27 +1,8 @@
 {% extends "aflafrettir/index.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block header %}
-{% endblock %}
-
-{% block content_left %}
-<div class="col-md-2" id="sidebar">
-  <div class="panel panel-default" id="admin_left">
-    <div class="panel-heading">Flokkar</div>
-    <div class="panel-body">
-      <ul class="nav nav-stacked">
-        <li><a href="{{ url_for('aflafrettir.category', cid=1) }}">Almenn frétt</a></li>
-        {% for category in categories %}
-          <li><a href="{{ url_for('aflafrettir.category', cid=category.id) }}">{{ category.name }}</a></li>
-        {% endfor %}
-      </ul>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel panel-default -->
-</div> <!-- ./col-md-2 -->
-{% endblock %}
-
 {% block content_main %}
-<div class="col-md-10" id="content">
+<div class="col-md-10" id="content_main">
   <div class="panel">
     <div class="panel-heading">Hafa samband </div> 
     <div class="panel-body"> 
@@ -46,9 +27,6 @@
     </div> <!-- ./panel-body -->
   </div> <!-- ./panel -->
 </div> <!-- ./col-md-7 -->
-{% endblock %}
-
-{% block adbar %}
 {% endblock %}
 
 {% block disqus_comments %}
