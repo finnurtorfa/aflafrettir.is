@@ -115,7 +115,16 @@ def results(query, page=1):
 @aflafrettir.route('/um-siduna')
 def about():
   about = About.query.first()
-  return render_template('aflafrettir/about.html', about=about)
+  categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  top_ads = [ad for ad in ads if ad.type == 0]
+  right_ads = [ad for ad in ads if ad.type == 3]
+
+  return render_template('aflafrettir/about.html', 
+                          about=about,
+                          categories=categories,
+                          top_ads=top_ads,
+                          right_ads=right_ads)
 
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
 def contact():
