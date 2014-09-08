@@ -62,6 +62,13 @@
           <li><a href="{{ url_for('aflafrettir.category', cid=category.id) }}">{{ category.name }}</a></li>
         {% endfor %}
       </ul>
+      {% if left_ads %}
+        {% for ad in left_ads %}
+        {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+        {% endfor %}
+      {% else %}
+      <img data-src="holder.js/150x150/auto/#777:#7777" alt="Laust auglýsingapláss">
+      {% endif %}
     </div> <!-- ./panel-body -->
   </div> <!-- ./panel panel-default -->
 </div> <!-- ./col-md-2 -->
