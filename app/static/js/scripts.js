@@ -24,6 +24,10 @@ function set_height() {
       return $(this).outerHeight();
     }).get());
   boxes.outerHeight(maxHeight);
+
+  carousel_height = $('.carousel-inner .item.active img').height();
+  $('.carousel .item').height(carousel_height);
+  $('.carousel').height(carousel_height);
 }
 
 $(document).ready(function() {
