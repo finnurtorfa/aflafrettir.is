@@ -83,6 +83,7 @@
     <div class="panel-body">
       
       <div class="row">
+      {% set ad_type = 1 %}
       {% for post in posts.items %}
         <div class="col-6 col-sm-6 maxheight">
           <h2> {{ post.title }} </h2>
@@ -106,6 +107,43 @@
             </div> <!-- ./col-12 col-sm-12 -->
           </div> <!-- ./row -->
         </div> <!-- ./col-6 col-sm-6 col-lg-4 -->
+
+        {% if loop.index is divisibleby(4) %}
+          {% if  main_lg and ad_type == 1 %}
+            {% set ad = main_lg.pop() %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+            {% set ad_type = 2 %}
+          {% elif main_sm and ad_type == 2 %}
+            {% for i in range(2) %}
+              {% if main_sm %}
+                {% set ad = main_sm.pop() %}
+                {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+              {% else %}
+                <img data-src="holder.js/485x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+              {% endif %}
+            {% endfor %}
+            {% set ad_type = 1 %}
+          {% elif main_lg and not main_sm and ad_type == 2 %}
+            {% set ad = main_lg.pop() %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+          {% elif main_sm and not main_lg and ad_type == 1 %}
+            {% for i in range(2) %}
+              {% if main_sm %}
+                {% set ad = main_sm.pop() %}
+                {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+              {% else %}
+                <img data-src="holder.js/485x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+              {% endif %}
+            {% endfor %}
+          {% elif ad_type == 1 %}
+            <img data-src="holder.js/970x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+            {% set ad_type = 2 %}
+          {% elif ad_type == 2 %}
+            <img data-src="holder.js/485x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+            <img data-src="holder.js/485x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+            {% set ad_type = 1 %}
+          {% endif %}
+        {% endif %}
       {% endfor %}
       </div> <!-- ./row -->
 
