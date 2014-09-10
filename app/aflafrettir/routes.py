@@ -23,7 +23,10 @@ def index(page=1):
   posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  main_lg = [ad for ad in ads if ad.type == 1]
+  main_sm = [ad for ad in ads if ad.type == 2]
   right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
@@ -36,12 +39,15 @@ def index(page=1):
       post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
     else:
       post.thumbnail = fn
-      
+
   return render_template('aflafrettir/index.html', 
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
-                          right_ads=right_ads)
+                          main_lg=main_lg,
+                          main_sm=main_sm,
+                          right_ads=right_ads,
+                          left_ads=left_ads)
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
 @aflafrettir.route('/frettir/flokkur/<int:cid>/sida/<int:page>')
@@ -50,7 +56,10 @@ def category(cid, page=1):
   posts = Post.get_by_category(cid, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  main_lg = [ad for ad in ads if ad.type == 1]
+  main_sm = [ad for ad in ads if ad.type == 2]
   right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
@@ -68,7 +77,10 @@ def category(cid, page=1):
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
-                          right_ads=right_ads)
+                          main_lg=main_lg,
+                          main_sm=main_sm,
+                          right_ads=right_ads,
+                          left_ads=left_ads)
 
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
 def post(title, pid):
@@ -76,11 +88,13 @@ def post(title, pid):
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
   right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
 
   return render_template('aflafrettir/post.html', 
                           categories=categories,
                           post=post,
-                          right_ads=right_ads)
+                          right_ads=right_ads,
+                          left_ads=left_ads)
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 def search():
@@ -96,7 +110,10 @@ def results(query, page=1):
   posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  main_lg = [ad for ad in ads if ad.type == 1]
+  main_sm = [ad for ad in ads if ad.type == 2]
   right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
@@ -114,7 +131,10 @@ def results(query, page=1):
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
-                          right_ads=right_ads)
+                          main_lg=main_lg,
+                          main_sm=main_sm,
+                          right_ads=right_ads,
+                          left_ads=left_ads)
 
 @aflafrettir.route('/um-siduna')
 def about():
@@ -123,12 +143,14 @@ def about():
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
   right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
 
   return render_template('aflafrettir/about.html', 
                           about=about,
                           categories=categories,
                           top_ads=top_ads,
-                          right_ads=right_ads)
+                          right_ads=right_ads,
+                          left_ads=left_ads)
 
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
 def contact():
@@ -137,6 +159,7 @@ def contact():
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
   right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
 
   if request.method == 'POST':
     if not form.validate():
@@ -162,7 +185,8 @@ def contact():
                           form=form,
                           categories=categories,
                           top_ads=top_ads,
-                          right_ads=right_ads)
+                          right_ads=right_ads,
+                          left_ads=left_ads)
 
 @aflafrettir.route('/notandi/<username>')
 def user(username):
