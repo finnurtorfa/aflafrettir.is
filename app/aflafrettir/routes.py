@@ -23,6 +23,8 @@ def index(page=1):
   posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  main_lg = [ad for ad in ads if ad.type == 1]
+  main_sm = [ad for ad in ads if ad.type == 2]
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
@@ -37,11 +39,13 @@ def index(page=1):
       post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
     else:
       post.thumbnail = fn
-      
+
   return render_template('aflafrettir/index.html', 
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
+                          main_lg=main_lg,
+                          main_sm=main_sm,
                           right_ads=right_ads,
                           left_ads=left_ads)
 
@@ -52,6 +56,8 @@ def category(cid, page=1):
   posts = Post.get_by_category(cid, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  main_lg = [ad for ad in ads if ad.type == 1]
+  main_sm = [ad for ad in ads if ad.type == 2]
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
@@ -71,6 +77,8 @@ def category(cid, page=1):
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
+                          main_lg=main_lg,
+                          main_sm=main_sm,
                           right_ads=right_ads,
                           left_ads=left_ads)
 
@@ -102,6 +110,8 @@ def results(query, page=1):
   posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
+  main_lg = [ad for ad in ads if ad.type == 1]
+  main_sm = [ad for ad in ads if ad.type == 2]
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
@@ -121,6 +131,8 @@ def results(query, page=1):
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
+                          main_lg=main_lg,
+                          main_sm=main_sm,
                           right_ads=right_ads,
                           left_ads=left_ads)
 
