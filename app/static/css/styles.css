@@ -92,6 +92,12 @@ a,a:hover {
   min-width: 100%;
 }
 
+.ad-main img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+
 h3.highlight  {
 	padding-top:13px;
   padding-bottom:14px;
