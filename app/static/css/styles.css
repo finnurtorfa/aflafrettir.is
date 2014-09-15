@@ -9,7 +9,6 @@
 /* custom theme + Bootstrap resets */
 
 header {
-	min-height:180px;
   margin-bottom:5px;
   margin-top:57px;
 }
@@ -90,6 +89,19 @@ a,a:hover {
   padding: 0;
   max-width: 100%;
   min-width: 100%;
+}
+
+#content_left img {
+  max-height: 150px;
+  max-width: 150px;
+  width: 100%;
+  height: auto;
+}
+
+.ad-main img, .adbar img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
 }
 
 h3.highlight  {

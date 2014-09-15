@@ -111,50 +111,52 @@
         {% if loop.index is divisibleby(4) %}
           {% if  main_lg and ad_type == 1 %}
             {% set ad = main_lg.pop() %}
-            <div class="col-12 col-sm-12">
+            <div class="col-12 col-sm-12 ad-main">
               {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
               {% set ad_type = 2 %}
             </div> <!-- ./col-12 col-sm-12 -->
           {% elif main_sm and ad_type == 2 %}
             {% for i in range(2) %}
               {% if main_sm %}
-                <div class="col-6 col-sm-6">
+                <div class="col-6 col-sm-6 ad-main">
                   {% set ad = main_sm.pop() %}
                   {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-                </div> <!-- ./col-6 col-sm-12 -->
+                </div> <!-- ./col-6 col-sm-6 -->
               {% else %}
-                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                <div class="col-6 col-sm-6 ad-main">
+                  <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                </div> <!-- ./col-6 col-sm-6 -->
               {% endif %}
             {% endfor %}
             {% set ad_type = 1 %}
           {% elif main_lg and not main_sm and ad_type == 2 %}
             {% set ad = main_lg.pop() %}
-            <div class="col-12 col-sm-12">
+            <div class="col-12 col-sm-12 ad-main">
               {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
             </div> <!-- ./col-12 col-sm-12 -->
           {% elif main_sm and not main_lg and ad_type == 1 %}
             {% for i in range(2) %}
               {% if main_sm %}
                 {% set ad = main_sm.pop() %}
-                <div class="col-6 col-sm-6">
+                <div class="col-6 col-sm-6 ad-main">
                   {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-                </div> <!-- ./col-6 col-sm-12 -->
+                </div> <!-- ./col-6 col-sm-6 -->
               {% else %}
-                <div class="col-6 col-sm-6">
+                <div class="col-6 col-sm-6 ad-main">
                   <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
-                </div> <!-- ./col-6 col-sm-12 -->
+                </div> <!-- ./col-6 col-sm-6 -->
               {% endif %}
             {% endfor %}
           {% elif ad_type == 1 %}
-            <div class="col-12 col-sm-12">
+            <div class="col-12 col-sm-12 ad-main">
               <img data-src="holder.js/945x250/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-12 col-sm-12 -->
             {% set ad_type = 2 %}
           {% elif ad_type == 2 %}
-            <div class="col-6 col-sm-6">
+            <div class="col-6 col-sm-6 ad-main">
               <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-6 col-sm-12 -->
-            <div class="col-6 col-sm-6">
+            <div class="col-6 col-sm-6 ad-main">
               <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-6 col-sm-12 -->
             {% set ad_type = 1 %}
