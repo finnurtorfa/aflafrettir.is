@@ -98,7 +98,7 @@ a,a:hover {
   height: auto;
 }
 
-.ad-main img {
+.ad-main img, .adbar img {
   max-width: 100%;
   width: 100%;
   height: auto;
