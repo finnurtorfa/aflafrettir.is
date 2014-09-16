@@ -1,21 +1,3 @@
-$('#content_left').affix({
-  offset: {
-    top: 310,
-    bottom: function() {
-      return (this.bottom = $('footer').outerHeight(true))
-    }
-  }
-});	
-
-$('#admin_left').affix({
-  offset: {
-    top: 0,
-    bottom: function() {
-      return (this.bottom = $('footer').outerHeight(true))
-    }
-  }
-});	
-
 function set_height() {
   boxes = $('.maxheight');
   boxes.css({'height':''});
