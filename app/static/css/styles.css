@@ -20,21 +20,22 @@ header {
  	  margin-left:15px;
   }
 
+  #content_left.affix-bottom,
+  #admin_left.affix-bottom {
+    bottom: 0px;
+  }
+
   #content_left.affix-top,
   #admin_left.affix-top {
-    position: static;
+    top: 0px;
   }
   
   #content_left.affix,
   #admin_left.affix {
     position: fixed !important;
     top: 67px;
-    width:200px;
+    width: 200px;
   }
-}
-
-.affix {
-  position:static;
 }
 
 body {
