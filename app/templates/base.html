@@ -17,6 +17,7 @@
   {{ super() }}
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
   <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' rel='stylesheet' type='text/css'>
 {% endblock %}
 
@@ -38,8 +39,8 @@
   <div class="container-fluid">
     <!-- Title -->
     <div class="navbar-header pull-left">
-      <a class="navbar-brand" href="{{ url_for('aflafrettir.index') }}">
-        <b>Aflafréttir.is</b>
+      <a class="brand" href="{{ url_for('aflafrettir.index') }}">
+        <img src="{{ url_for('static', filename='imgs/afla_logo.png') }}" />
       </a>
     </div>
     

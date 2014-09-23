@@ -36,7 +36,7 @@ def index(page=1):
     post.distance_in_time = distance_in_time
 
     if not e and not os.path.isfile(fn):
-      post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
+      post.thumbnail = url_for('static', filename='imgs/default.png')
     else:
       post.thumbnail = fn
 
@@ -69,7 +69,7 @@ def category(cid, page=1):
     post.distance_in_time = distance_in_time
 
     if not e and not os.path.isfile(fn):
-      post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
+      post.thumbnail = url_for('static', filename='imgs/default.png')
     else:
       post.thumbnail = fn
       
@@ -123,7 +123,7 @@ def results(query, page=1):
     post.distance_in_time = distance_in_time
 
     if not e and not os.path.isfile(fn):
-      post.thumbnail = url_for('static', filename='imgs_default/fish1.jpg')
+      post.thumbnail = url_for('static', filename='imgs/default.png')
     else:
       post.thumbnail = fn
       
