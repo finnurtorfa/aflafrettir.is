@@ -25,6 +25,9 @@ mail = Mail()
 def create_app(config_name):
   app = Flask(__name__)
   app.config.from_object(config[config_name])
+
+  configure_logging(app)
+
   app.jinja_env.globals.update(slugify=slugify)
   app.jinja_env.globals.update(truncate=truncate)
   app.jinja_env.globals.update(url=ads.url)
@@ -51,3 +54,19 @@ def create_app(config_name):
     start_image_deletion_thread()
 
   return app
+
+def configure_logging(app, logger='logger.yml'):
+  import logging, os, yaml
+  import logging.config
+
+
+  try:
+    os.makedirs('log', exist_ok=True)
+  except OSError as e:
+    logging.exception('OSError: ')
+
+  if os.path.exists(logger):
+    with open(logger) as f:
+      config = yaml.load(f.read())
+  
+  logging.config.dictConfig(config)
