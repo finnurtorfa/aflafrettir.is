@@ -169,7 +169,6 @@ def contact():
                     sender=form.email.data,
                     recipients=['finnurtorfa@gmail.com'],
                     charset='utf-8')
-      print(mail)
       msg.body = """
       From: {n} <{e}>
       {s}
