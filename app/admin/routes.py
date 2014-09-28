@@ -54,8 +54,17 @@ def profile_edit():
 @login_required
 def post_to_fb():
   if current_user.fb_token:
+    current_app.logger.debug('User {} already has token: {}'\
+                             .format(current_user.username,
+                                     current_user.fb_token))
+    current_app.logger.debug(request.args)
+
     api = GraphAPI(current_user.fb_token)
   elif request.args.get('code'):
+    current_app.logger.debug('Fetching Faccbook token for user {}'\
+                             .format(current_user.username))
+    current_app.logger.debug(request.args)
+
     f = FacebookAPI(current_app.config['FB_APP_ID'],
                     current_app.config['FB_APP_SECRET'],
                     url_for('admin.post_to_fb', 
@@ -69,6 +78,10 @@ def post_to_fb():
 
     api = GraphAPI(user_access_token)
   else:
+    current_app.logger.error("Not able to send post to Facebook for user {}"\
+                             .format(current_user.username))
+    current_app.logger.error(request.args)
+    
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
@@ -79,6 +92,9 @@ def post_to_fb():
       page_access_token = d['access_token']
       break
   else:
+    current_app.logger.error('Not able to find the page_access_token')
+    curent_app.logger.error(accounts)
+    current_app.logger.error(request.args)
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
