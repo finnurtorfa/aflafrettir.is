@@ -85,7 +85,6 @@ def remove_images(app):
 
         for i in images:
           if i.location + i.filename in diff_imgs:
-            print(i.filename)
             if os.path.isfile(imgs.path(i.filename)):
               os.remove(imgs.path(i.filename))
               f, e = os.path.splitext(i.filename)

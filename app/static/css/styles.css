@@ -126,14 +126,14 @@ h3.highlight  {
   border-radius:0;
 }
 .navbar-nav > li > a {
-	color:#fff;
+  color:#3C50DD;
 	padding-left:20px;
   padding-right:20px;
 }
 
 .navbar-nav li a:hover {
 	background-color:#77CCDD;
-  color:#768c91;
+	color:#fff;
   transition: color 0.2s ease-in;
 }
 
@@ -178,15 +178,14 @@ li.dropdown:hover {
 
 .dropdown-toggle {
 	background-color:#77CCDD;
-  color:#fff;
+  color:#3C50DD;
   margin-top:5px;
   font-size:125%;
 }
 
 .dropdown:hover, .dropdown-toggle:hover, .dropdown-toggle:focus {
-  color:#768c91;
+  color:#fff;
 	background-color:#77CCDD;
-	background-image:none;
   transition: color 0.2s ease-in, background-color 0.2s ease-in;
 }
 
