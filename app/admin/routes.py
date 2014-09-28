@@ -130,13 +130,15 @@ def news_post():
 
 
     if form.facebook.data:
+      fn = os.path.basename(get_all_imgs(form.post.data)[0])
+
+      session['link'] = url_for('aflafrettir.post', 
+                                title=slugify(post.title),
+                                pid=post.id,
+                                _external=True)
+      session['body'] = form.facebook.data
+      session['picture'] = imgs.url(fn)
       if current_user.fb_token:
-        session['link'] = url_for('aflafrettir.post', 
-                                  title=slugify(post.title),
-                                  pid=post.id,
-                                  _external=True)
-        session['body'] = form.facebook.data
-  
         return redirect(url_for('admin.post_to_fb'))
       else:
         f = FacebookAPI(current_app.config['FB_APP_ID'],
@@ -147,15 +149,6 @@ def news_post():
                                          'email', 
                                          'manage_pages',
                                          'publish_actions'])
-
-        session['link'] = url_for('aflafrettir.post', 
-                                  title=slugify(post.title),
-                                  pid=post.id,
-                                  _external=True)
-        session['body'] = form.facebook.data
-
-        fn = os.path.basename(get_all_imgs(form.post.data)[0])
-        session['picture'] = imgs.url(fn)
 
         return redirect(auth_url)
     
