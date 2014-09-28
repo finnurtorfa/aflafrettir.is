@@ -1,3 +1,5 @@
+import os
+
 from datetime import datetime
 
 from flask import (render_template, redirect, url_for, flash, request, json,
@@ -7,7 +9,7 @@ from flask.ext.uploads import UploadNotAllowed
 
 from facebook import FacebookAPI, GraphAPI
 
-from helpers.text import remove_html_tags, slugify
+from helpers.text import remove_html_tags, slugify, get_all_imgs
 from helpers.image import crop_image, jpeg_convert
 
 from . import admin
@@ -85,7 +87,8 @@ def post_to_fb():
   api = GraphAPI(page_access_token)
   post = api.post(current_app.config['FB_PAGE_ID'] + '/feed', 
                   params={'message': session.pop('body', None),
-                          'link': session.pop('link', None)})
+                          'link': session.pop('link', None),
+                          'picture': session.pop('picture', None)})
   
   flash("Tókst að senda póst á Facebook")
 
@@ -125,6 +128,7 @@ def news_post():
 
     flash("Fréttin hefur verið vistuð!")
 
+
     if form.facebook.data:
       if current_user.fb_token:
         session['link'] = url_for('aflafrettir.post', 
@@ -149,7 +153,10 @@ def news_post():
                                   pid=post.id,
                                   _external=True)
         session['body'] = form.facebook.data
-  
+
+        fn = os.path.basename(get_all_imgs(form.post.data)[0])
+        session['picture'] = imgs.url(fn)
+
         return redirect(auth_url)
     
     return redirect(url_for('admin.news_index'))
