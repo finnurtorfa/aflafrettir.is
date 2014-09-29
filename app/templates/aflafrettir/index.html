@@ -90,14 +90,13 @@
           <div class="wrap-text"> 
             <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
             <p> {{ truncate(post.body, 300)|safe }} 
-              <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
             </p>
           </div>
           <div class="row">
             <div class="col-12 col-sm-12">
               <p class="pull-right">
                 <span class="label label-default">
-                  <a href="{{ url_for('aflafrettir.category', cid=post.category.id) }}">{{ post.category.name }}</a>
+                  <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
                 </span>
               </p>
               <ul class="list-inline">
