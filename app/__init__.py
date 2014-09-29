@@ -1,3 +1,5 @@
+import logging
+
 from flask import Flask
 from flask.ext.bootstrap import Bootstrap
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -56,7 +58,7 @@ def create_app(config_name):
   return app
 
 def configure_logging(app, logger='logger.yml'):
-  import logging, os, yaml
+  import os, yaml
   import logging.config
 
 
@@ -70,3 +72,10 @@ def configure_logging(app, logger='logger.yml'):
       config = yaml.load(f.read())
   
   logging.config.dictConfig(config)
+
+class LevelFilter(logging.Filter):
+  def __init__(self, level):
+    self.__level = level
+
+  def filter(self, record):
+    return record.levelno == self.__level
