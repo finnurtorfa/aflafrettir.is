@@ -71,7 +71,7 @@ def remove_images(app):
   from datetime import datetime
 
   while True:
-    time.sleep(10)
+    time.sleep(1800)
     conf = app.config['IMAGE_DELETE']
     with app.app_context():
       if ( datetime.utcnow().hour in conf['TIME_OF_DAY'] and 
