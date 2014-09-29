@@ -56,8 +56,17 @@ def profile_edit():
 @login_required
 def post_to_fb():
   if current_user.fb_token:
+    current_app.logger.debug('User {} already has token: {}'\
+                             .format(current_user.username,
+                                     current_user.fb_token))
+    current_app.logger.debug(request.args)
+
     api = GraphAPI(current_user.fb_token)
   elif request.args.get('code'):
+    current_app.logger.debug('Fetching Faccbook token for user {}'\
+                             .format(current_user.username))
+    current_app.logger.debug(request.args)
+
     f = FacebookAPI(current_app.config['FB_APP_ID'],
                     current_app.config['FB_APP_SECRET'],
                     url_for('admin.post_to_fb', 
@@ -71,6 +80,10 @@ def post_to_fb():
 
     api = GraphAPI(user_access_token)
   else:
+    current_app.logger.error("Not able to send post to Facebook for user {}"\
+                             .format(current_user.username))
+    current_app.logger.error(request.args)
+    
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
@@ -81,6 +94,9 @@ def post_to_fb():
       page_access_token = d['access_token']
       break
   else:
+    current_app.logger.error('Not able to find the page_access_token')
+    curent_app.logger.error(accounts)
+    current_app.logger.error(request.args)
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
@@ -138,6 +154,8 @@ def news_post():
                                 _external=True)
       session['body'] = form.facebook.data
       session['picture'] = imgs.url(fn)
+      current_app.logger.debug('Preparing data for Facebook')
+
       if current_user.fb_token:
         return redirect(url_for('admin.post_to_fb'))
       else:
@@ -150,6 +168,9 @@ def news_post():
                                          'manage_pages',
                                          'publish_actions'])
 
+        current_app.logger.debug('Authentication url for Facebook {}'\
+                                 .format(auth_url))
+  
         return redirect(auth_url)
     
     return redirect(url_for('admin.news_index'))
@@ -162,6 +183,8 @@ def nicedit_upload():
   file = request.files.get('image')
   filename = imgs.save(file)
   filename = jpeg_convert(imgs.path(filename))
+
+  current_app.logger.debug('Uploaded {} to the server'.format(filename))
 
   img = Image(filename=filename,
               location=url_for('static', filename='uploads/imgs/'),
@@ -177,6 +200,8 @@ def nicedit_upload():
                                       filename='uploads/imgs/' + filename)}
   set_dict    = {'links' : links_dict}
   upload_dict = {'upload' : set_dict }
+
+  current_app.logger.debug('upload_dict {}'.format(upload_dict))
 
   return json.dumps(upload_dict)
 
@@ -248,6 +273,9 @@ def news_category():
 
     if request.method == 'POST':
       if form.submit.data and form.category.data:
+        current_app.logger.debug('Adding a new category: {}'\
+                                 .format(form.category.data))
+
         category = Category(name=form.category.data)
 
         db.session.add(category)
@@ -256,6 +284,9 @@ def news_category():
         return redirect(url_for('admin.news_category'))
 
       if form.right.data and inactive and form.inactive.data != None:
+        current_app.logger.debug('Deactivating category: {}'\
+                                 .format(form.category.data))
+
         category_selected = form.inactive.choices[int(form.inactive.data)][1]
         category = Category.get_by_name(category_selected)
         category.active=True
@@ -266,6 +297,9 @@ def news_category():
         return redirect(url_for('admin.news_category'))
 
       if form.left.data and active and form.active.data != None:
+        current_app.logger.debug('Activating category: {}'\
+                                 .format(form.category.data))
+
         category_selected = form.active.choices[int(form.active.data)][1]
         category = Category.get_by_name(category_selected)
         category.active=False
@@ -301,6 +335,8 @@ def ad_upload():
         #filename = do_something(ads.path(filename))
         flash("Skráin hefur verið vistuð!")
       except UploadNotAllowed:
+        current_app.logger.exception('Tried to upload {}'.format(filename))
+
         flash("Ekki leyfileg tegund af skrá!")
 
         return redirect(url_for('admin.ad_index'))
