@@ -83,6 +83,12 @@ def remove_images(app):
 
         diff_imgs = set(db_imgs) - set(post_imgs)
 
+        if diff_imgs:
+          app.logger.debug('Images found in db: {}'.format(db_imgs))
+          app.logger.debug('Images found in posts: {}'.format(db_imgs))
+          app.logger.debug('Images to delete: {}'.format(db_imgs))
+
+
         for i in images:
           if i.location + i.filename in diff_imgs:
             if os.path.isfile(imgs.path(i.filename)):
@@ -101,4 +107,6 @@ def start_image_deletion_thread():
     if _image_thread is None:
       _image_thread = Thread(target=remove_images,
                              args=[current_app._get_current_object()])
+
+      current_app.logger.debug('Starting image deletion thread')
       _image_thread.start()
