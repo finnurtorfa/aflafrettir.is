@@ -33,6 +33,7 @@ def jpeg_convert(infile):
     
     img.save(outfile, dpi=[100,100], quality=80)
   except IOError:
+    current_app.logger.exception('Could not save file: ')
     return os.path.basename(infile)
   
   return os.path.basename(outfile)
