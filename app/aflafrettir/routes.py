@@ -35,7 +35,7 @@ def index(page=1):
     distance_in_time = time_ago(post.timestamp)
     post.distance_in_time = distance_in_time
 
-    if not e and not os.path.isfile(fn):
+    if not e or not os.path.isfile(fn):
       post.thumbnail = url_for('static', filename='imgs/default.png')
     else:
       post.thumbnail = fn
