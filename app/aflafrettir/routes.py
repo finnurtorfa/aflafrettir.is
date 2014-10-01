@@ -7,7 +7,7 @@ from . import aflafrettir
 from .forms import ContactForm, SearchForm
 from ..models import User, Category, Post, About, Image
 
-from .. import mail
+from .. import mail, imgs
 
 from helpers.text import get_thumbnail, time_ago
 
@@ -30,15 +30,16 @@ def index(page=1):
 
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
-    fn = f + '/' + e
+    fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + e
 
     distance_in_time = time_ago(post.timestamp)
     post.distance_in_time = distance_in_time
+    post.thumbnail = imgs.url(e)
 
-    if not e or not os.path.isfile(fn):
+    if not e:
       post.thumbnail = url_for('static', filename='imgs/default.png')
-    else:
-      post.thumbnail = fn
+    if not os.path.isfile(fn):
+      post.thumbnail = url_for('static', filename='imgs/default.png')
 
   return render_template('aflafrettir/index.html', 
                           categories=categories,
