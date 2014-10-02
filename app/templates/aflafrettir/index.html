@@ -82,87 +82,93 @@
     <div class="panel-heading">Fréttir</div> 
     <div class="panel-body">
       
-      <div class="row">
-      {% set ad_type = 1 %}
-      {% for post in posts.items %}
-        <div class="col-6 col-sm-6 maxheight">
-          <h2> {{ post.title }} </h2>
-          <div class="wrap-text"> 
-            <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
-            <p> {{ truncate(post.body, 300)|safe }} 
+    {% set ad_type = 1 %}
+    {% for post in posts.items %}
+    {% if loop.index0 is divisibleby(2) %}
+    <div class="row">
+    {% endif %}
+      <div class="col-6 col-sm-6">
+        <h2> {{ post.title }} </h2>
+        <div class="wrap-text"> 
+          <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+          <p> {{ truncate(post.body, 300)|safe }} 
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-12 col-sm-12">
+            <p class="pull-right">
+              <span class="label label-default">
+                <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
+              </span>
             </p>
-          </div>
-          <div class="row">
-            <div class="col-12 col-sm-12">
-              <p class="pull-right">
-                <span class="label label-default">
-                  <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Lesa meira »</a> 
-                </span>
-              </p>
-              <ul class="list-inline">
-                <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Birt {{ post.distance_in_time }}</a></li>
-                <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
-              </ul>
-            </div> <!-- ./col-12 col-sm-12 -->
-          </div> <!-- ./row -->
-        </div> <!-- ./col-6 col-sm-6 col-lg-4 -->
+            <ul class="list-inline">
+              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">Birt {{ post.distance_in_time }}</a></li>
+              <li><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}"><i class="glyphicon glyphicon-comment"></i> </a><a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}#disqus_thread">Álit</a></li>
+            </ul>
+          </div> <!-- ./col-12 col-sm-12 -->
+        </div> <!-- ./row -->
+      </div> <!-- ./col-6 col-sm-6 col-lg-4 -->
+    {% if loop.index is divisibleby(2) %}
+    </div> <!-- ./row -->
+    {% endif %}
 
-        {% if loop.index is divisibleby(4) %}
-          {% if  main_lg and ad_type == 1 %}
-            {% set ad = main_lg.pop() %}
-            <div class="col-12 col-sm-12 ad-main">
-              {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-              {% set ad_type = 2 %}
-            </div> <!-- ./col-12 col-sm-12 -->
-          {% elif main_sm and ad_type == 2 %}
-            {% for i in range(2) %}
-              {% if main_sm %}
-                <div class="col-6 col-sm-6 ad-main">
-                  {% set ad = main_sm.pop() %}
-                  {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-                </div> <!-- ./col-6 col-sm-6 -->
-              {% else %}
-                <div class="col-6 col-sm-6 ad-main">
-                  <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
-                </div> <!-- ./col-6 col-sm-6 -->
-              {% endif %}
-            {% endfor %}
-            {% set ad_type = 1 %}
-          {% elif main_lg and not main_sm and ad_type == 2 %}
-            {% set ad = main_lg.pop() %}
-            <div class="col-12 col-sm-12 ad-main">
-              {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-            </div> <!-- ./col-12 col-sm-12 -->
-          {% elif main_sm and not main_lg and ad_type == 1 %}
-            {% for i in range(2) %}
-              {% if main_sm %}
-                {% set ad = main_sm.pop() %}
-                <div class="col-6 col-sm-6 ad-main">
-                  {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-                </div> <!-- ./col-6 col-sm-6 -->
-              {% else %}
-                <div class="col-6 col-sm-6 ad-main">
-                  <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
-                </div> <!-- ./col-6 col-sm-6 -->
-              {% endif %}
-            {% endfor %}
-          {% elif ad_type == 1 %}
-            <div class="col-12 col-sm-12 ad-main">
-              <img data-src="holder.js/945x250/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-12 col-sm-12 -->
+      {% if loop.index is divisibleby(4) %}
+      <div class="row">
+        {% if  main_lg and ad_type == 1 %}
+          {% set ad = main_lg.pop() %}
+          <div class="col-12 col-sm-12 ad-main">
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
             {% set ad_type = 2 %}
-          {% elif ad_type == 2 %}
-            <div class="col-6 col-sm-6 ad-main">
-              <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-6 col-sm-12 -->
-            <div class="col-6 col-sm-6 ad-main">
-              <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-6 col-sm-12 -->
-            {% set ad_type = 1 %}
-          {% endif %}
+          </div> <!-- ./col-12 col-sm-12 -->
+        {% elif main_sm and ad_type == 2 %}
+          {% for i in range(2) %}
+            {% if main_sm %}
+              <div class="col-6 col-sm-6 ad-main">
+                {% set ad = main_sm.pop() %}
+                {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+              </div> <!-- ./col-6 col-sm-6 -->
+            {% else %}
+              <div class="col-6 col-sm-6 ad-main">
+                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+              </div> <!-- ./col-6 col-sm-6 -->
+            {% endif %}
+          {% endfor %}
+          {% set ad_type = 1 %}
+        {% elif main_lg and not main_sm and ad_type == 2 %}
+          {% set ad = main_lg.pop() %}
+          <div class="col-12 col-sm-12 ad-main">
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+          </div> <!-- ./col-12 col-sm-12 -->
+        {% elif main_sm and not main_lg and ad_type == 1 %}
+          {% for i in range(2) %}
+            {% if main_sm %}
+              {% set ad = main_sm.pop() %}
+              <div class="col-6 col-sm-6 ad-main">
+                {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+              </div> <!-- ./col-6 col-sm-6 -->
+            {% else %}
+              <div class="col-6 col-sm-6 ad-main">
+                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+              </div> <!-- ./col-6 col-sm-6 -->
+            {% endif %}
+          {% endfor %}
+        {% elif ad_type == 1 %}
+          <div class="col-12 col-sm-12 ad-main">
+            <img data-src="holder.js/945x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+          </div> <!-- ./col-12 col-sm-12 -->
+          {% set ad_type = 2 %}
+        {% elif ad_type == 2 %}
+          <div class="col-6 col-sm-6 ad-main">
+            <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+          </div> <!-- ./col-6 col-sm-12 -->
+          <div class="col-6 col-sm-6 ad-main">
+            <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+          </div> <!-- ./col-6 col-sm-12 -->
+          {% set ad_type = 1 %}
         {% endif %}
-      {% endfor %}
       </div> <!-- ./row -->
+      {% endif %}
+    {% endfor %}
 
     </div> <!-- ./panel-body -->
 
