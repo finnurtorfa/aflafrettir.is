@@ -126,7 +126,7 @@ h3.highlight  {
   border-radius:0;
 }
 .navbar-nav > li > a {
-  color:#3C50DD;
+  color: #3B5998;
 	padding-left:20px;
   padding-right:20px;
 }
@@ -157,6 +157,11 @@ h3.highlight  {
 	border-width:0;
 }
 
+.btn.btn-social-icon.btn-facebook {
+  margin-top: 12px;
+}
+
+
 li.dropdown:hover {
 	background-color:#77CCDD;
   color:#768c91;
@@ -165,6 +170,10 @@ li.dropdown:hover {
 	background-color:#77CCDD;
   color:#fff;
 	min-width: 250px;
+}
+
+.dropdown-menu.facebook-like {
+  background-color: #fff;
 }
 
 .dropdown-menu li > a {
@@ -178,7 +187,7 @@ li.dropdown:hover {
 
 .dropdown-toggle {
 	background-color:#77CCDD;
-  color:#3C50DD;
+  color:#3B5998;
   margin-top:5px;
   font-size:125%;
 }
