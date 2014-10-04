@@ -17,8 +17,11 @@
   {{ super() }}
   <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-social/bootstrap-social.css') }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
   <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' rel='stylesheet' type='text/css'>
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block metas %}
@@ -94,6 +97,14 @@
           </ul>
         </li>
 
+        <li class="dropdown pull-right">
+          <a data-toggle="dropdown" class="dropdown-toggle btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+          <ul class="dropdown-menu facebook-like">
+            <li>
+              <div class="fb-like-box" data-href="https://www.facebook.com/pages/wwwaflafrettircom/179516748286" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+            </li>
+          </ul>
+        </li>
       </ul>
 
       <!-- Required bootstrap placeholder for the collapsed menu -->
