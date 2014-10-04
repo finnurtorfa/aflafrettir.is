@@ -7,3 +7,6 @@
 [submodule "app/static/js/Respond"]
 	path = app/static/js/Respond
 	url = https://github.com/scottjehl/Respond.git
+[submodule "app/static/css/bootstrap-social"]
+	path = app/static/css/bootstrap-social
+	url = https://github.com/lipis/bootstrap-social
