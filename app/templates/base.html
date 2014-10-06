@@ -70,7 +70,7 @@
     <div class="navbar-header pull-right">
       <ul class="nav pull-left">
         <li class="dropdown pull-right">
-          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user fa-lg"></i></a>
           <ul class="dropdown-menu">
             {% if not current_user.is_authenticated() %}
             <li><a href="{{ url_for('auth.login') }}">Innskráning</a></li>
@@ -82,7 +82,7 @@
         </li>
 
         <li class="dropdown pull-right">
-          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><span class="glyphicon glyphicon-search"></span><b class="caret"></b></a>
+          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-search fa-lg"></i></a>
           <ul class="dropdown-menu">
             <li>
               <form action="{{ url_for('aflafrettir.search') }}" method="post" class="navbar-form" role="search">

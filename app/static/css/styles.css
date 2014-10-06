@@ -158,7 +158,9 @@ h3.highlight  {
 }
 
 .btn.btn-social-icon.btn-facebook {
-  margin-top: 12px;
+  margin-top: 14px;
+  margin-right: 5px;
+  font-size: 100%;
 }
 
 
