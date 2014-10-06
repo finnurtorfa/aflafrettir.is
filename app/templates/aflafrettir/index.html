@@ -112,7 +112,7 @@
     </div> <!-- ./row -->
     {% endif %}
 
-      {% if loop.index is divisibleby(4) %}
+      {% if (loop.index+2) is divisibleby(4) %}
       <div class="row">
         {% if  main_lg and ad_type == 1 %}
           {% set ad = main_lg.pop() %}
