@@ -30,6 +30,8 @@ $(document).ready(function() {
     set_height();
   });
 
+  $('.carousel-inner .item.active img').on('load', set_height);
+
   set_height();
 
   $('.post-body table').each(function(){
