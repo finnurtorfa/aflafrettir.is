@@ -61,15 +61,15 @@
   <div class="container-fluid">
     <!-- Title -->
     <div class="navbar-header pull-left">
-      <a class="brand" href="{{ url_for('aflafrettir.index') }}">
+      <a href="{{ url_for('aflafrettir.index') }}">
         <img src="{{ url_for('static', filename='imgs/afla_logo.png') }}" />
       </a>
     </div>
     
     <!-- 'Sticky' (non-collapsing) right-side menu item(s) -->
-    <div class="navbar-header pull-right">
-      <ul class="nav pull-left">
-        <li class="dropdown pull-right">
+    <div class="navbar-header pull-right"> 
+      <ul class="nav navbar-nav pull-left">
+        <li class="dropdown pull-right"> 
           <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user fa-lg"></i></a>
           <ul class="dropdown-menu">
             {% if not current_user.is_authenticated() %}
@@ -90,7 +90,7 @@
                 <div class="input-group">
                   {{ g.search_form.search(**{'class':'form-control', 'placeholder':'Leita'}) }}
                   <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
                   </div> <!-- ./input-group-brn -->
                 </div> <!-- ./input-group -->
               </form>
@@ -99,7 +99,7 @@
         </li>
 
         <li class="dropdown pull-right">
-          <a data-toggle="dropdown" class="dropdown-toggle btn btn-social-icon btn-facebook"><i class="fa fa-facebook"></i></a>
+          <a data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-facebook-square fa-lg"></i></a>
           <ul class="dropdown-menu facebook-like">
             <li>
               <div class="fb-like-box" data-href="https://www.facebook.com/pages/wwwaflafrettircom/179516748286" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
@@ -111,12 +111,12 @@
       <!-- Required bootstrap placeholder for the collapsed menu -->
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Opna/Loka Valmynd</span>
-        <span class="glyphicon glyphicon-list"></span>
+        <i class="fa fa-list-ul fa-lg"></i>
       </button> 
     </div>
 
     <!-- The Collapsing items navbar-left or navbar-right -->
-    <div class="collapse navbar-collapse navbar-left">
+    <div class="navbar-header collapse navbar-collapse navbar-left">
       <!--                      pull-right keeps the drop-down in line -->
       <ul class="nav navbar-nav pull-right">
         <li><a href="{{ url_for('aflafrettir.index') }}">Forsíða</a></li>
