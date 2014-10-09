@@ -30,6 +30,14 @@ $(document).ready(function() {
     set_height();
   });
 
+  $('.dropdown').mouseenter(function() {
+    $(this).addClass('open');
+  });
+
+  $('.dropdown').mouseleave(function() {
+    $(this).removeClass('open');
+  });
+
   $('.carousel-inner .item.active img').on('load', set_height);
 
   set_height();
