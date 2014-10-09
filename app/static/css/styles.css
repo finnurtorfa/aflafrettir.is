@@ -1,43 +1,11 @@
-/* bootstrap 3 helpers */
 
-.navbar-form input, .form-inline input {
-	width:auto;
-}
+/*
+	background-color:#77CCDD;
+  color:#3B5998;
+	color:#fff;
+  */
 
-/* end */
-
-/* custom theme + Bootstrap resets */
-
-header {
-  margin-bottom:5px;
-  margin-top:57px;
-}
-
-/* only apply sticky columns on wider screens */
-@media (min-width: 1200px) {
-  #content_left,
-  #admin_left {
- 	  margin-left:15px;
-  }
-
-  #content_left.affix-bottom,
-  #admin_left.affix-bottom {
-    bottom: 0px;
-  }
-
-  #content_left.affix-top,
-  #admin_left.affix-top {
-    top: 0px;
-  }
-  
-  #content_left.affix,
-  #admin_left.affix {
-    position: fixed !important;
-    top: 67px;
-    width: 200px;
-  }
-}
-
+/* General stylings */
 body {
   font-family:'Open Sans',sans-serif;
   font-weight:400;
@@ -45,267 +13,87 @@ body {
   background-color:#efefef;
 }
 
-nav {
-  font-family:'Raleway',sans-serif;
-  font-weight:800;
-  font-size:125%;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
 a,a:hover {
 	color:#77CCDD;
   text-decoration:none;
 }
 
-.btn-default a, .btn-default a:hover {
-  color:black;
-}
-
-.label-default a, .label-default a:hover {
-	color:#fff;
-  text-decoration:none;
-}
-
-.highlight-bk {
-	background-color:#77CCDD;
-  padding:1px;
-  width:100%;
-}
-
-.highlight {
-	color:#77CCDD;
-}
-  
 .container-fluid,
 .container {
   padding: 0;
 }
+/* General stylings */
 
-.ad-right {
-  padding-left: 0;
-}
-
-.ad-right img {
-  padding: 0;
-  max-width: 100%;
-  min-width: 100%;
-}
-
-#content_left img {
-  max-height: 150px;
-  max-width: 150px;
-  width: 100%;
-  height: auto;
-}
-
-.ad-main img, .adbar img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-}
-
-h3.highlight  {
-	padding-top:13px;
-  padding-bottom:14px;
-  border-bottom:2px solid #77CCDD;
-}
-
-.wrap-text .img-resize {
-  float: left;
-  max-width: 152px;
-  min-width: 152px;
-  padding: 5px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;  
-}
-.navbar {
+/* Stylings for the navigation bar at top */
+nav {
+  font-family:'Raleway', sans-serif;
+  font-weight:800;
+  font-size:125%;
 	background-color:#77CCDD;
-  color:#ffffff;
-  border-radius:0;
-}
-.navbar-nav > li > a {
-  color: #3B5998;
-	padding-left:20px;
-  padding-right:20px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-.navbar-nav li a:hover {
+.navbar-header li>a, .navbar-header button {
+  margin-top: 5px;
+  color:#3B5998;
+}
+
+.navbar-header .dropdown.open .dropdown-toggle {
+	background-color:#77CCDD;
+}
+
+.navbar-header li>a:hover, 
+.navbar-header button:hover,
+.navbar-header li>a:focus, 
+.navbar-header button:focus {
 	background-color:#77CCDD;
 	color:#fff;
   transition: color 0.2s ease-in;
 }
 
-.navbar-nav > .open > a, .navbar-nav > .open > a:hover, .navbar-nav > .open > a:focus {
-	color: #000;
-  opacity:.9;
-}
-
-.navbar-brand {
-	color:#fff;
-  font-size:150%;
-}
-
-.navbar-brand:hover {
-	background-color:#77CCDD;
-  color:#768c91;
+.navbar-header li>a i.fa-facebook-square:hover {
+  background-color:#3B5998;
   transition: color 0.2s ease-in;
 }
 
-.accordion-group {
-	border-width:0;
+.dropdown-toggle {
+  font-size:125%;
 }
 
-.btn.btn-social-icon.btn-facebook {
-  margin-top: 14px;
-  margin-right: 5px;
-  font-size: 100%;
+i.fa {
+  font-size: 150%;
 }
 
-
-li.dropdown:hover {
-	background-color:#77CCDD;
-  color:#768c91;
+i.fa-facebook-square {
+	background-color:#fff;
 }
+
+i.fa-list-ul {
+  margin-top: 8px;
+  margin-left: 15px;
+}
+
+.navbar-form input {
+  width: auto;
+}
+
 .dropdown-menu {
-	background-color:#77CCDD;
-  color:#fff;
-	min-width: 250px;
+  background-color: #77CCDD;
+  color: #fff;
+  min-width: 250px;
 }
 
 .dropdown-menu.facebook-like {
   background-color: #fff;
 }
 
-.dropdown-menu li > a {
-  color: #fff;
+.dropdown-menu li>a {
+  color: #3B5998;
 }
+/* Stylings for the navigation bar at top */
 
-.dropdown-menu li > a:hover {
-	background-color:#77CCDD;
-  color:#768c91;
-}
-
-.dropdown-toggle {
-	background-color:#77CCDD;
-  color:#3B5998;
-  margin-top:5px;
-  font-size:125%;
-}
-
-.dropdown:hover, .dropdown-toggle:hover, .dropdown-toggle:focus {
-  color:#fff;
-	background-color:#77CCDD;
-  transition: color 0.2s ease-in, background-color 0.2s ease-in;
-}
-
-.readmore {
-  position: relative;
-}
-
-.readmore:before {
-  position: absolute;
-  bottom: 0;  
-  height: 100%;
-  width: 100%;
-  content: "";
-  background: linear-gradient(to left,
-     rgba(255,255,255, 1) 10%, 
-     rgba(255,255,255, 0) 100%
-  );
-  pointer-events: none; /* so the text is still selectable */
-}
-.caret {
-	color:#fff;
-}
-
-.post-body .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: #f1f1f1;
-}
-
-.post-body img {
-  max-width: 100%;
-}
-
-.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-  background-color: #f5f5f5;
-}
-
-.navbar-toggle {
-	color:#fff;
-  border-width:0;
-}
-  
-.navbar-toggle:hover {
-	background-color:#77CCDD;
-  color:#768c91;
-}
-
-.panel,.panel-heading {
-  border-radius:0;
-  border-width:0;
-	-webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
-  box-shadow: 0 3px 3px  rgba(0, 0, 0, 0.09);
-}
-
-.panel-heading {
-  font-family:'Raleway',sans-serif;
-  font-size: 150%;
-}
-
-#content_left .panel-heading,
-#admin_left .panel-heading {
-  background-color:#a0dbe7;
-  color:#fff;"
-}
-
-#content, #sidebar {
-  top:67px;
-}
-
-#content_main .panel-heading,
-#content .panel-heading{
-  background-color:#77ccdd;
-  color:#fff;"
-}
-
-.thumbnail {
-	margin-bottom:8px;
-	border-radius:0;
-}
-
-.well {
-  border-radius:0;
-}
-
-.accordion-heading .accordion-toggle, .accordion-inner, .nav-stacked li > a {
-	padding-left:1px;
-}
-
-#content_left a {
-  color:#676767;
-}
-
-#footer {
-  height: 60px;
-  margin-top:50px;
-  padding-top:20px;
-  padding-bottom:20px;
-	background-color:#dfdfdf;
-	color:#888;
-}
-
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by its height */
-  margin: 0 auto -60px;
-  /* Pad bottom by footer height */
-  padding: 0 0 70px;
-}
-
+/* Stylings for everything below the navigation bar */
 @media (min-width: 992px) {
   .no-gutter.row {
     margin-right: 0px;
@@ -358,13 +146,12 @@ li.dropdown:hover {
   }
 }
 
-/* CUSTOMIZE THE CAROUSEL
--------------------------------------------------- */
+/* Style the carousel */
 
 /* Carousel base class */
 .carousel {
   height: 300px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   margin-top: 10px;
 }
 /* Since positioning the image, we need to help out the caption */
@@ -385,9 +172,6 @@ li.dropdown:hover {
   height: auto;
 }
 
-/* RESPONSIVE CSS
--------------------------------------------------- */
-
 @media (min-width: 768px) {
 
   /* Bump up size of carousel content */
@@ -398,4 +182,162 @@ li.dropdown:hover {
   }
 
 }
+/* Stylings for everything below the navigation bar */
 
+/* Stylings that apply to content on left side and main content */
+.panel, .panel-heading {
+  border-radius: 0px;
+  border-width: 0px;
+  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
+}
+
+.panel-heading {
+  font-family:'Raleway', sans-serif;
+  font-size:150%;
+}
+
+/* Push the main content down a bit */
+header {
+  margin-bottom: 5px;
+  margin-top: 60px;
+}
+
+#content, #sidebar {
+  top: 70px;
+}
+/* Stylings that apply to content on left side and main content */
+
+/* Stylings for content on left side of page */
+/* only apply sticky columns on wider screens */
+@media (min-width: 1200px) {
+  #content_left,
+  #admin_left {
+  margin-left:15px; /*unnecessary? */
+  }
+
+  #content_left.affix-bottom,
+  #admin_left.affix-bottom {
+    bottom: 0px;
+  }
+
+  #content_left.affix-top,
+  #admin_left.affix-top {
+    top: 0px;
+  }
+  
+  #content_left.affix,
+  #admin_left.affix {
+    position: fixed !important;
+    top: 67px;
+    width: 200px;
+  }
+}
+
+#content_left .panel-heading, 
+#admin_left .panel-heading {
+  background-color: #a0dbe7;
+  color: #fff;
+}
+
+#content_left a {
+  color: #676767;
+}
+
+#content_left img {
+  max-height: 150px;
+  max-width: 150px;
+  width: 100%;
+  height: auto;
+}
+/* Stylings for content on left side of page */
+
+/* Stylings for main content of page */
+#content_main .panel-heading,
+#content .panel-heading {
+  background-color: #77CCDD;
+  color: #fff;
+}
+
+.label-default a, .label-default a:hover {
+	color:#fff;
+}
+
+.ad-main img, .adbar img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.wrap-text .img-resize {
+  float: left;
+  max-width: 152px;
+  min-width: 152px;
+  padding: 5px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;  
+}
+
+.readmore {
+  position: relative;
+}
+
+.readmore:before {
+  position: absolute;
+  bottom: 0;  
+  height: 100%;
+  width: 100%;
+  content: "";
+  background: linear-gradient(to left,
+     rgba(255,255,255, 1) 10%, 
+     rgba(255,255,255, 0) 100%
+  );
+  pointer-events: none; /* so the text is still selectable */
+}
+
+.post-body img {
+  max-width: 100%;
+}
+
+.post-body .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #f1f1f1;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+  background-color: #f5f5f5;
+}
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 70px;
+}
+/* Stylings for main content of page */
+
+/* Stylings for right side of page */
+.ad-right {
+  padding-left: 0;
+}
+
+.ad-right img {
+  padding: 0;
+  max-width: 100%;
+  min-width: 100%;
+}
+/* Stylings for right side of page */
+
+/* Stylings for footer */
+#footer {
+  height: 60px;
+  margin-top:50px;
+  padding-top:20px;
+  padding-bottom:20px;
+	background-color:#dfdfdf;
+	color:#888;
+}
+/* Stylings for footer */
