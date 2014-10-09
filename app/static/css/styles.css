@@ -91,6 +91,10 @@ i.fa-list-ul {
 .dropdown-menu li>a {
   color: #3B5998;
 }
+
+.search-form {
+  margin-top: 5px;
+}
 /* Stylings for the navigation bar at top */
 
 /* Stylings for everything below the navigation bar */
