@@ -82,6 +82,16 @@ i.fa-list-ul {
   background-color: #77CCDD;
   color: #fff;
   min-width: 250px;
+  -webkit-transform-origin: top;
+  transform-origin: top;
+  -webkit-animation-fill-mode: forwards;  
+  animation-fill-mode: forwards; 
+  -webkit-transform: scale(1, 0);
+  transform: scale(1, 0);
+  display: block;
+  
+  transition: all 0.2s ease-out;
+  -webkit-transition: all 0.2s ease-out;
 }
 
 .dropdown-menu.facebook-like {
@@ -90,6 +100,15 @@ i.fa-list-ul {
 
 .dropdown-menu li>a {
   color: #3B5998;
+}
+
+.open > .dropdown-menu {
+  -webkit-transform: scale(1,1);
+  transform: scale(1,1);
+}
+
+.navbar .nav > li > .dropdown-menu:after {
+ 
 }
 
 .search-form {
