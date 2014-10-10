@@ -147,6 +147,9 @@ def news_post():
 
     if form.facebook.data:
       fn = os.path.basename(get_all_imgs(form.post.data)[0])
+      fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + fn
+      if not os.path.isfile(fn):
+        fn = url_for('static', filename='imgs/default.png')
 
       session['link'] = url_for('aflafrettir.post', 
                                 title=slugify(post.title),
@@ -154,6 +157,7 @@ def news_post():
                                 _external=True)
       session['body'] = form.facebook.data
       session['picture'] = imgs.url(fn)
+      
       current_app.logger.debug('Preparing data for Facebook')
 
       if current_user.fb_token:
