@@ -263,11 +263,13 @@ header {
   color: #fff;
 }
 
-#content_left a {
+#content_left a,
+#admin_left a {
   color: #676767;
 }
 
-#content_left img {
+#content_left img,
+#admin_left img {
   max-height: 150px;
   max-width: 150px;
   width: 100%;
