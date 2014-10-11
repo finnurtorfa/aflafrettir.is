@@ -220,6 +220,11 @@ i.fa-list-ul {
   font-size:150%;
 }
 
+.panel-body li a {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 /* Push the main content down a bit */
 header {
   margin-bottom: 5px;
