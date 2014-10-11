@@ -1,4 +1,6 @@
-function set_height() {
+function carousel_size() {
+  carousel_width = $('.carousel-inner .item').width()
+  $('.carousel-inner .item.active img').width(carousel_width);
   carousel_height = $('.carousel-inner .item.active img').height();
   if ( carousel_height < 100 ) {
     carousel_height = 100;
@@ -27,12 +29,20 @@ $(document).ready(function() {
   });
 
   $(window).resize(function() {
-    set_height();
+    carousel_size();
   });
 
-  $('.carousel-inner .item.active img').on('load', set_height);
+  $('.dropdown').mouseenter(function() {
+    $(this).addClass('open');
+  });
 
-  set_height();
+  $('.dropdown').mouseleave(function() {
+    $(this).removeClass('open');
+  });
+
+  $('.carousel-inner .item.active img').on('load', carousel_size);
+
+  carousel_size();
 
   $('.post-body table').each(function(){
     $(this).prepend('<thead></thead>')
