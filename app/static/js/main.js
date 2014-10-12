@@ -17,3 +17,27 @@ $('#confirm-delete').on('show.bs.modal', function(e) {
   $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
   $('.debug-url').html('Þú ert við það að fara að eyða færslu með titilinn: <strong>' + $(e.relatedTarget).data('title') + '</strong> <br> Ertu viss?');
 });
+
+$('#content_left, #admin_left').affix({
+  offset: {
+    top: function() {
+      if ( $('#content_left, #admin_left').outerHeight(true) >= $(window).height() ) {
+        return 310 - ($(window).height() - $('#content_left, #admin_left').outerHeight(true));
+      }
+      return $('#content_left, #admin_left').attr('data-affix-top');
+    },
+    bottom: 100
+  }
+});
+
+$('#content_left, #admin_left').on('affixed.bs.affix', function() {
+  if ( $(this).outerHeight(true) >= $(window).height() ) {
+    $(this).css('top', ($(window).height() - $(this).outerHeight(true)) + 'px');
+  } else {
+    $(this).css('top', '67px');
+  }
+});
+
+$('#content_left, #admin_left').on('affixed-top.bs.affix', function() {
+  $(this).css('top', '0px');
+});
