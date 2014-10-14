@@ -155,7 +155,7 @@ def news_post():
       if not os.path.isfile(fn):
         fn = url_for('static', filename='imgs/facebook.png')
       else:
-        fn = imgs.url(fn)
+        fn = imgs.url(os.path.basename(fn))
 
       session['link'] = url_for('aflafrettir.post', 
                                 title=slugify(post.title),
