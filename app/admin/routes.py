@@ -150,10 +150,10 @@ def news_post():
         fn = os.path.basename(get_all_imgs(form.post.data)[0])
         fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + fn
       except IndexError:
-        fn = url_for('static', filename='imgs/default.png')
+        fn = url_for('static', filename='imgs/facebook.png')
 
       if not os.path.isfile(fn):
-        fn = url_for('static', filename='imgs/default.png')
+        fn = url_for('static', filename='imgs/facebook.png')
       else:
         fn = imgs.url(fn)
 
