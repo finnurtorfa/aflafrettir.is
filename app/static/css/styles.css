@@ -336,6 +336,12 @@ header {
   /* Pad bottom by footer height */
   padding: 0 0 70px;
 }
+
+.post-like {
+  margin-top: 15px;
+  height: 20px;
+  overflow: hidden;
+}
 /* Stylings for main content of page */
 
 /* Stylings for right side of page */
