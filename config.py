@@ -15,6 +15,7 @@ class Config(object):
   FB_APP_ID     = os.environ.get('FB_APP_ID') or 'my_app_id'
   FB_APP_SECRET = os.environ.get('FB_APP_SECRET') or 'my_app_secret'
   FB_PAGE_ID    = os.environ.get('FB_PAGE_ID') or 'my_page_id'
+  GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID') or 'XXXX'
 
 class DevelopmentConfig(Config):
   DEBUG = True
