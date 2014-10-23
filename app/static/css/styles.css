@@ -251,6 +251,13 @@ header {
   }
 }
 
+@media (max-width: 768px) {
+  #content_left.affix,
+  #admin_left.affix {
+    position: static;
+  }
+}
+
 #content_left .panel-heading, 
 #admin_left .panel-heading {
   background-color: #a0dbe7;
