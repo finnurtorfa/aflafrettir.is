@@ -90,7 +90,9 @@
       <div class="col-6 col-sm-6">
         <h2> {{ post.title }} </h2>
         <div class="wrap-text"> 
-          <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+          <a href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id) }}">
+            <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+          </a>
           <p> {{ truncate(post.body, 300)|safe }} 
           </p>
         </div>
