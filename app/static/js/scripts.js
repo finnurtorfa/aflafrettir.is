@@ -63,7 +63,7 @@ $(document).ready(function() {
         }
         return $('#content_left, #admin_left').attr('data-affix-top');
       },
-      bottom: 100
+      bottom: 300
     }
   });
   
