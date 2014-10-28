@@ -1,0 +1,25 @@
+{% extends "aflafrettir/index.html" %}
+
+{% block header %}
+{% endblock %}
+
+{% block content_left %}
+{% endblock %}
+
+{% block content_main %}
+<div class="col-md-12" id="content">
+  {% include "_warnings.html" %}
+
+  <div class="panel">
+    <div class="panel-heading">Síða fannst ekki</div> 
+    <div class="panel-body post-body"> 
+        <div class="col-xs-12">
+          Þessi síða fannst því miður ekki!
+        </div> <!-- ./col-xs-12 -->
+    </div> <!-- ./panel-body -->
+  </div> <!-- ./panel -->
+</div> <!-- ./col-md-7 -->
+{% endblock %}
+
+{% block disqus_comments %}
+{% endblock %}
