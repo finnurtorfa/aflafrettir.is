@@ -192,6 +192,19 @@
 </div> <!-- ./col-md-7 -->
 {% endblock %}
 
+{% block footer_right %}
+<div class="col-md-9">
+  <p class="text-center"> <strong>Flokkar</strong><br><hr></p>
+</div>
+
+<ul class="list-inline">
+  <li><a href="{{ url_for('aflafrettir.category', cid=1) }}">Almenn frétt</a></li>
+  {% for category in categories %} 
+    <li><a href="{{ url_for('aflafrettir.category', cid=category.id) }}">{{ category.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
+
 {% block disqus_comments %}
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
