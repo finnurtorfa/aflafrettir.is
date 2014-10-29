@@ -15,6 +15,18 @@ from helpers.text import get_thumbnail, time_ago
 def before_app_request():
   g.search_form = SearchForm()
 
+@aflafrettir.errorhandler(404)
+def page_not_found(e):
+  categories = Category.get_all_active()
+  ads = Image.get_all_ads()
+  right_ads = [ad for ad in ads if ad.type == 3]
+  left_ads = [ad for ad in ads if ad.type == 4]
+
+  return render_template('aflafrettir/404.html', 
+                          categories=categories,
+                          right_ads=right_ads,
+                          left_ads=left_ads), 404
+
 @aflafrettir.route('/', alias=True)
 @aflafrettir.route('/frettir')
 @aflafrettir.route('/frettir/<int:page>')

@@ -137,16 +137,29 @@
   </div> <!-- ./col-span -->
 </div> <!-- ./container-fluid -->
 
+<div class="push"></div>
+
 </div> <!-- /.wrap -->
 
 {% block footer %} 
 <div id="footer">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">©Company 2014</div>
+      <div class="col-md-3">
+        <ul class="fa-ul">
+          <li><i class="fa-li fa fa-user"></i> <strong>Gísli Reynisson </strong> </li>
+          <li><i class="fa-li fa fa-home"></i> Fífudalur 23<br>260 Reykjanesbær</li>
+          <li><i class="fa-li fa fa-phone"></i> 421-7585</li>
+          <li><i class="fa-li fa fa-mobile"></i> 663-5575</li>
+          <li><i class="fa-li fa fa-envelope-o"></i><a href="mailto:gis@rafpostur.is">gis@rafpostur.is</a></li>
+          <li><i class="fa-li fa fa-bank"></i>Kennitala: 200875-3709<br>Reikningur: 0142-15-380889</li>
+        </ul>
+      </div>
+      {% block footer_right %}
+      {% endblock %}
     </div>
   </div>
-</footer>
+</div>
 {% endblock %}
 
 {% block disqus_comments %}

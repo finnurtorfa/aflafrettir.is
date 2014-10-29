@@ -100,7 +100,7 @@ class Post(db.Model):
 
   @classmethod
   def get_by_id(cls, aid):
-    return cls.query.filter_by(id=aid).first()
+    return cls.query.filter_by(id=aid).first_or_404()
 
   @classmethod
   def get_by_category(cls, cid, page, per_page=5, descending=True):
