@@ -189,7 +189,7 @@ def contact():
       {s}
       """.format(n=form.name.data,
                  e=form.email.data,
-                 s=form.message.data).encode('ascii', 'replace')
+                 s=form.message.data)
 
       mail.send(msg)
 
