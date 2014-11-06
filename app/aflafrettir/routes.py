@@ -182,7 +182,7 @@ def contact():
     else:
       msg = Message(form.subject.data, 
                     sender=form.email.data,
-                    recipients=['finnurtorfa@gmail.com'],
+                    recipients=[current_app.config['MAIL_USERNAME']],
                     charset='utf-8')
       msg.body = """
       From: {n} <{e}>
