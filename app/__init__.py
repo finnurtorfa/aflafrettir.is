@@ -24,6 +24,7 @@ imgs = UploadSet('imgs', IMAGES)
 
 mail = Mail()
 
+
 def create_app(config_name):
   app = Flask(__name__)
   app.config.from_object(config[config_name])
@@ -46,32 +47,36 @@ def create_app(config_name):
   from .aflafrettir import aflafrettir as afla_blueprint
   from .auth import auth as auth_blueprint
   from .admin import admin as admin_blueprint
+  from .rss import feed as feed_blueprint
   app.register_blueprint(afla_blueprint)
   app.register_blueprint(auth_blueprint, url_prefix='/auth')
   app.register_blueprint(admin_blueprint, url_prefix='/admin')
+  app.register_blueprint(feed_blueprint, url_prefix='/feed')
 
   from helpers.image import start_image_deletion_thread
+
   @app.before_first_request
   def before_first_request():
     start_image_deletion_thread()
 
   return app
 
+
 def configure_logging(app, logger='logger.yml'):
   import os, yaml
   import logging.config
 
-
   try:
     os.makedirs('log', exist_ok=True)
-  except OSError as e:
+  except OSError:
     logging.exception('OSError: ')
 
   if os.path.exists(logger):
     with open(logger) as f:
       config = yaml.load(f.read())
-  
+
   logging.config.dictConfig(config)
+
 
 class LevelFilter(logging.Filter):
   def __init__(self, level):
