@@ -1,0 +1,12 @@
+{% extends "rss/base.html" %}
+
+{% block items %}
+{% for post in posts.items %}
+  <item>
+    <title>{{post.title}} </title>
+    <link>{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id, _external=True) }}"</link>
+    <description>{{ truncate(post.body, 300)|safe }}</description>
+    <pubDate>{{ post.timestamp.strftime('%a, %d %b %Y %H:%M:%S %z') }}</pubDate>
+  </item>
+{% endfor %}
+{% endblock %}
