@@ -351,10 +351,14 @@ header {
   padding: 0;
   max-width: 100%;
   min-width: 100%;
+  margin-bottom: 10px;
 }
 /* Stylings for right side of page */
 
 /* Stylings for footer */
+.push {
+  margin-bottom: 70px;
+}
 #footer, .push {
   height:210px;
   padding-top:20px;
