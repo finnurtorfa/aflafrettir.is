@@ -11,9 +11,11 @@ from .. import mail, imgs
 
 from helpers.text import get_thumbnail, time_ago
 
+
 @aflafrettir.before_app_request
 def before_app_request():
   g.search_form = SearchForm()
+
 
 @aflafrettir.errorhandler(404)
 def page_not_found(e):
@@ -22,10 +24,11 @@ def page_not_found(e):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
-  return render_template('aflafrettir/404.html', 
+  return render_template('aflafrettir/404.html',
                           categories=categories,
                           right_ads=right_ads,
                           left_ads=left_ads), 404
+
 
 @aflafrettir.route('/', alias=True)
 @aflafrettir.route('/frettir')
@@ -53,7 +56,7 @@ def index(page=1):
     if not os.path.isfile(fn):
       post.thumbnail = url_for('static', filename='imgs/default.png')
 
-  return render_template('aflafrettir/index.html', 
+  return render_template('aflafrettir/index.html',
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
@@ -61,6 +64,7 @@ def index(page=1):
                           main_sm=main_sm,
                           right_ads=right_ads,
                           left_ads=left_ads)
+
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
 @aflafrettir.route('/frettir/flokkur/<int:cid>/sida/<int:page>')
@@ -87,7 +91,7 @@ def category(cid, page=1):
     if not os.path.isfile(fn):
       post.thumbnail = url_for('static', filename='imgs/default.png')
 
-  return render_template('aflafrettir/index.html', 
+  return render_template('aflafrettir/index.html',
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
@@ -95,6 +99,7 @@ def category(cid, page=1):
                           main_sm=main_sm,
                           right_ads=right_ads,
                           left_ads=left_ads)
+
 
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
 def post(title, pid):
@@ -104,18 +109,21 @@ def post(title, pid):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
-  return render_template('aflafrettir/post.html', 
+  return render_template('aflafrettir/post.html',
                           categories=categories,
                           post=post,
                           right_ads=right_ads,
                           left_ads=left_ads)
+
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 def search():
   if not g.search_form.validate_on_submit():
     return redirect(url_for('aflafrettir.index'))
 
-  return redirect(url_for('aflafrettir.results', query=g.search_form.search.data))
+  return redirect(url_for('aflafrettir.results',
+                  query=g.search_form.search.data))
+
 
 @aflafrettir.route('/frettir/leita/<query>')
 @aflafrettir.route('/frettir/leita/<query>/sida/<int:page>')
@@ -142,7 +150,7 @@ def results(query, page=1):
     if not os.path.isfile(fn):
       post.thumbnail = url_for('static', filename='imgs/default.png')
 
-  return render_template('aflafrettir/index.html', 
+  return render_template('aflafrettir/index.html',
                           categories=categories,
                           posts=posts,
                           top_ads=top_ads,
@@ -150,6 +158,7 @@ def results(query, page=1):
                           main_sm=main_sm,
                           right_ads=right_ads,
                           left_ads=left_ads)
+
 
 @aflafrettir.route('/um-siduna')
 def about():
@@ -160,12 +169,13 @@ def about():
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
-  return render_template('aflafrettir/about.html', 
+  return render_template('aflafrettir/about.html',
                           about=about,
                           categories=categories,
                           top_ads=top_ads,
                           right_ads=right_ads,
                           left_ads=left_ads)
+
 
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
 def contact():
@@ -180,7 +190,7 @@ def contact():
     if not form.validate():
       return render_template('aflafrettir/contact.html', form=form)
     else:
-      msg = Message(form.subject.data, 
+      msg = Message(form.subject.data,
                     sender=form.email.data,
                     recipients=[current_app.config['MAIL_USERNAME']],
                     charset='utf-8')
@@ -195,12 +205,13 @@ def contact():
 
       return redirect(url_for('aflafrettir.contact'))
 
-  return render_template('aflafrettir/contact.html', 
+  return render_template('aflafrettir/contact.html',
                           form=form,
                           categories=categories,
                           top_ads=top_ads,
                           right_ads=right_ads,
                           left_ads=left_ads)
+
 
 @aflafrettir.route('/notandi/<username>')
 def user(username):

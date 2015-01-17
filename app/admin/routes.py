@@ -16,15 +16,18 @@ from . import admin
 from .forms import ProfileForm, PostForm, CategoryForm, AdForm, AboutForm
 
 from .. import db, ads, imgs
-from ..models import User, Post, Category, Image, About
+from ..models import Post, Category, Image, About
 
-### Profile Related Routes
-##############################
+"""Profile Related Routes
+"""
+
+
 @admin.route('/')
 @admin.route('/profile', alias=True)
 @login_required
 def profile_index():
   return render_template('admin/user.html', user=current_user)
+
 
 @admin.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
@@ -49,27 +52,28 @@ def profile_edit():
 
   return render_template('admin/edit_user.html', form=form)
 
-### News Related Routes
-##############################
+"""News Related Routes
+"""
+
 
 @admin.route('/facebook', methods=['GET', 'POST'])
 @login_required
 def post_to_fb():
   if current_user.fb_token:
-    current_app.logger.debug('User {} already has token: {}'\
+    current_app.logger.debug('User {} already has token: {}'
                              .format(current_user.username,
                                      current_user.fb_token))
     current_app.logger.debug(request.args)
 
     api = GraphAPI(current_user.fb_token)
   elif request.args.get('code'):
-    current_app.logger.debug('Fetching Faccbook token for user {}'\
+    current_app.logger.debug('Fetching Faccbook token for user {}'
                              .format(current_user.username))
     current_app.logger.debug(request.args)
 
     f = FacebookAPI(current_app.config['FB_APP_ID'],
                     current_app.config['FB_APP_SECRET'],
-                    url_for('admin.post_to_fb', 
+                    url_for('admin.post_to_fb',
                             _external=True))
     access_token = f.get_access_token(request.args.get('code'))
     user_access_token = access_token[b'access_token'].decode('utf-8')
@@ -80,10 +84,10 @@ def post_to_fb():
 
     api = GraphAPI(user_access_token)
   else:
-    current_app.logger.error("Not able to send post to Facebook for user {}"\
+    current_app.logger.error("Not able to send post to Facebook for user {}"
                              .format(current_user.username))
     current_app.logger.error(request.args)
-    
+
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
@@ -95,20 +99,21 @@ def post_to_fb():
       break
   else:
     current_app.logger.error('Not able to find the page_access_token')
-    curent_app.logger.error(accounts)
+    current_app.logger.error(accounts)
     current_app.logger.error(request.args)
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
   api = GraphAPI(page_access_token)
-  post = api.post(current_app.config['FB_PAGE_ID'] + '/feed', 
-                  params={'message': session.pop('body', None),
-                          'link': session.pop('link', None),
-                          'picture': session.pop('picture', None)})
-  
+  api.post(current_app.config['FB_PAGE_ID'] + '/feed',
+           params={'message': session.pop('body', None),
+                   'link': session.pop('link', None),
+                   'picture': session.pop('picture', None)})
+
   flash("Tókst að senda póst á Facebook")
 
   return redirect(url_for('admin.news_index'))
+
 
 @admin.route('/news')
 @login_required
@@ -116,6 +121,7 @@ def news_index():
   posts = Post.get_all()
 
   return render_template('admin/news.html', posts=posts)
+
 
 @admin.route('/news/post', methods=['GET', 'POST'])
 @login_required
@@ -126,7 +132,7 @@ def news_post():
 
   active = Category.get_all_active()
 
-  form.category.choices.extend([(n+1, i.name) for n, i in enumerate(active)])
+  form.category.choices.extend([(n + 1, i.name) for n, i in enumerate(active)])
 
   if form.validate_on_submit():
     name = form.category.choices[int(form.category.data)][1]
@@ -134,8 +140,8 @@ def news_post():
 
     post = Post(title=form.title.data,
                 body=remove_html_tags(form.post.data),
-                body_html=form.post.data, 
-                timestamp=form.created.data, 
+                body_html=form.post.data,
+                timestamp=form.created.data,
                 author=current_user,
                 category=category)
 
@@ -144,9 +150,8 @@ def news_post():
 
     flash("Fréttin hefur verið vistuð!")
 
-
     if form.facebook.data:
-      try: 
+      try:
         fn = os.path.basename(get_all_imgs(form.post.data)[0])
         fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + fn
       except IndexError:
@@ -157,13 +162,13 @@ def news_post():
       else:
         fn = imgs.url(os.path.basename(fn))
 
-      session['link'] = url_for('aflafrettir.post', 
+      session['link'] = url_for('aflafrettir.post',
                                 title=slugify(post.title),
                                 pid=post.id,
                                 _external=True)
       session['body'] = form.facebook.data
       session['picture'] = fn
-      
+
       current_app.logger.debug('Preparing data for Facebook')
       current_app.logger.debug(session)
 
@@ -172,22 +177,23 @@ def news_post():
       else:
         f = FacebookAPI(current_app.config['FB_APP_ID'],
                         current_app.config['FB_APP_SECRET'],
-                        url_for('admin.post_to_fb', 
+                        url_for('admin.post_to_fb',
                                 _external=True))
-        auth_url = f.get_auth_url(scope=['public_profile', 
-                                         'email', 
+        auth_url = f.get_auth_url(scope=['public_profile',
+                                         'email',
                                          'manage_pages',
                                          'publish_actions'])
 
-        current_app.logger.debug('Authentication url for Facebook {}'\
+        current_app.logger.debug('Authentication url for Facebook {}'
                                  .format(auth_url))
-  
+
         return redirect(auth_url)
-    
+
     return redirect(url_for('admin.news_index'))
 
   return render_template('admin/post.html', form=form)
-  
+
+
 @admin.route('/news/post/upload', methods=['GET', 'POST'])
 @login_required
 def nicedit_upload():
@@ -206,15 +212,16 @@ def nicedit_upload():
   db.session.commit()
 
   crop_image(imgs.path(filename))
-        
-  links_dict  = {'original' : url_for('static', 
+
+  links_dict  = {'original': url_for('static',
                                       filename='uploads/imgs/' + filename)}
-  set_dict    = {'links' : links_dict}
-  upload_dict = {'upload' : set_dict }
+  set_dict    = {'links': links_dict}
+  upload_dict = {'upload': set_dict}
 
   current_app.logger.debug('upload_dict {}'.format(upload_dict))
 
   return json.dumps(upload_dict)
+
 
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
@@ -226,7 +233,7 @@ def news_edit(post_id):
 
   active = Category.get_all_active()
 
-  form.category.choices.extend([(n+1, i.name) for n, i in enumerate(active)])
+  form.category.choices.extend([(n + 1, i.name) for n, i in enumerate(active)])
 
   if form.validate_on_submit():
     name = form.category.choices[int(form.category.data)][1]
@@ -245,7 +252,7 @@ def news_edit(post_id):
     flash("Fréttin hefur verið uppfærð!")
 
     return redirect(url_for('admin.news_index'))
-  
+
   form.title.data       = post.title
   form.post.data        = post.body_html
   form.created.data     = post.timestamp
@@ -253,6 +260,7 @@ def news_edit(post_id):
                              if v[1] == post.category.name][0]
 
   return render_template('admin/post.html', form=form)
+
 
 @admin.route('/news/delete/<int:post_id>')
 @login_required
@@ -264,6 +272,7 @@ def news_delete(post_id):
 
   return redirect(url_for('admin.news_index'))
 
+
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
 def news_category():
@@ -273,18 +282,18 @@ def news_category():
     inactive = Category.get_all_active(False)
 
     if active:
-      form.active.choices = [(n, i.name) for n,i in enumerate(active)]
+      form.active.choices = [(n, i.name) for n, i in enumerate(active)]
     else:
       form.active.choices = [(0, '')]
 
     if inactive:
-      form.inactive.choices = [(n, i.name) for n,i in enumerate(inactive)]
+      form.inactive.choices = [(n, i.name) for n, i in enumerate(inactive)]
     else:
       form.inactive.choices = [(0, '')]
 
     if request.method == 'POST':
       if form.submit.data and form.category.data:
-        current_app.logger.debug('Adding a new category: {}'\
+        current_app.logger.debug('Adding a new category: {}'
                                  .format(form.category.data))
 
         category = Category(name=form.category.data)
@@ -294,26 +303,26 @@ def news_category():
 
         return redirect(url_for('admin.news_category'))
 
-      if form.right.data and inactive and form.inactive.data != None:
-        current_app.logger.debug('Deactivating category: {}'\
+      if form.right.data and inactive and form.inactive.data is not None:
+        current_app.logger.debug('Deactivating category: {}'
                                  .format(form.category.data))
 
         category_selected = form.inactive.choices[int(form.inactive.data)][1]
         category = Category.get_by_name(category_selected)
-        category.active=True
+        category.active = True
 
         db.session.add(category)
         db.session.commit()
 
         return redirect(url_for('admin.news_category'))
 
-      if form.left.data and active and form.active.data != None:
-        current_app.logger.debug('Activating category: {}'\
+      if form.left.data and active and form.active.data is not None:
+        current_app.logger.debug('Activating category: {}'
                                  .format(form.category.data))
 
         category_selected = form.active.choices[int(form.active.data)][1]
         category = Category.get_by_name(category_selected)
-        category.active=False
+        category.active = False
 
         db.session.add(category)
         db.session.commit()
@@ -322,8 +331,9 @@ def news_category():
 
     return render_template('admin/category.html', form=form)
 
-### File Upload Related Routes
-##############################
+"""File Upload Related Routes
+"""
+
 
 @admin.route('/ad')
 @login_required
@@ -332,6 +342,7 @@ def ad_index():
   ads = Image.get_all_ads(only_active=False)
 
   return render_template('admin/ads.html', form=form, ads=ads)
+
 
 @admin.route('/ad/upload', methods=['GET', 'POST'])
 @login_required
@@ -343,7 +354,8 @@ def ad_upload():
       try:
         file = request.files.get('ad')
         filename = ads.save(file)
-        #filename = do_something(ads.path(filename))
+        """filename = do_something(ads.path(filename))
+        """
         flash("Skráin hefur verið vistuð!")
       except UploadNotAllowed:
         current_app.logger.exception('Tried to upload {}'.format(filename))
@@ -354,7 +366,7 @@ def ad_upload():
       else:
         if form.url.data:
           if not form.url.data.startswith('http'):
-            form.url.data = 'http://'+form.url.data
+            form.url.data = 'http://' + form.url.data
 
         ad = Image(filename=filename,
                    location=url_for('static', filename='uploads/ads/'),
@@ -364,10 +376,11 @@ def ad_upload():
 
         db.session.add(ad)
         db.session.commit()
-        
+
         return redirect(url_for('admin.ad_index'))
 
   return render_template('admin/upload.html', form=form)
+
 
 @admin.route('/ad/edit/<int:ad_id>', methods=['GET', 'POST'])
 @login_required
@@ -378,7 +391,7 @@ def ad_edit(ad_id):
   if request.method == 'POST':
     if form.url.data:
       if not form.url.data.startswith('http'):
-        form.url.data = 'http://'+form.url.data
+        form.url.data = 'http://' + form.url.data
 
     ad.type      = form.placement.data
     ad.url       = form.url.data
@@ -388,6 +401,7 @@ def ad_edit(ad_id):
     db.session.commit()
 
     flash("Auglýsingin hefur verið uppfærð")
+
     return redirect(url_for('admin.ad_index'))
 
   form.placement.data = ad.type
@@ -395,6 +409,7 @@ def ad_edit(ad_id):
   form.active.data    = ad.active
 
   return render_template('admin/upload.html', form=form)
+
 
 @admin.route('/ad/delete/<int:ad_id>')
 @login_required
@@ -412,8 +427,10 @@ def ad_delete(ad_id):
 
   return redirect(url_for('admin.ad_index'))
 
-### About the page related routes
-##############################
+"""About the page related routes
+"""
+
+
 @admin.route('/about', methods=['GET', 'POST'])
 def about():
   form = AboutForm()
@@ -427,14 +444,17 @@ def about():
     db.session.commit()
 
   form.body.data = about.body
-  
+
   return render_template('admin/about.html', form=form)
 
-### Informatics and Analytics
-##############################
+""" Informatics and Analytics
+"""
+
+
 @admin.route('/info/feedjit')
 def feedjit():
   return render_template('admin/feedjit.html')
+
 
 @admin.route('/info/google')
 def google():
