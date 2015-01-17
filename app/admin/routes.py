@@ -358,7 +358,7 @@ def ad_upload():
         """
         flash("Skráin hefur verið vistuð!")
       except UploadNotAllowed:
-        current_app.logger.exception('Tried to upload {}'.format(filename))
+        current_app.logger.exception('Tried to upload {}'.format(file))
 
         flash("Ekki leyfileg tegund af skrá!")
 
