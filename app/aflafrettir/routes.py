@@ -113,7 +113,7 @@ def post(title, pid):
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 def search():
   if not g.search_form.validate_on_submit():
-    return redirect(url_for('index'))
+    return redirect(url_for('aflafrettir.index'))
 
   return redirect(url_for('aflafrettir.results', query=g.search_form.search.data))
 
