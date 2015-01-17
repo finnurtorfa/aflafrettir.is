@@ -27,6 +27,13 @@ class HTMLStripper(HTMLParser):
   def handle_data(self, d):
     """ Handler for the data inside tags """
     if not self.escape:
+      eol = ''
+      if d[-1] not in ('.', '!', '?'):
+        eol = eol + '.'
+
+      eol = eol + ' '
+
+      d += eol
       self.fed.append(d)
 
   def get_data(self):
