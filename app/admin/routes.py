@@ -7,7 +7,7 @@ from flask import (render_template, redirect, url_for, flash, request, json,
 from flask.ext.login import login_required, current_user
 from flask.ext.uploads import UploadNotAllowed
 
-from facebook import FacebookAPI, GraphAPI
+from facebook import FacebookAPI, GraphAPI, GraphAPIError
 
 from helpers.text import remove_html_tags, slugify, get_all_imgs
 from helpers.image import crop_image, jpeg_convert
@@ -105,12 +105,15 @@ def post_to_fb():
     return redirect(url_for('admin.news_index'))
 
   api = GraphAPI(page_access_token)
-  api.post(current_app.config['FB_PAGE_ID'] + '/feed',
-           params={'message': session.pop('body', None),
-                   'link': session.pop('link', None),
-                   'picture': session.pop('picture', None)})
+  try:
+    api.post(current_app.config['FB_PAGE_ID'] + '/feed',
+             params={'message': session.pop('body', None),
+                     'link': session.pop('link', None),
+                     'picture': session.pop('picture', None)})
 
-  flash("Tókst að senda póst á Facebook")
+    flash("Tókst að senda póst á Facebook")
+  except GraphAPIError as e:
+    flash("Tókst ekki að senda á Facebook. Skilaboð: {0}".format(e))
 
   return redirect(url_for('admin.news_index'))
 
