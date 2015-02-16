@@ -16,6 +16,7 @@ class Config(object):
   FB_APP_SECRET = os.environ.get('FB_APP_SECRET') or 'my_app_secret'
   FB_PAGE_ID    = os.environ.get('FB_PAGE_ID') or 'my_page_id'
   GOOGLE_ANALYTICS_ID = os.environ.get('GOOGLE_ANALYTICS_ID') or 'XXXX'
+  BABEL_DEFAULT_LOCALE = 'is'
 
 class DevelopmentConfig(Config):
   DEBUG = True
