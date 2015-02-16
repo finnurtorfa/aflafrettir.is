@@ -7,6 +7,7 @@ from flask.ext.login import LoginManager
 from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
 from flask.ext.mail import Mail
 from flask.ext.whooshalchemy import whoosh_index
+from flask.ext.babel import Babel
 
 from helpers.text import slugify, truncate
 
@@ -23,6 +24,7 @@ ads = UploadSet('ads', IMAGES)
 imgs = UploadSet('imgs', IMAGES)
 
 mail = Mail()
+babel = Babel()
 
 
 def create_app(config_name):
@@ -40,6 +42,7 @@ def create_app(config_name):
   login_manager.init_app(app)
   configure_uploads(app, (ads, imgs))
   mail.init_app(app)
+  babel.init_app(app)
 
   from .models import Post
   whoosh_index(app, Post)
