@@ -55,6 +55,9 @@ docs/_build/
 # Sqlite db's
 *.sqlite
 
+# Translations
+translations/
+
 # Uploads directory
 uploads/
 
