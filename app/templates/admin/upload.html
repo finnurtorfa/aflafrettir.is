@@ -6,9 +6,9 @@
   {% include "_warnings.html" %}
 
   <div class="panel">
-    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-heading">{{ _('Stjórnborð') }}</div> 
     <div class="panel-body">
-      <h1> Bæta við auglýsingu </h1>
+      <h1>{{ _('Bæta við auglýsingu') }}</h1>
       
       <form action="{{ request.path }}" method="post" enctype="multipart/form-data" class="form" role="form">
         {% if request.path == url_for('admin.ad_upload') %} 

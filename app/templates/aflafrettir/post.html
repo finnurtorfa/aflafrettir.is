@@ -6,10 +6,10 @@
 {% block content_left %}
 <div class="col-md-2" id="sidebar">
   <div class="panel panel-default" id="admin_left" data-affix-top="0">
-    <div class="panel-heading">Flokkar</div>
+    <div class="panel-heading">{{ _('Flokkar') }}</div>
     <div class="panel-body">
       <ul class="nav nav-stacked">
-        <li><a href="{{ url_for('aflafrettir.category', cid=1) }}">Almenn frétt</a></li>
+        <li><a href="{{ url_for('aflafrettir.category', cid=1) }}">{{ _('Almenn frétt') }}</a></li>
         {% for category in categories %}
           <li><a href="{{ url_for('aflafrettir.category', cid=category.id) }}">{{ category.name }}</a></li>
         {% endfor %}

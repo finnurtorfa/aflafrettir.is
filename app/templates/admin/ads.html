@@ -8,16 +8,16 @@
   {% include "_warnings.html" %}
 
   <div class="panel">
-    <div class="panel-heading">Stjórnborð</div> 
+    <div class="panel-heading">{{ _('Stjórnborð') }}</div> 
     <div class="panel-body">
       <table class="table table-striped table-hover table-condensed">
         <thead>
           <tr>
-            <th> Titill </th>
-            <th> Staðsetning </th>
-            <th> Virk? </th>
-            <th> Dagsetning </th>
-            <th> Aðgerðir </th>
+            <th> {{ _('Titill') }}</th>
+            <th> {{ _('Staðsetning') }}</th>
+            <th> {{ _('Virk?') }}</th>
+            <th> {{ _('Dagsetning') }}</th>
+            <th> {{ _('Aðgerðir') }}</th>
           </tr>
         </thead>
       
@@ -26,7 +26,7 @@
           <tr>
             <td> {{ ad.filename }} </td>
             <td> {{ form.placement.choices[ad.type][1] }} </td>
-            <td> {% if ad.active %} Já {% else %} Nei {% endif %} </td>
+            <td> {% if ad.active %} {{ _('Já') }}{% else %} {{ _('Nei') }}{% endif %} </td>
             <td> {{ ad.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
             <td> 
               <a href="{{ url_for('admin.ad_edit', ad_id=ad.id) }}">

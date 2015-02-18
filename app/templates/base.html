@@ -57,10 +57,11 @@
           <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user fa-lg"></i></a>
           <ul class="dropdown-menu">
             {% if not current_user.is_authenticated() %}
-            <li><a href="{{ url_for('auth.login') }}">Innskráning</a></li>
+            <li><a href="{{ url_for('auth.login') }}">{{ _('Innskráning') }}</a></li>
             {% elif current_user.is_authenticated() %}
-            <li><a href="{{ url_for('admin.profile_index') }}">Stjórnborð</a></li>
-            <li><a href="{{ url_for('auth.logout') }}">Útskráning</a></li>
+            <li><a href="{{ url_for('admin.profile_index') }}">{{
+                _('Stjórnborð') }}</a></li>
+            <li><a href="{{ url_for('auth.logout') }}">{{ _('Útskráning') }}</a></li>
             {% endif %}
           </ul>
         </li>
@@ -72,7 +73,8 @@
               <form action="{{ url_for('aflafrettir.search') }}" method="post" class="navbar-form" role="search">
                 {{ g.search_form.hidden_tag() }}
                 <div class="input-group">
-                  {{ g.search_form.search(**{'class':'form-control search-form', 'placeholder':'Leita'}) }}
+                  {{ g.search_form.search(**{'class':'form-control search-form', 
+                                             'placeholder':'Leita'}) }}
                   <div class="input-group-btn">
                     <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
                   </div> <!-- ./input-group-brn -->
@@ -94,7 +96,7 @@
 
       <!-- Required bootstrap placeholder for the collapsed menu -->
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Opna/Loka Valmynd</span>
+        <span class="sr-only">{{ _('Opna/Loka Valmynd') }}</span>
         <i class="fa fa-list-ul fa-lg"></i>
       </button> 
     </div>
@@ -103,9 +105,9 @@
     <div class="navbar-header collapse navbar-collapse navbar-left">
       <!--                      pull-right keeps the drop-down in line -->
       <ul class="nav navbar-nav pull-right">
-        <li><a href="{{ url_for('aflafrettir.index') }}">Forsíða</a></li>
-        <li><a href="{{ url_for('aflafrettir.contact') }}">Hafa samband</a></li>
-        <li><a href="{{ url_for('aflafrettir.about') }}">Um síðuna</a></li>
+        <li><a href="{{ url_for('aflafrettir.index') }}">{{ _('Forsíða') }}</a></li>
+        <li><a href="{{ url_for('aflafrettir.contact') }}">{{ _('Hafa samband') }}</a></li>
+        <li><a href="{{ url_for('aflafrettir.about') }}">{{ _('Um síðuna') }}</a></li>
       </ul>
     </div>
 
