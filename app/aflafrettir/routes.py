@@ -7,13 +7,18 @@ from . import aflafrettir
 from .forms import ContactForm, SearchForm
 from ..models import User, Category, Post, About, Image
 
-from .. import mail, imgs
+from .. import mail, imgs, babel
 
 from helpers.text import get_thumbnail, time_ago
 
 
-@aflafrettir.before_app_request
-def before_app_request():
+@babel.localeselector
+def get_locale():
+  return request.view_args.get('lang_code', 'is')
+
+
+@aflafrettir.before_request
+def before_request():
   g.search_form = SearchForm()
 
 
@@ -33,7 +38,9 @@ def page_not_found(e):
 @aflafrettir.route('/', alias=True)
 @aflafrettir.route('/frettir')
 @aflafrettir.route('/frettir/<int:page>')
-def index(page=1):
+@aflafrettir.route('/<lang_code>/frettir')
+@aflafrettir.route('/<lang_code>/frettir/<int:page>')
+def index(page=1, lang_code='is'):
   categories = Category.get_all_active()
   posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
@@ -68,7 +75,9 @@ def index(page=1):
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
 @aflafrettir.route('/frettir/flokkur/<int:cid>/sida/<int:page>')
-def category(cid, page=1):
+@aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>')
+@aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>/sida/<int:page>')
+def category(cid, page=1, lang_code='is'):
   categories = Category.get_all_active()
   posts = Post.get_by_category(cid, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
@@ -102,7 +111,8 @@ def category(cid, page=1):
 
 
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
-def post(title, pid):
+@aflafrettir.route('/<lang_code>/frettir/grein/<title>/<int:pid>')
+def post(title, pid, lang_code='is'):
   post = Post.get_by_id(pid)
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
@@ -117,6 +127,7 @@ def post(title, pid):
 
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
+@aflafrettir.route('/<lang_code>/frettir/leita', methods=['POST'])
 def search():
   if not g.search_form.validate_on_submit():
     return redirect(url_for('aflafrettir.index'))
@@ -127,7 +138,9 @@ def search():
 
 @aflafrettir.route('/frettir/leita/<query>')
 @aflafrettir.route('/frettir/leita/<query>/sida/<int:page>')
-def results(query, page=1):
+@aflafrettir.route('/<lang_code>/frettir/leita/<query>')
+@aflafrettir.route('/<lang_code>/frettir/leita/<query>/sida/<int:page>')
+def results(query, page=1, lang_code='is'):
   categories = Category.get_all_active()
   posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
@@ -161,7 +174,8 @@ def results(query, page=1):
 
 
 @aflafrettir.route('/um-siduna')
-def about():
+@aflafrettir.route('/<lang_code>/um-siduna')
+def about(lang_code='is'):
   about = About.query.first()
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
@@ -178,7 +192,8 @@ def about():
 
 
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
-def contact():
+@aflafrettir.route('/<lang_code>/hafa-samband', methods=['GET', 'POST'])
+def contact(lang_code='is'):
   form = ContactForm()
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
@@ -214,6 +229,7 @@ def contact():
 
 
 @aflafrettir.route('/notandi/<username>')
-def user(username):
+@aflafrettir.route('/<lang_code>/notandi/<username>')
+def user(username, lang_code='is'):
   user = User.query.filter_by(username=username).first_or_404()
   return render_template('aflafrettir/user.html', user=user)
