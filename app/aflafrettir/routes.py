@@ -1,6 +1,7 @@
 import os
 
-from flask import render_template, url_for, redirect, request, g, current_app
+from flask import (render_template, url_for, redirect, request, g, 
+                   current_app, abort)
 from flask.ext.mail import Message
 
 from . import aflafrettir
@@ -20,6 +21,10 @@ def get_locale():
 @aflafrettir.before_request
 def before_request():
   g.search_form = SearchForm()
+
+  if request.view_args and 'lang_code' in request.view_args:
+    if request.view_args['lang_code'] not in ('en', 'is'):
+      return abort(404)
 
 
 @aflafrettir.errorhandler(404)
