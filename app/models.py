@@ -78,6 +78,7 @@ class Post(db.Model):
   title         = db.Column(db.String(64))
   body          = db.Column(db.Text)
   body_html     = db.Column(db.Text)
+  language      = db.Column(db.String(4), default='is')
   timestamp     = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   author_id     = db.Column(db.Integer, db.ForeignKey('users.id'))
   category_id   = db.Column(db.Integer, db.ForeignKey('categories.id'))
