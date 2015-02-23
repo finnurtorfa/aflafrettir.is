@@ -91,12 +91,14 @@ class Post(db.Model):
       return cls.query.order_by(cls.timestamp).all()
 
   @classmethod
-  def get_per_page(cls, page, per_page=5, descending=True):
+  def get_per_page(cls, page, per_page=5, descending=True, lang='is'):
     if descending:
       return cls.query.order_by(cls.timestamp.desc())\
+                .filter_by(language=lang)\
                 .paginate(page, per_page, False)
     else:
       return cls.query.order_by(cls.timestamp)\
+                .filter_by(language=lang)\
                 .paginate(page, per_page, False)
 
   @classmethod
@@ -104,13 +106,15 @@ class Post(db.Model):
     return cls.query.filter_by(id=aid).first_or_404()
 
   @classmethod
-  def get_by_category(cls, cid, page, per_page=5, descending=True):
+  def get_by_category(cls, cid, page, per_page=5, descending=True, lang='is'):
     if descending:
       return cls.query.filter(cls.category_id == cid)\
+                .filter_by(language=lang)\
                 .order_by(cls.timestamp.desc())\
                 .paginate(page, per_page, False)
     else:
       return cls.query.filter(cls.category_id == cid)\
+                .filter_by(language=lang)\
                 .order_by(cls.timestamp)\
                 .paginate(page, per_page, False)
 
