@@ -45,7 +45,7 @@
   <div class="container-fluid">
     <!-- Title -->
     <div class="navbar-header pull-left">
-      <a href="{{ url_for('aflafrettir.index') }}">
+      <a href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">
         <img src="{{ url_for('static', filename='imgs/afla_logo.png') }}" />
       </a>
     </div>
@@ -70,7 +70,7 @@
           <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-search fa-lg"></i></a>
           <ul class="dropdown-menu">
             <li>
-              <form action="{{ url_for('aflafrettir.search') }}" method="post" class="navbar-form" role="search">
+              <form action="{{ url_for('aflafrettir.search', lang_code=lang_code) }}" method="post" class="navbar-form" role="search">
                 {{ g.search_form.hidden_tag() }}
                 <div class="input-group">
                   {{ g.search_form.search(**{'class':'form-control search-form', 
@@ -105,9 +105,9 @@
     <div class="navbar-header collapse navbar-collapse navbar-left">
       <!--                      pull-right keeps the drop-down in line -->
       <ul class="nav navbar-nav pull-right">
-        <li><a href="{{ url_for('aflafrettir.index') }}">{{ _('Forsíða') }}</a></li>
-        <li><a href="{{ url_for('aflafrettir.contact') }}">{{ _('Hafa samband') }}</a></li>
-        <li><a href="{{ url_for('aflafrettir.about') }}">{{ _('Um síðuna') }}</a></li>
+        <li><a href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">{{ _('Forsíða') }}</a></li>
+        <li><a href="{{ url_for('aflafrettir.contact', lang_code=lang_code) }}">{{ _('Hafa samband') }}</a></li>
+        <li><a href="{{ url_for('aflafrettir.about', lang_code=lang_code) }}">{{ _('Um síðuna') }}</a></li>
       </ul>
     </div>
 
