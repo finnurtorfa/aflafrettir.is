@@ -50,7 +50,9 @@ def page_not_found(e):
 @aflafrettir.route('/<lang_code>/frettir/<int:page>')
 def index(page=1, lang_code='is'):
   categories = Category.get_all_active()
-  posts = Post.get_per_page(page, current_app.config['POSTS_PER_PAGE'])
+  posts = Post.get_per_page(page,
+                            current_app.config['POSTS_PER_PAGE'],
+                            lang=lang_code)
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
   main_lg = [ad for ad in ads if ad.type == 1]
@@ -87,7 +89,10 @@ def index(page=1, lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>/sida/<int:page>')
 def category(cid, page=1, lang_code='is'):
   categories = Category.get_all_active()
-  posts = Post.get_by_category(cid, page, current_app.config['POSTS_PER_PAGE'])
+  posts = Post.get_by_category(cid,
+                               page,
+                               current_app.config['POSTS_PER_PAGE'],
+                               lang=lang_code)
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
   main_lg = [ad for ad in ads if ad.type == 1]
