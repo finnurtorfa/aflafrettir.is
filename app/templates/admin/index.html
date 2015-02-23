@@ -25,9 +25,11 @@
           <a class="collapsible" href="#" data-toggle="collapse" data-target="#news-menu">
             <h3>{{ _('Fréttir') }}</h3>
           </a>
-          <ul class="list-unstyled collapse {% if request.path in [url_for('admin.news_index'), url_for('admin.news_post'), url_for('admin.news_category')] %} in {% endif %}" id="news-menu">
+          <ul class="list-unstyled collapse {% if request.path in [url_for('admin.news_index', lang=lang), url_for('admin.news_post', lang=lang), url_for('admin.news_category')] %} in {% endif %}" id="news-menu">
             <li><a href="{{ url_for('admin.news_index') }}">{{ _('Yfirlit') }}</a></li>
             <li><a href="{{ url_for('admin.news_post') }}">{{ _('Ný Frétt') }}</a></li>
+            <li><a href="{{ url_for('admin.news_index', lang='en') }}">{{ _('Yfirlit Enska') }}</a></li>
+            <li><a href="{{ url_for('admin.news_post', lang='en') }}">{{ _('Ný Frétt Enska') }}</a></li>
             <li><a href="{{ url_for('admin.news_category') }}">{{ _('Flokkar') }}</a></li>
           </ul> <!-- ./list-unstyled collapse in -->
         </li> <!-- ./nav-header -->
