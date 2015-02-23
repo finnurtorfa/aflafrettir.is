@@ -15,10 +15,13 @@ from helpers.text import get_thumbnail, time_ago
 
 @babel.localeselector
 def get_locale():
-  return request.view_args.get('lang_code', 'is')
+  if request.view_args:
+    return request.view_args.get('lang_code', 'is')
+
+  return 'is'
 
 
-@aflafrettir.before_request
+@aflafrettir.before_app_request
 def before_request():
   g.search_form = SearchForm()
 
