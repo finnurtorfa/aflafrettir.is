@@ -119,19 +119,29 @@ def post_to_fb():
 
 
 @admin.route('/news')
+@admin.route('/<lang>/news')
 @login_required
-def news_index():
-  posts = Post.get_all()
+def news_index(lang='is'):
+  posts = Post.get_all(lang=lang)
 
-  return render_template('admin/news.html', posts=posts)
+  if lang == 'is':
+    lang = None
+
+  return render_template('admin/news.html',
+                         posts=posts,
+                         lang=lang)
 
 
 @admin.route('/news/post', methods=['GET', 'POST'])
+@admin.route('/<lang>/news/post', methods=['GET', 'POST'])
 @login_required
-def news_post():
+def news_post(lang='is'):
   form = PostForm()
   form.category.choices = [(0, 'Almenn frétt')]
   form.created.data = datetime.utcnow()
+
+  if lang == 'is':
+    lang = None
 
   active = Category.get_all_active()
 
@@ -144,6 +154,7 @@ def news_post():
     post = Post(title=form.title.data,
                 body=remove_html_tags(form.post.data),
                 body_html=form.post.data,
+                language=lang,
                 timestamp=form.created.data,
                 author=current_user,
                 category=category)
@@ -192,9 +203,11 @@ def news_post():
 
         return redirect(auth_url)
 
-    return redirect(url_for('admin.news_index'))
+    return redirect(url_for('admin.news_index', lang=lang))
 
-  return render_template('admin/post.html', form=form)
+  return render_template('admin/post.html',
+                         form=form,
+                         lang=lang)
 
 
 @admin.route('/news/post/upload', methods=['GET', 'POST'])
@@ -227,9 +240,13 @@ def nicedit_upload():
 
 
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
+@admin.route('/<lang>/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
-def news_edit(post_id):
+def news_edit(post_id, lang='is'):
   post = Post.get_by_id(post_id)
+
+  if lang == 'is':
+    lang = None
 
   form = PostForm()
   form.category.choices = [(0, 'Almenn frétt')]
@@ -245,6 +262,7 @@ def news_edit(post_id):
     post.title      = form.title.data
     post.body       = remove_html_tags(form.post.data)
     post.body_html  = form.post.data
+    post.language   = lang
     post.timestamp  = form.created.data
     post.author     = current_user
     post.category   = category
@@ -254,7 +272,7 @@ def news_edit(post_id):
 
     flash("Fréttin hefur verið uppfærð!")
 
-    return redirect(url_for('admin.news_index'))
+    return redirect(url_for('admin.news_index', lang=lang))
 
   form.title.data       = post.title
   form.post.data        = post.body_html
@@ -262,18 +280,24 @@ def news_edit(post_id):
   form.category.data    = [i for i, v in enumerate(form.category.choices)
                              if v[1] == post.category.name][0]
 
-  return render_template('admin/post.html', form=form)
+  return render_template('admin/post.html',
+                         form=form,
+                         lang=lang)
 
 
 @admin.route('/news/delete/<int:post_id>')
+@admin.route('/<lang>/news/delete/<int:post_id>')
 @login_required
-def news_delete(post_id):
+def news_delete(post_id, lang='is'):
   post = Post.get_by_id(post_id)
+
+  if lang == 'is':
+    lang = None
 
   db.session.delete(post)
   db.session.commit()
 
-  return redirect(url_for('admin.news_index'))
+  return redirect(url_for('admin.news_index', lang=lang))
 
 
 @admin.route('/news/category', methods=['GET', 'POST'])
