@@ -84,11 +84,15 @@ class Post(db.Model):
   category_id   = db.Column(db.Integer, db.ForeignKey('categories.id'))
 
   @classmethod
-  def get_all(cls, descending=True):
+  def get_all(cls, descending=True, lang='is'):
     if descending:
-      return cls.query.order_by(cls.timestamp.desc()).all()
+      return cls.query.order_by(cls.timestamp.desc())\
+                .filter_by(language=lang)\
+                .all()
     else:
-      return cls.query.order_by(cls.timestamp).all()
+      return cls.query.order_by(cls.timestamp)\
+                .filter_by(language=lang)\
+                .all()
 
   @classmethod
   def get_per_page(cls, page, per_page=5, descending=True, lang='is'):
