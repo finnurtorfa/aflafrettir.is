@@ -60,6 +60,9 @@ def index(page=1, lang_code='is'):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
+  if lang_code == 'is':
+    lang_code = None
+
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + e
@@ -80,7 +83,8 @@ def index(page=1, lang_code='is'):
                           main_lg=main_lg,
                           main_sm=main_sm,
                           right_ads=right_ads,
-                          left_ads=left_ads)
+                          left_ads=left_ads,
+                          lang_code=lang_code)
 
 
 @aflafrettir.route('/frettir/flokkur/<int:cid>')
@@ -100,6 +104,9 @@ def category(cid, page=1, lang_code='is'):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
+  if lang_code == 'is':
+    lang_code = None
+
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + e
@@ -120,7 +127,8 @@ def category(cid, page=1, lang_code='is'):
                           main_lg=main_lg,
                           main_sm=main_sm,
                           right_ads=right_ads,
-                          left_ads=left_ads)
+                          left_ads=left_ads, 
+                          lang_code=lang_code)
 
 
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
@@ -132,21 +140,27 @@ def post(title, pid, lang_code='is'):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
+  if lang_code == 'is':
+    lang_code = None
+
   return render_template('aflafrettir/post.html',
                           categories=categories,
                           post=post,
                           right_ads=right_ads,
-                          left_ads=left_ads)
+                          left_ads=left_ads, 
+                          lang_code=lang_code)
 
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 @aflafrettir.route('/<lang_code>/frettir/leita', methods=['POST'])
 def search():
   if not g.search_form.validate_on_submit():
-    return redirect(url_for('aflafrettir.index'))
+    return redirect(url_for('aflafrettir.index',
+                            lang_code=lang_code))
 
   return redirect(url_for('aflafrettir.results',
-                  query=g.search_form.search.data))
+                  query=g.search_form.search.data,
+                  lang_code=lang_code))
 
 
 @aflafrettir.route('/frettir/leita/<query>')
@@ -163,6 +177,9 @@ def results(query, page=1, lang_code='is'):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
+  if lang_code == 'is':
+    lang_code = None
+
   for post in posts.items:
     f, e = get_thumbnail(post.body_html)
     fn = current_app.config['UPLOADS_DEFAULT_DEST'] + '/imgs/' + e
@@ -183,7 +200,9 @@ def results(query, page=1, lang_code='is'):
                           main_lg=main_lg,
                           main_sm=main_sm,
                           right_ads=right_ads,
-                          left_ads=left_ads)
+                          left_ads=left_ads, 
+                          lang_code=lang_code)
+
 
 
 @aflafrettir.route('/um-siduna')
@@ -196,12 +215,16 @@ def about(lang_code='is'):
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
 
+  if lang_code == 'is':
+    lang_code = None
+
   return render_template('aflafrettir/about.html',
                           about=about,
                           categories=categories,
                           top_ads=top_ads,
                           right_ads=right_ads,
-                          left_ads=left_ads)
+                          left_ads=left_ads,
+                          lang_code=lang_code)
 
 
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
@@ -213,6 +236,9 @@ def contact(lang_code='is'):
   top_ads = [ad for ad in ads if ad.type == 0]
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
+
+  if lang_code == 'is':
+    lang_code = None
 
   if request.method == 'POST':
     if not form.validate():
@@ -238,11 +264,18 @@ def contact(lang_code='is'):
                           categories=categories,
                           top_ads=top_ads,
                           right_ads=right_ads,
-                          left_ads=left_ads)
+                          left_ads=left_ads,
+                          lang_code=lang_code)
 
 
 @aflafrettir.route('/notandi/<username>')
 @aflafrettir.route('/<lang_code>/notandi/<username>')
 def user(username, lang_code='is'):
   user = User.query.filter_by(username=username).first_or_404()
-  return render_template('aflafrettir/user.html', user=user)
+
+  if lang_code == 'is':
+    lang_code = None
+
+  return render_template('aflafrettir/user.html',
+                         user=user,
+                         lang_code=lang_code)
