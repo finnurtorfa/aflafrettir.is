@@ -138,22 +138,23 @@ class Category(db.Model):
   __tablename__ = 'categories'
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
   name          = db.Column(db.String(64), nullable=False, unique=True)
+  name_en       = db.Column(db.String(64), nullable=False, unique=True)
   active        = db.Column(db.Boolean, nullable=False, default=False)
   posts         = db.relationship('Post', backref='category', lazy='dynamic')
-  
+
   @classmethod
   def get_all_active(cls, active=True):
     if active:
       return cls.query.filter_by(active=True)\
-              .filter(cls.name != 'Almenn frétt').all()
+                .filter(cls.name != 'Almenn frétt').all()
     else:
       return cls.query.filter_by(active=False)\
-             .filter(cls.name != 'Almenn frétt').all()
+                .filter(cls.name != 'Almenn frétt').all()
 
   @classmethod
   def get_by_name(cls, name):
     return cls.query.filter_by(name=name).first()
-  
+
 class Image(db.Model):
   __tablename__  = 'images'
   id             = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -162,10 +163,10 @@ class Image(db.Model):
   type           = db.Column(db.Integer, nullable=False)
   url            = db.Column(db.String(120))
   active         = db.Column(db.Boolean, default=False)
-  timestamp      = db.Column(db.DateTime, 
+  timestamp      = db.Column(db.DateTime,
                              nullable=False,
                              default=datetime.utcnow)
- 
+
   @classmethod
   def get_all_imgs(cls, descending=True):
     if descending:
