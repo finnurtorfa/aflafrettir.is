@@ -319,11 +319,12 @@ def news_category():
       form.inactive.choices = [(0, '')]
 
     if request.method == 'POST':
-      if form.submit.data and form.category.data:
-        current_app.logger.debug('Adding a new category: {}'
-                                 .format(form.category.data))
+      if form.submit.data and form.category.data and form.cat_en.data:
+        current_app.logger.debug('Adding a new category: {}, {}'
+                                 .format(form.category.data, form.cat_en.data))
 
-        category = Category(name=form.category.data)
+        category = Category(name=form.category.data,
+                            name_en=form.cat_en.data)
 
         db.session.add(category)
         db.session.commit()
