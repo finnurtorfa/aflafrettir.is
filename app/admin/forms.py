@@ -25,6 +25,7 @@ class PostForm(Form):
 
 class CategoryForm(Form):
   category  = StringField('Nafn á Flokki', validators=[Optional()])
+  cat_en    = StringField('Enskt nafn', validators=[Optional()])
   submit    = SubmitField('Senda', validators=[Optional()])
   inactive  = SelectField('Flokkar sem ekki birtast', validators=[Optional()])
   right     = SubmitField('>', validators=[Optional()])
