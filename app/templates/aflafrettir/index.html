@@ -59,7 +59,7 @@
       <ul class="nav nav-stacked">
         <li><a href="{{ url_for('aflafrettir.category', cid=1, lang_code=lang_code) }}">{{ _('Almenn frétt') }}</a></li>
         {% for category in categories %}
-          <li><a href="{{ url_for('aflafrettir.category', cid=category.id, lang_code=lang_code) }}">{{ category.name }}</a></li>
+          <li><a href="{{ url_for('aflafrettir.category', cid=category.id, lang_code=lang_code) }}">{% if not lang_code  %}{{ category.name }}{% else %}{{ category.name_en }}{% endif %}</a></li>
         {% endfor %}
       </ul>
       {% if left_ads %}
