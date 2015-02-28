@@ -11,7 +11,7 @@ manager = Manager(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
-
+#pylint: disable-msg=E1101
 @manager.command
 def adduser(email, username, admin=False):
   """ Register a new user"""

@@ -20,15 +20,13 @@ from ..models import Post, Category, Image, About
 
 """Profile Related Routes
 """
-
-
 @admin.route('/')
 @admin.route('/profile', alias=True)
 @login_required
 def profile_index():
   return render_template('admin/user.html', user=current_user)
 
-
+#pylint: disable-msg=E1101
 @admin.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
@@ -39,7 +37,7 @@ def profile_edit():
     current_user.location = form.location.data
     current_user.bio = form.bio.data
 
-    db.session.add(current_user._get_current_object())
+    db.session.add(current_user)
     db.session.commit()
 
     flash("Síðan hefur verið uppfærð")
@@ -54,8 +52,6 @@ def profile_edit():
 
 """News Related Routes
 """
-
-
 @admin.route('/facebook', methods=['GET', 'POST'])
 @login_required
 def post_to_fb():
@@ -230,7 +226,7 @@ def nicedit_upload():
   crop_image(imgs.path(filename))
 
   links_dict  = {'original': url_for('static',
-                                      filename='uploads/imgs/' + filename)}
+                                     filename='uploads/imgs/' + filename)}
   set_dict    = {'links': links_dict}
   upload_dict = {'upload': set_dict}
 
@@ -278,7 +274,7 @@ def news_edit(post_id, lang='is'):
   form.post.data        = post.body_html
   form.created.data     = post.timestamp
   form.category.data    = [i for i, v in enumerate(form.category.choices)
-                             if v[1] == post.category.name][0]
+                           if v[1] == post.category.name][0]
 
   return render_template('admin/post.html',
                          form=form,
@@ -367,9 +363,9 @@ def news_category():
 @login_required
 def ad_index():
   form = AdForm()
-  ads = Image.get_all_ads(only_active=False)
+  all_ads = Image.get_all_ads(only_active=False)
 
-  return render_template('admin/ads.html', form=form, ads=ads)
+  return render_template('admin/ads.html', form=form, ads=all_ads)
 
 
 @admin.route('/ad/upload', methods=['GET', 'POST'])
@@ -442,8 +438,6 @@ def ad_edit(ad_id):
 @admin.route('/ad/delete/<int:ad_id>')
 @login_required
 def ad_delete(ad_id):
-  import os
-
   ad = Image.get_by_id(ad_id)
 
   os.remove(ads.path(ad.filename))
@@ -462,16 +456,16 @@ def ad_delete(ad_id):
 @admin.route('/about', methods=['GET', 'POST'])
 def about():
   form = AboutForm()
-  about = About().query.first() or About()
+  my_about = About().query.first() or About()
 
   if request.method == 'POST':
-    about.body = form.body.data
-    about.timestamp = datetime.utcnow()
+    my_about.body = form.body.data
+    my_about.timestamp = datetime.utcnow()
 
-    db.session.add(about)
+    db.session.add(my_about)
     db.session.commit()
 
-  form.body.data = about.body
+  form.body.data = my_about.body
 
   return render_template('admin/about.html', form=form)
 
