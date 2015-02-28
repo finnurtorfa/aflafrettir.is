@@ -2,7 +2,7 @@ import os
 
 from flask import (render_template, url_for, redirect, request, g, 
                    current_app, abort)
-from flask.ext.mail import Message
+from flask_mail import Message
 
 from . import aflafrettir
 from .forms import ContactForm, SearchForm

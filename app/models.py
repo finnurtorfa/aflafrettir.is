@@ -3,9 +3,9 @@ import hashlib
 from datetime import datetime
 
 from flask import request
-from flask.ext.login import UserMixin
+from flask_login import UserMixin
 
-import flask.ext.whooshalchemy
+import flask_whooshalchemy
 
 from werkzeug.security import generate_password_hash, check_password_hash
 

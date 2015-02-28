@@ -4,8 +4,8 @@ from datetime import datetime
 
 from flask import (render_template, redirect, url_for, flash, request, json,
                    session, current_app)
-from flask.ext.login import login_required, current_user
-from flask.ext.uploads import UploadNotAllowed
+from flask_login import login_required, current_user
+from flask_uploads import UploadNotAllowed
 
 from facebook import FacebookAPI, GraphAPI, GraphAPIError
 

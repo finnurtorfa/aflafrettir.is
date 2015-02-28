@@ -1,13 +1,13 @@
 import logging
 
 from flask import Flask
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
-from flask.ext.uploads import UploadSet, configure_uploads, IMAGES
-from flask.ext.mail import Mail
-from flask.ext.whooshalchemy import whoosh_index
-from flask.ext.babel import Babel
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
+from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask_mail import Mail
+from flask_whooshalchemy import whoosh_index
+from flask_babel import Babel
 
 from helpers.text import slugify, truncate
 
