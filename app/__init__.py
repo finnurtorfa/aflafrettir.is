@@ -1,4 +1,5 @@
 import logging
+import logging.config
 
 from flask import Flask
 from flask_bootstrap import Bootstrap
@@ -16,6 +17,8 @@ from config import config
 bootstrap = Bootstrap()
 
 db = SQLAlchemy()
+mail = Mail()
+babel = Babel()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -23,15 +26,11 @@ login_manager.login_view = 'auth.login'
 ads = UploadSet('ads', IMAGES)
 imgs = UploadSet('imgs', IMAGES)
 
-mail = Mail()
-babel = Babel()
-
-
 def create_app(config_name):
   app = Flask(__name__)
   app.config.from_object(config[config_name])
 
-  configure_logging(app)
+  configure_logging()
 
   app.jinja_env.globals.update(slugify=slugify)
   app.jinja_env.globals.update(truncate=truncate)
@@ -58,16 +57,15 @@ def create_app(config_name):
 
   from helpers.image import start_image_deletion_thread
 
+  #pylint: disable-msg=W0612
   @app.before_first_request
   def before_first_request():
     start_image_deletion_thread()
 
   return app
 
-
-def configure_logging(app, logger='logger.yml'):
+def configure_logging(logger='logger.yml'):
   import os, yaml
-  import logging.config
 
   try:
     os.makedirs('log', exist_ok=True)
@@ -76,14 +74,17 @@ def configure_logging(app, logger='logger.yml'):
 
   if os.path.exists(logger):
     with open(logger) as f:
-      config = yaml.load(f.read())
+      conf = yaml.load(f.read())
 
-  logging.config.dictConfig(config)
-
+  logging.config.dictConfig(conf)
 
 class LevelFilter(logging.Filter):
   def __init__(self, level):
+    super(LevelFilter, self).__init__()
     self.__level = level
 
   def filter(self, record):
-    return record.levelno == self.__level
+    return record.levelno == self.get_level()
+
+  def get_level(self):
+    return self.__level

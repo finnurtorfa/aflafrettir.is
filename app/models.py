@@ -1,28 +1,30 @@
-import hashlib 
+import hashlib
 
 from datetime import datetime
 
 from flask import request
 from flask_login import UserMixin
 
-import flask_whooshalchemy
-
 from werkzeug.security import generate_password_hash, check_password_hash
-
-from sqlalchemy import desc
 
 from . import db, login_manager
 
+#pylint: disable-msg=E1101
+@login_manager.user_loader
+def load_user(user_id):
+  return User.query.get(int(user_id))
+
+#pylint: disable-msg=E1101
 class User(UserMixin, db.Model):
   __tablename__ = 'users'
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  email         = db.Column(db.String(64), 
-                            nullable=False, 
-                            unique=True, 
+  email         = db.Column(db.String(64),
+                            nullable=False,
+                            unique=True,
                             index=True)
-  username      = db.Column(db.String(64), 
-                            nullable=False, 
-                            unique=True, 
+  username      = db.Column(db.String(64),
+                            nullable=False,
+                            unique=True,
                             index=True)
   is_admin      = db.Column(db.Boolean)
   name          = db.Column(db.String(64))
@@ -40,14 +42,11 @@ class User(UserMixin, db.Model):
     if self.email is not None and self.avatar_hash is None:
         self.avatar_hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
+  #pylint: disable-msg=R0201
   @property
   def password(self):
     raise AttributeError('Password is not a readable attribute')
 
-  @login_manager.user_loader
-  def load_user(user_id):
-    return User.query.get(int(user_id))
-  
   @password.setter
   def password(self, password):
     self.password_hash = generate_password_hash(password)
@@ -61,11 +60,11 @@ class User(UserMixin, db.Model):
     else:
       url = 'http://www.gravatar.com/avatar'
 
-    hash = self.avatar_hash or \
-           hashlib.md5(self.email.encode('utf-8')).hexdigest()
+    h = self.avatar_hash or \
+        hashlib.md5(self.email.encode('utf-8')).hexdigest()
 
     return '{u}/{h}?s={s}&d={d}&r={r}'.format(u=url,
-                                              h=hash,
+                                              h=h,
                                               s=size,
                                               d=default,
                                               r=rating)
@@ -82,6 +81,9 @@ class Post(db.Model):
   timestamp     = db.Column(db.DateTime, index=True, default=datetime.utcnow)
   author_id     = db.Column(db.Integer, db.ForeignKey('users.id'))
   category_id   = db.Column(db.Integer, db.ForeignKey('categories.id'))
+
+  def __init__(self, **kwargs):
+    super(Post, self).__init__(**kwargs)
 
   @classmethod
   def get_all(cls, descending=True, lang='is'):
@@ -109,6 +111,7 @@ class Post(db.Model):
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first_or_404()
 
+  #pylint: disable-msg=R0913
   @classmethod
   def get_by_category(cls, cid, page, per_page=5, descending=True, lang='is'):
     if descending:
@@ -142,6 +145,9 @@ class Category(db.Model):
   active        = db.Column(db.Boolean, nullable=False, default=False)
   posts         = db.relationship('Post', backref='category', lazy='dynamic')
 
+  def __init__(self, **kwargs):
+    super(Category, self).__init__(**kwargs)
+
   @classmethod
   def get_all_active(cls, active=True):
     if active:
@@ -166,6 +172,9 @@ class Image(db.Model):
   timestamp      = db.Column(db.DateTime,
                              nullable=False,
                              default=datetime.utcnow)
+
+  def __init__(self, **kwargs):
+    super(Image, self).__init__(**kwargs)
 
   @classmethod
   def get_all_imgs(cls, descending=True):
@@ -199,6 +208,7 @@ class Image(db.Model):
   def get_by_id(cls, aid):
     return cls.query.filter_by(id=aid).first()
 
+#pylint: disable-msg=R0903
 class About(db.Model):
   __tablename__ = 'about'
   id            = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -206,3 +216,7 @@ class About(db.Model):
   timestamp     = db.Column(db.DateTime,
                             nullable=False,
                             default=datetime.utcnow)
+
+  def __init__(self, **kwargs):
+    super(About, self).__init__(**kwargs)
+
