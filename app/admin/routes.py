@@ -113,7 +113,6 @@ def post_to_fb():
 
   return redirect(url_for('admin.news_index'))
 
-
 @admin.route('/news')
 @admin.route('/<lang>/news')
 @login_required
@@ -126,7 +125,6 @@ def news_index(lang='is'):
   return render_template('admin/news.html',
                          posts=posts,
                          lang=lang)
-
 
 @admin.route('/news/post', methods=['GET', 'POST'])
 @admin.route('/<lang>/news/post', methods=['GET', 'POST'])
@@ -205,7 +203,6 @@ def news_post(lang='is'):
                          form=form,
                          lang=lang)
 
-
 @admin.route('/news/post/upload', methods=['GET', 'POST'])
 @login_required
 def nicedit_upload():
@@ -233,7 +230,6 @@ def nicedit_upload():
   current_app.logger.debug('upload_dict {}'.format(upload_dict))
 
   return json.dumps(upload_dict)
-
 
 @admin.route('/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @admin.route('/<lang>/news/edit/<int:post_id>', methods=['GET', 'POST'])
@@ -280,7 +276,6 @@ def news_edit(post_id, lang='is'):
                          form=form,
                          lang=lang)
 
-
 @admin.route('/news/delete/<int:post_id>')
 @admin.route('/<lang>/news/delete/<int:post_id>')
 @login_required
@@ -294,7 +289,6 @@ def news_delete(post_id, lang='is'):
   db.session.commit()
 
   return redirect(url_for('admin.news_index', lang=lang))
-
 
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
@@ -357,8 +351,6 @@ def news_category():
 
 """File Upload Related Routes
 """
-
-
 @admin.route('/ad')
 @login_required
 def ad_index():
@@ -366,7 +358,6 @@ def ad_index():
   all_ads = Image.get_all_ads(only_active=False)
 
   return render_template('admin/ads.html', form=form, ads=all_ads)
-
 
 @admin.route('/ad/upload', methods=['GET', 'POST'])
 @login_required
@@ -405,7 +396,6 @@ def ad_upload():
 
   return render_template('admin/upload.html', form=form)
 
-
 @admin.route('/ad/edit/<int:ad_id>', methods=['GET', 'POST'])
 @login_required
 def ad_edit(ad_id):
@@ -434,7 +424,6 @@ def ad_edit(ad_id):
 
   return render_template('admin/upload.html', form=form)
 
-
 @admin.route('/ad/delete/<int:ad_id>')
 @login_required
 def ad_delete(ad_id):
@@ -451,8 +440,6 @@ def ad_delete(ad_id):
 
 """About the page related routes
 """
-
-
 @admin.route('/about', methods=['GET', 'POST'])
 def about():
   form = AboutForm()
@@ -471,13 +458,6 @@ def about():
 
 """ Informatics and Analytics
 """
-
-
-@admin.route('/info/feedjit')
-def feedjit():
-  return render_template('admin/feedjit.html')
-
-
 @admin.route('/info/google')
 def google():
   return render_template('admin/google.html')
