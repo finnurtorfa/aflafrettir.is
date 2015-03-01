@@ -5,7 +5,7 @@ from . import auth
 from .forms import LoginForm
 from ..models import User
 
-
+#pylint: disable-msg=E1101
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
   form = LoginForm()
@@ -22,7 +22,6 @@ def login():
     return redirect(request.args.get('next') or url_for('admin.profile_index'))
 
   return render_template('auth/login.html', form=form)
-
 
 @auth.route('/logout')
 def logout():
