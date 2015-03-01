@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#pylint: disable-msg=E1101,W0603,W0212
 
 import os, time
 from threading import Thread
@@ -17,7 +18,7 @@ _image_thread = None
 
 def jpeg_convert(infile):
   """ Try to convert and compress an image to jpeg"""
-  f, e = os.path.splitext(infile)
+  f, _ = os.path.splitext(infile)
   outfile = f + '.jpg'
 
   try:
@@ -30,12 +31,12 @@ def jpeg_convert(infile):
       new_height = int(h*ratio)
 
       img = img.resize((base_width, new_height), Image.ANTIALIAS)
-    
+
     img.save(outfile, dpi=[100,100], quality=80)
   except IOError:
     current_app.logger.exception('Could not save file: ')
     return os.path.basename(infile)
-  
+
   return os.path.basename(outfile)
 
 def crop_image(infile):
@@ -74,7 +75,7 @@ def remove_images(app):
     time.sleep(1800)
     conf = app.config['IMAGE_DELETE']
     with app.app_context():
-      if ( datetime.utcnow().hour in conf['TIME_OF_DAY'] and 
+      if ( datetime.utcnow().hour in conf['TIME_OF_DAY'] and
            datetime.utcnow().weekday() in conf['WEEKDAY'] ):
         images = Img.get_all_imgs()
         db_imgs = [img.location + img.filename for img in images]
@@ -104,7 +105,7 @@ def remove_images(app):
 def start_image_deletion_thread():
   if not current_app.config['TESTING']:
     global _image_thread
-    
+
     if _image_thread is None:
       _image_thread = Thread(target=remove_images,
                              args=[current_app._get_current_object()])

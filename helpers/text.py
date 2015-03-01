@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#pylint: disable-msg=R0903,R0911
 
 import os
 import unicodedata
