@@ -48,41 +48,48 @@
 {% endblock %}
 <!-- End of head block -->
 
-{% block navbar %}
+<!-- Beginning of body block -->
+{% block body %}
+
+<!-- Facebook Popup flier starts -->
 {% include "_fb_popup.html" %}
+<!-- Facebook Popup flier ends -->
+
 <div id="wrap">
-  {% include "navigation_bar.html" %}
-{% endblock %}
-
-{% block content %}
-
-<!-- Main content of site -->
-<div class="container-fluid">
-  {% block header %}
-  {% endblock %}
-
-  <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
-    <div class="no-gutter row">
-      <!-- Beginning of left side of main content -->
-      {% block content_left %} {% endblock %}
-      <!-- End of left side of main content -->
+  <!-- Navigation bar starts -->
+  {% block navbar %}{% include "navigation_bar.html" %}{% endblock %}
+  <!-- Navigation bar ends -->
   
-      <!-- Beginning of main content -->
-      {% block content_main %} {% endblock %}
-      <!-- End of main content -->
-    </div> <!-- ./no-gutter row -->
-  </div> <!-- ./col-span -->
-
-  <div class="col-md-2 ad-right hidden-xs hidden-sm adbar" {% if request.endpoint == 'aflafrettir.post' %} id="sidebar"{% endif %}>
-    {% block adbar %}
+  <!-- Main content of site starts -->
+  {% block content %}
+  <div class="container-fluid">
+    {% block header %}
     {% endblock %}
-  </div> <!-- ./col-span -->
-</div> <!-- ./container-fluid -->
+  
+    <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
+      <div class="no-gutter row">
+        <!-- Beginning of left side of main content -->
+        {% block content_left %} {% endblock %}
+        <!-- End of left side of main content -->
+    
+        <!-- Beginning of main content -->
+        {% block content_main %} {% endblock %}
+        <!-- End of main content -->
+      </div> <!-- ./no-gutter row -->
+    </div> <!-- ./col-span -->
+  
+    <div class="col-md-2 ad-right hidden-xs hidden-sm adbar" {% if request.endpoint == 'aflafrettir.post' %} id="sidebar"{% endif %}>
+      {% block adbar %}
+      {% endblock %}
+    </div> <!-- ./col-span -->
+  </div> <!-- ./container-fluid -->
 
-<div class="push"></div>
-
+  <div class="push"></div>
+  {% endblock %}
+  <!-- Main content of site ends -->
 </div> <!-- /.wrap -->
 
+<!-- Footer of site starts -->
 {% block footer %} 
 <div id="footer">
   <div class="container">
@@ -103,13 +110,13 @@
   </div>
 </div>
 {% endblock %}
+<!-- Footer of site ends -->
 
-{% block disqus_comments %}
-{% endblock %}
-
-{% endblock %}
-
+<!-- Script block starts -->
 {% block scripts %}
+
+{% block disqus_comments %}{% endblock %}
+
 <script type="text/javascript">
   try { var FJ = FJNew(); FJ.logHit(); } catch(err) {}
 </script>
@@ -149,3 +156,8 @@
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 <script src="{{ url_for('static', filename='js/holder/holder.js') }}"></script>
 {% endblock %}
+<!-- Script block ends -->
+
+{% endblock %}
+<!-- End of body block -->
+
