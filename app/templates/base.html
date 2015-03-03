@@ -1,40 +1,52 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
-{% block html_attribs %} lang="is" {% endblock %}
+{% block html_attribs %} lang="{{ lang_code or 'is' }}" {% endblock %}
 
-{% block head %}
-  {{ super() }}
-  <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <script src="{{ url_for('static', filename='js/Respond/src/respond.js') }}"></script>
-  <![endif]-->
-{% endblock %}
-
+<!-- Beginning of head block -->
 {% block title %} Aflafréttir.is {% endblock %}
 
-{% block styles %}
-  {{ super() }}
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fb_popup.css') }}">
-  <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
-  <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' rel='stylesheet' type='text/css'>
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-{% endblock %}
-
 {% block metas %}
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:title" content="Aflafréttir og fleira">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="{{ request.base_url }}">
-  <meta property="og:site_name" content="Aflafréttir">
-  <meta property="og:description" content="Sjávarútvegsfréttir um allt of alla">
-  <meta property="fb:admins" content="100000026998299">
-  <meta property="fb:app_id" content="1526822784207277">
-
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta property="og:title" content="Aflafréttir og fleira">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.base_url }}">
+    <meta property="og:site_name" content="Aflafréttir">
+    <meta property="og:description" 
+          content="Sjávarútvegsfréttir um allt of alla">
+    <meta property="fb:admins" content="100000026998299">
+    <meta property="fb:app_id" content="1526822784207277">
 {% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" 
+          type="text/css" 
+          href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" 
+          type="text/css" 
+          href="{{ url_for('static', filename='css/fb_popup.css') }}">
+    <link rel="shortcut icon" 
+          type="image/x-icon" 
+          href="{{ url_for('static', filename='imgs/favicon.ico') }}">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' 
+          rel='stylesheet' 
+          type='text/css'>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" 
+          rel="stylesheet">
+{% endblock %}
+
+{% block head %}
+    {{ super() }}
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="{{ url_for('static', filename='js/Respond/src/respond.js') }}"></script>
+    <![endif]-->
+{% endblock %}
+<!-- End of head block -->
 
 {% block navbar %}
 {% include "_fb_popup.html"%}
