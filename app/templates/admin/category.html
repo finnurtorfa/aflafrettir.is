@@ -21,7 +21,10 @@
       <br>
       
       <div class="row">
-        <form class="form-horizontal" role="form" action="{{ request.path }}" method=post>
+        <form class="form-horizontal" 
+              role="form" 
+              action="{{ request.path }}" 
+              method=post>
           <div class="form form-group">
               <div class="col-xs-3">
                 {{ form.inactive(**{'size':'10'}) }}
