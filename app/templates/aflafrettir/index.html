@@ -3,33 +3,47 @@
 {% block header %}
 <header class="masthead">
   <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
-    <div id="carousel-example-captions" class="carousel slide" data-ride="carousel">
-    {% if top_ads %}
+    <div id="carousel-example-captions" 
+         class="carousel slide" 
+         data-ride="carousel">
+      {% if top_ads %}
       <ol class="carousel-indicators">
         {% for ad in top_ads %}
-        <li data-target="#carousel-example-captions" data-slide-to="{{ loop.index0 }}" class="{% if loop.first %}active{% endif %}"></li>
+        <li data-target="#carousel-example-captions"
+            data-slide-to="{{ loop.index0 }}" 
+            class="{% if loop.first %}active{% endif %}">
+        </li>
         {% endfor %}
-      </ol>
+      </ol><!-- ./carousel-indicators -->
+
       <div class="carousel-inner">
         {% for ad in top_ads %}
         <div class="item {% if loop.first %}active{% endif %}">
-          {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
+          {% if ad.url %} <a href="{{ ad.url }}" target="_blank">{% endif %}
+          <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+          {% if ad.url %}</a>{% endif %}
         </div> <!-- ./item -->
         {% endfor %}
       </div> <!-- ./carousel-inner -->
-    {% else %}
+      {% else %}
       <ol class="carousel-indicators">
-        <li data-target="#carousel-example-captions" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-captions" 
+            data-slide-to="0" 
+            class="active">
+        </li>
       </ol>
+
       <div class="carousel-inner">
         <div class="item active">
-          <img data-src="holder.js/1140x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+          <img data-src="holder.js/1140x300/auto/#777:#7777" 
+               alt="Laust auglýsingapláss">
           <div class="carousel-caption">
             <p>{{ _('Pláss fyrir auglýsing') }}</p>
           </div>
         </div> <!-- ./item -->
       </div> <!-- ./carousel-inner -->
-    {% endif %}
+      {% endif %}
+
       <a class="left carousel-control" href="#carousel-example-captions" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
       </a>
@@ -37,7 +51,7 @@
         <span class="glyphicon glyphicon-chevron-right"></span>
       </a>
     </div> <!-- ./carousel-example-captions -->
-  </div> <!-- ./col-span -->
+  </div> <!-- ./col-xs-12 col-sm-12 col-md-9 col-md-offset-1 -->
 </header>
 {% endblock %}
 
