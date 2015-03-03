@@ -9,9 +9,19 @@
     <div class="panel-heading">{{ _('Flokkar') }}</div>
     <div class="panel-body">
       <ul class="nav nav-stacked">
-        <li><a href="{{ url_for('aflafrettir.category', cid=1, lang_code=lang_code) }}">{{ _('Almenn frétt') }}</a></li>
+        <li>
+          <a href="{{ url_for('aflafrettir.category',
+                              cid=1, 
+                              lang_code=lang_code) }}">{{ _('Almenn frétt') }}
+          </a>
+        </li>
         {% for category in categories %}
-          <li><a href="{{ url_for('aflafrettir.category', cid=category.id, lang_code=lang_code) }}">{{ category.name }}</a></li>
+        <li>
+          <a href="{{ url_for('aflafrettir.category',
+                              cid=category.id,
+                              lang_code=lang_code) }}">{{ category.name }}
+          </a>
+        </li>
         {% endfor %}
       </ul>
     </div> <!-- ./panel-body -->
@@ -34,7 +44,16 @@
       <div class="row post-like">
         <div class="col-12 col-sm-12">
           <div class="pull-right">
-            <div class="fb-like" data-href="{{ url_for('aflafrettir.post', title=slugify(post.title), pid=post.id, _external=True, lang_code=lang_code) }}" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+            <div class="fb-like" 
+                 data-href="{{ url_for('aflafrettir.post',
+                                       title=slugify(post.title),
+                                       pid=post.id,
+                                       _external=True, 
+                                       lang_code=lang_code) }}" 
+                 data-layout="button_count" 
+                 data-action="like" 
+                 data-show-faces="false"
+                 data-share="true"></div>
           </div>
         </div> <!-- ./col-12 col-sm-12 -->
       </div> <!-- ./row -->
@@ -56,7 +75,7 @@
 
     </div> <!-- ./panel-body -->
   </div> <!-- ./panel -->
-</div> <!-- ./col-md-7 -->
+</div> <!-- ./col-md-10 -->
 {% endblock %}
 
 {% block disqus_comments %}

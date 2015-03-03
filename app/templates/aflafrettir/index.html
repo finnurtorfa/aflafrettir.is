@@ -160,7 +160,7 @@
             </div> <!-- ./col-12 col-sm-12 -->
           </div> <!-- ./row-post -->
         </div> <!-- ./col-6 col-sm-6 -->
-      {% if loop.index is divisibleby(2) or loop.length < 2 %}
+      {% if loop.index is divisibleby(2) or loop.last %}
       </div> <!-- ./row-of-2-posts -->
       {% endif %}
 
