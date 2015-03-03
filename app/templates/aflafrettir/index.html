@@ -55,16 +55,6 @@
 </header>
 {% endblock %}
 
-{% block adbar %}
-  {% if right_ads %}
-    {% for ad in right_ads %}
-    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
-    {% endfor %}
-  {% else %}
-  <img data-src="holder.js/250x300/auto/#555:#5555" alt="Third slide image">
-  {% endif %}
-{% endblock %}
-
 {% block content_left %}
 <div class="col-md-2">
   <div class="panel panel-default" id="content_left" data-affix-top="310">
@@ -204,6 +194,18 @@
     </div> <!-- ./panel-footer -->
   </div> <!-- ./panel -->
 </div> <!-- ./col-md-7 -->
+{% endblock %}
+
+{% block adbar %}
+  {% if right_ads %}
+    {% for ad in right_ads %}
+    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+      <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+    {% if ad.url %}</a>{% endif %}
+    {% endfor %}
+  {% else %}
+  <img data-src="holder.js/250x300/auto/#555:#5555" alt="Auglýsing">
+  {% endif %}
 {% endblock %}
 
 {% block footer_right %}
