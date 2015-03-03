@@ -69,19 +69,20 @@
     <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
       <div class="no-gutter row">
         <!-- Beginning of left side of main content -->
-        {% block content_left %} {% endblock %}
+        {% block content_left %}{% endblock %}
         <!-- End of left side of main content -->
     
         <!-- Beginning of main content -->
-        {% block content_main %} {% endblock %}
+        {% block content_main %}{% endblock %}
         <!-- End of main content -->
       </div> <!-- ./no-gutter row -->
-    </div> <!-- ./col-span -->
+    </div> <!-- ./col-xs-12 col-sm-12 col-md-9 col-md-offset-1-->
   
     <div class="col-md-2 ad-right hidden-xs hidden-sm adbar" {% if request.endpoint == 'aflafrettir.post' %} id="sidebar"{% endif %}>
-      {% block adbar %}
-      {% endblock %}
-    </div> <!-- ./col-span -->
+      <!-- Beginning of adbar content -->
+      {% block adbar %}{% endblock %}
+      <!-- End of adbar content -->
+    </div> <!-- ./col-md-2 ad-right hidden-xs hidden-sm adbar -->
   </div> <!-- ./container-fluid -->
 
   <div class="push"></div>
