@@ -148,7 +148,7 @@ def news_post(lang='is'):
     post = Post(title=form.title.data,
                 body=remove_html_tags(form.post.data),
                 body_html=form.post.data,
-                language=lang,
+                language=lang or 'is',
                 timestamp=form.created.data,
                 author=current_user,
                 category=category)
@@ -254,7 +254,7 @@ def news_edit(post_id, lang='is'):
     post.title      = form.title.data
     post.body       = remove_html_tags(form.post.data)
     post.body_html  = form.post.data
-    post.language   = lang
+    post.language   = lang or 'is'
     post.timestamp  = form.created.data
     post.author     = current_user
     post.category   = category
