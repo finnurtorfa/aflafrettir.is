@@ -24,7 +24,7 @@
         <tbody>
           {% for ad in ads %}
           <tr>
-            <td> {{ ad.filename }} </td>
+            <td> {{ ad.filename  or  ad.file_url }} </td>
             <td> {{ form.placement.choices[ad.type][1] }} </td>
             <td> {% if ad.active %} {{ _('Já') }}
               {% else %} {{ _('Nei') }}

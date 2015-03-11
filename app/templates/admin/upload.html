@@ -16,6 +16,7 @@
             class="form" role="form">
         {% if request.path == url_for('admin.ad_upload') %} 
         {{ wtf.form_field(form.ad) }}
+        {{ wtf.form_field(form.ad_url) }}
         {% endif %}
         {{ wtf.form_field(form.placement) }}
         {{ wtf.form_field(form.url) }}
