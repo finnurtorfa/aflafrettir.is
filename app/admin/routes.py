@@ -213,6 +213,7 @@ def nicedit_upload():
   current_app.logger.debug('Uploaded {} to the server'.format(filename))
 
   img = Image(filename=filename,
+              file_url=None,
               location=url_for('static', filename='uploads/imgs/'),
               type=10,
               active=False)
@@ -363,36 +364,40 @@ def ad_index():
 @login_required
 def ad_upload():
   form = AdForm()
+  filename = None
 
   if request.method == 'POST':
-    if form.ad.data:
-      try:
-        file = request.files.get('ad')
-        filename = ads.save(file)
-        """filename = do_something(ads.path(filename))
-        """
-        flash("Skráin hefur verið vistuð!")
-      except UploadNotAllowed:
-        current_app.logger.exception('Tried to upload {}'.format(file))
+    if form.ad.data or form.ad_url.data:
+      if form.ad.data:
+        try:
+          file = request.files.get('ad')
+          filename = ads.save(file)
+          """filename = do_something(ads.path(filename))
+          """
+          flash("Skráin hefur verið vistuð!")
+        except UploadNotAllowed:
+          current_app.logger.exception('Tried to upload {}'.format(file))
 
-        flash("Ekki leyfileg tegund af skrá!")
+          flash("Ekki leyfileg tegund af skrá!")
 
-        return redirect(url_for('admin.ad_index'))
-      else:
-        if form.url.data:
-          if not form.url.data.startswith('http'):
-            form.url.data = 'http://' + form.url.data
+          return redirect(url_for('admin.ad_index'))
 
-        ad = Image(filename=filename,
-                   location=url_for('static', filename='uploads/ads/'),
-                   type=form.placement.data,
-                   url=form.url.data,
-                   active=form.active.data)
+      if form.url.data:
+        if not form.url.data.startswith('http'):
+          form.url.data = 'http://' + form.url.data
 
-        db.session.add(ad)
-        db.session.commit()
+      print(form.ad_url.data)
+      ad = Image(filename=filename,
+                 file_url=form.ad_url.data,
+                 location=url_for('static', filename='uploads/ads/'),
+                 type=form.placement.data,
+                 url=form.url.data,
+                 active=form.active.data)
 
-        return redirect(url_for('admin.ad_index'))
+      db.session.add(ad)
+      db.session.commit()
+
+      return redirect(url_for('admin.ad_index'))
 
   return render_template('admin/upload.html', form=form)
 
@@ -408,6 +413,7 @@ def ad_edit(ad_id):
         form.url.data = 'http://' + form.url.data
 
     ad.type      = form.placement.data
+    ad.file_url  = form.ad_url.data
     ad.url       = form.url.data
     ad.active    = form.active.data
 
@@ -419,6 +425,7 @@ def ad_edit(ad_id):
     return redirect(url_for('admin.ad_index'))
 
   form.placement.data = ad.type
+  form.ad_url.data    = ad.file_url
   form.url.data       = ad.url
   form.active.data    = ad.active
 
@@ -429,7 +436,8 @@ def ad_edit(ad_id):
 def ad_delete(ad_id):
   ad = Image.get_by_id(ad_id)
 
-  os.remove(ads.path(ad.filename))
+  if ad.filename:
+    os.remove(ads.path(ad.filename))
 
   db.session.delete(ad)
   db.session.commit()
