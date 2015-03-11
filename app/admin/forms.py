@@ -31,7 +31,8 @@ class CategoryForm(Form):
   active    = SelectField('Flokkar sem birtast', validators=[Optional()])
 
 class AdForm(Form):
-  ad        = FileField('Skrá', validators=[Required()])
+  ad        = FileField('Skrá', validators=[Optional()])
+  ad_url    = StringField('Tengill á auglýsingu', validators=[Optional()])
   placement = SelectField('Staðsetning',
                           choices=[(0, 'Efst'),
                                    (1, 'Aðalhluti - Stór'),
