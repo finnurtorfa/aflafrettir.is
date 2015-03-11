@@ -169,9 +169,19 @@
         {% if  main_lg and ad_type == 1 %}
         {% set ad = main_lg.pop() %}
         <div class="col-12 col-sm-12 ad-main">
-          {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-            <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-          {% if ad.url %}</a>{% endif %}
+          {% if ad.filename %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+              <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+            {% if ad.url %}</a>{% endif %}
+          {% elif ad.file_url %}
+          <object data={{ ad.file_url }} 
+                  width="455" 
+                  height="250"> 
+            <embed src={{ ad.file_url }} 
+                   width="455" 
+                   height="250"> 
+            </embed> Error: Embedded data could not be displayed. </object>
+          {% endif %}
         </div> <!-- ./col-12 col-sm-12 ad-main -->
 
         {% set ad_type = 2 %}
@@ -181,9 +191,19 @@
         {% if main_sm %}
         {% set ad = main_sm.pop() %}
         <div class="col-6 col-sm-6 ad-main">
-          {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-            <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-          {% if ad.url %}</a>{% endif %}
+          {% if ad.filename %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+              <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+            {% if ad.url %}</a>{% endif %}
+          {% elif ad.file_url %}
+          <object data={{ ad.file_url }} 
+                  width="455" 
+                  height="250"> 
+            <embed src={{ ad.file_url }} 
+                   width="455" 
+                   height="250"> 
+            </embed> Error: Embedded data could not be displayed. </object>
+          {% endif %}
         </div> <!-- ./col-6 col-sm-6 ad-main -->
         {% else %}
         <div class="col-6 col-sm-6 ad-main">
@@ -197,18 +217,38 @@
         {% elif main_lg and not main_sm and ad_type == 2 %}
         {% set ad = main_lg.pop() %}
         <div class="col-12 col-sm-12 ad-main">
-          {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-            <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-          {% if ad.url %}</a>{% endif %}
+          {% if ad.filename %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+              <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+            {% if ad.url %}</a>{% endif %}
+          {% elif ad.file_url %}
+          <object data={{ ad.file_url }} 
+                  width="455" 
+                  height="250"> 
+            <embed src={{ ad.file_url }} 
+                   width="455" 
+                   height="250"> 
+            </embed> Error: Embedded data could not be displayed. </object>
+          {% endif %}
         </div> <!-- ./col-12 col-sm-12 ad-main -->
         {% elif main_sm and not main_lg and ad_type == 1 %}
         {% for i in range(2) %}
         {% if main_sm %}
         {% set ad = main_sm.pop() %}
         <div class="col-6 col-sm-6 ad-main">
-          {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-            <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-          {% if ad.url %}</a>{% endif %}
+          {% if ad.filename %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+              <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+            {% if ad.url %}</a>{% endif %}
+          {% elif ad.file_url %}
+          <object data={{ ad.file_url }} 
+                  width="455" 
+                  height="250"> 
+            <embed src={{ ad.file_url }} 
+                   width="455" 
+                   height="250"> 
+            </embed> Error: Embedded data could not be displayed. </object>
+          {% endif %}
         </div> <!-- ./col-6 col-sm-6 ad-main -->
         {% else %}
         <div class="col-6 col-sm-6 ad-main">
