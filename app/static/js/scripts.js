@@ -18,7 +18,9 @@ $(document).ready(function() {
 
   if ( footerTop < windowHeight ) {
     $('#footer').css('margin-top', (windowHeight - footerTop - footerHeight) + 'px');
-  } 
+  }
+
+  $('.ad-main > object').parent().addClass('ad-link');
 
   var img_width = $('div.img-resize').width();
   $('img.img-resize').width(img_width);
