@@ -174,13 +174,10 @@
               <img src="{{ url(ad.filename) }}" alt="Auglýsing">
             {% if ad.url %}</a>{% endif %}
           {% elif ad.file_url %}
-          <object data={{ ad.file_url }} 
-                  width="455" 
-                  height="250"> 
-            <embed src={{ ad.file_url }} 
-                   width="455" 
-                   height="250"> 
-            </embed> Error: Embedded data could not be displayed. </object>
+          <object data={{ ad.file_url }}>
+            <embed src={{ ad.file_url }}>
+            </embed> Error: Embedded data could not be displayed. 
+          </object>
           {% endif %}
         </div> <!-- ./col-12 col-sm-12 ad-main -->
 
@@ -196,13 +193,10 @@
               <img src="{{ url(ad.filename) }}" alt="Auglýsing">
             {% if ad.url %}</a>{% endif %}
           {% elif ad.file_url %}
-          <object data={{ ad.file_url }} 
-                  width="455" 
-                  height="250"> 
-            <embed src={{ ad.file_url }} 
-                   width="455" 
-                   height="250"> 
-            </embed> Error: Embedded data could not be displayed. </object>
+          <object data={{ ad.file_url }}>
+            <embed src={{ ad.file_url }}>
+            </embed> Error: Embedded data could not be displayed. 
+          </object>
           {% endif %}
         </div> <!-- ./col-6 col-sm-6 ad-main -->
         {% else %}
@@ -222,13 +216,10 @@
               <img src="{{ url(ad.filename) }}" alt="Auglýsing">
             {% if ad.url %}</a>{% endif %}
           {% elif ad.file_url %}
-          <object data={{ ad.file_url }} 
-                  width="455" 
-                  height="250"> 
-            <embed src={{ ad.file_url }} 
-                   width="455" 
-                   height="250"> 
-            </embed> Error: Embedded data could not be displayed. </object>
+          <object data={{ ad.file_url }}>
+            <embed src={{ ad.file_url }}>
+            </embed> Error: Embedded data could not be displayed. 
+          </object>
           {% endif %}
         </div> <!-- ./col-12 col-sm-12 ad-main -->
         {% elif main_sm and not main_lg and ad_type == 1 %}
@@ -241,13 +232,10 @@
               <img src="{{ url(ad.filename) }}" alt="Auglýsing">
             {% if ad.url %}</a>{% endif %}
           {% elif ad.file_url %}
-          <object data={{ ad.file_url }} 
-                  width="455" 
-                  height="250"> 
-            <embed src={{ ad.file_url }} 
-                   width="455" 
-                   height="250"> 
-            </embed> Error: Embedded data could not be displayed. </object>
+          <object data={{ ad.file_url }}>
+            <embed src={{ ad.file_url }}>
+            </embed> Error: Embedded data could not be displayed. 
+          </object>
           {% endif %}
         </div> <!-- ./col-6 col-sm-6 ad-main -->
         {% else %}
