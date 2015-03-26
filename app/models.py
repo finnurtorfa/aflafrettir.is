@@ -165,7 +165,7 @@ class Image(db.Model):
   __tablename__  = 'images'
   id             = db.Column(db.Integer, primary_key=True, autoincrement=True)
   filename       = db.Column(db.String(120), nullable=True)
-  file_url       = db.Column(db.String(120), nullable=True)
+  ad_html        = db.Column(db.Text)
   location       = db.Column(db.String(120), nullable=False)
   type           = db.Column(db.Integer, nullable=False)
   url            = db.Column(db.String(120))
