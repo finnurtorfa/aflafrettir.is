@@ -213,7 +213,7 @@ def nicedit_upload():
   current_app.logger.debug('Uploaded {} to the server'.format(filename))
 
   img = Image(filename=filename,
-              file_url=None,
+              ad_html=None,
               location=url_for('static', filename='uploads/imgs/'),
               type=10,
               active=False)
@@ -367,7 +367,7 @@ def ad_upload():
   filename = None
 
   if request.method == 'POST':
-    if form.ad.data or form.ad_url.data:
+    if form.ad.data or form.ad_html.data:
       if form.ad.data:
         try:
           file = request.files.get('ad')
@@ -386,9 +386,9 @@ def ad_upload():
         if not form.url.data.startswith('http'):
           form.url.data = 'http://' + form.url.data
 
-      print(form.ad_url.data)
+      print(form.ad_html.data)
       ad = Image(filename=filename,
-                 file_url=form.ad_url.data,
+                 ad_html=form.ad_html.data,
                  location=url_for('static', filename='uploads/ads/'),
                  type=form.placement.data,
                  url=form.url.data,
@@ -413,7 +413,7 @@ def ad_edit(ad_id):
         form.url.data = 'http://' + form.url.data
 
     ad.type      = form.placement.data
-    ad.file_url  = form.ad_url.data
+    ad.ad_html  = form.ad_html.data
     ad.url       = form.url.data
     ad.active    = form.active.data
 
@@ -425,7 +425,7 @@ def ad_edit(ad_id):
     return redirect(url_for('admin.ad_index'))
 
   form.placement.data = ad.type
-  form.ad_url.data    = ad.file_url
+  form.ad_html.data    = ad.ad_html
   form.url.data       = ad.url
   form.active.data    = ad.active
 
