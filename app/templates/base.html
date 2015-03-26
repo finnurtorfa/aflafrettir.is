@@ -124,6 +124,11 @@
 {% block disqus_comments %}{% endblock %}
 
 <script type="text/javascript">
+  var FJHost = ((document.location.protocol == 'https:') ? 
+      "https://ssllog." : "http://log.");
+  document.write(unescape("%3Cscript src='" + FJHost + 
+                          "feedjit.com/pg/fj/019d779b34a1fbdb/'" + 
+                          " type='text/javascript'%3E%3C/script%3E"));
   try { var FJ = FJNew(); FJ.logHit(); } catch(err) {}
 </script>
 
