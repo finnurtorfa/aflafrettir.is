@@ -386,7 +386,6 @@ def ad_upload():
         if not form.url.data.startswith('http'):
           form.url.data = 'http://' + form.url.data
 
-      print(form.ad_html.data)
       ad = Image(filename=filename,
                  ad_html=form.ad_html.data,
                  location=url_for('static', filename='uploads/ads/'),
