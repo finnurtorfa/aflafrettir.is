@@ -3,13 +3,14 @@ import os
 from app import create_app, db
 from app.models import User, Category
 
-from flask_script import Manager
+from flask_script import Manager, Server
 from flask_migrate import Migrate, MigrateCommand
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
+manager.add_command('runserver', Server(host='127.0.0.1'))
 
 #pylint: disable-msg=E1101
 @manager.command
