@@ -27,7 +27,9 @@ def adduser(email, username, admin=False):
 
   category = Category.get_by_name('Almenn frétt')
   if category is None:
-    category = Category(name='Almenn frétt', active=True)
+    category = Category(name='Almenn frétt',
+                        name_en='General News',
+                        active=True)
     db.session.add(category)
 
   user = User(email=email,
