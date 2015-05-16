@@ -1,0 +1,4 @@
+*.conf
+*.ini
+*.pid
+UWSGI_RELOAD
