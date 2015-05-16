@@ -1,0 +1,27 @@
+# uwsgi - uWSGI
+
+description "uWSGI Emperor"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+
+respawn
+
+env UWSGI=/path/to/uwsgi
+env LOGTO=/var/log/uwsgi/emperor.log
+
+env FLASK_CONFIG=
+env SECRET_KEY=
+env MAIL_USERNAME=
+env MAIL_PASSWORD=
+env FB_APP_ID=
+env FB_APP_SECRET=
+env FB_PAGE_ID=
+env GOOGLE_ANALYTICS_ID=
+
+exec $UWSGI \
+     --master \
+     --emperor /etc/uwsgi/apps-enabled \
+     --logto $LOGTO \
+     --die-on-term \
+     --pidfile /path/to/application/uwsgi/uwsgi-emperor.pid

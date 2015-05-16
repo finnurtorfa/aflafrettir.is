@@ -1,0 +1,26 @@
+[uwsgi]
+# Application's base folder
+base = /path/to/base/dir/of/application
+pythonpath = %(base)
+home = /path/to/virtual/env/directory/
+
+master = true
+
+# Python module to import
+module = manage
+
+# The variable that holds a flask application inside the module imported 
+callable = app
+
+uid = www-data
+gid = www-data
+
+chdir = %(base)
+
+socket = %(base)/uwsgi/%n.sock
+chmod-socket    = 644
+
+# Location of log files
+logto = /var/log/uwsgi/%n.log
+pidfile = %(base)/uwsgi/uwsgi-%n.pid
+touch-reload = %(base)/uwsgi/UWSGI_RELOAD
