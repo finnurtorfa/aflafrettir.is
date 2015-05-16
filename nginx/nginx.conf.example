@@ -1,0 +1,15 @@
+server {
+    listen      80;
+    server_name server.name
+    charset     utf-8;
+    client_max_body_size 75M;
+
+    location / { try_files $uri @yourapplication; }
+    location @yourapplication {
+        include uwsgi_params;
+        uwsgi_pass unix:/dir/to/application/uwsgi/application.sock;
+    }
+    location /static {
+        root /dir/to/application/app/;
+        }
+}
