@@ -465,10 +465,6 @@ def about():
 
 """ Informatics and Analytics
 """
-@admin.route('/info/feedjit')
-def feedjit():
-  return render_template('admin/feedjit.html')
-
 @admin.route('/info/google')
 def google():
   return render_template('admin/google.html')
