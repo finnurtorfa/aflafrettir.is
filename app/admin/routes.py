@@ -13,9 +13,10 @@ from helpers.text import remove_html_tags, slugify, get_all_imgs
 from helpers.image import crop_image, jpeg_convert
 
 from . import admin
-from .forms import ProfileForm, PostForm, CategoryForm, AdForm, AboutForm
+from .forms import (ProfileForm, PostForm, CategoryForm, AdForm, AboutForm,
+                    ListForm)
 
-from .. import db, ads, imgs
+from .. import db, ads, imgs, aflafrettir
 from ..models import Post, Category, Image, About
 
 """Profile Related Routes
@@ -468,3 +469,10 @@ def about():
 @admin.route('/info/google')
 def google():
   return render_template('admin/google.html')
+
+""" Aflafrettir extension
+"""
+@admin.route('/list')
+def make_list():
+  form = ListForm()
+  return render_template('admin/list.html', form=form)
