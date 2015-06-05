@@ -2,6 +2,7 @@
 from flask_wtf import Form
 from wtforms import StringField, TextAreaField, SubmitField, SelectField, \
                     DateTimeField, FileField, BooleanField
+from wtforms.fields.html5 import DateField
 from wtforms.validators import Required, Length, Optional
 
 class ProfileForm(Form):
@@ -48,3 +49,9 @@ class AdForm(Form):
 class AboutForm(Form):
   body   = TextAreaField('Um síðuna', validators=[Required()])
   submit = SubmitField('Vista')
+
+class ListForm(Form):
+  name        = StringField('Nafn', validators=[Required()])
+  date_to     = DateField('Dagsetning 1', format='%Y-%m-%d', validators=[Required()])
+  date_from   = DateField('Dagsetning 2', format='%Y-%m-%d', validators=[Required()])
+  submit      = SubmitField('Útbúa lista')
