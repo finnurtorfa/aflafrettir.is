@@ -9,6 +9,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES
 from flask_mail import Mail
 from flask_whooshalchemy import whoosh_index
 from flask_babel import Babel
+from flask_aflafrettir import Aflafrettir
 
 from helpers.text import slugify, truncate
 
@@ -19,6 +20,7 @@ bootstrap = Bootstrap()
 db = SQLAlchemy()
 mail = Mail()
 babel = Babel()
+aflafrettir = Aflafrettir()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -42,6 +44,7 @@ def create_app(config_name):
   configure_uploads(app, (ads, imgs))
   mail.init_app(app)
   babel.init_app(app)
+  aflafrettir.init_app(app)
 
   from .models import Post
   whoosh_index(app, Post)
