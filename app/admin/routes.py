@@ -482,11 +482,11 @@ def make_list(filename=None):
 
   if request.method == 'POST':
     if form.validate_on_submit():
-      afla_manager.make_list(name=landings.path(form.name.data),
-                             date_from=form.date_from.data,
-                             date_to=form.date_to.data)
-
-      return redirect(url_for('admin.make_list', filename=form.name.data))
-
+      if afla_manager.make_list(name=landings.path(form.name.data),
+                                date_from=form.date_from.data,
+                                date_to=form.date_to.data):
+        return redirect(url_for('admin.make_list', filename=form.name.data))
+      else:
+        flash('Eitthvað fór úrskeiðis')
 
   return render_template('admin/list.html', form=form)
