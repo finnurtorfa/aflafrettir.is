@@ -3,6 +3,13 @@
 {% block header %}
 {% endblock %}
 
+{% block metas %}
+{{ super() }}
+    <meta property="og:title" content="{{ post.title }}"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:description" content="{{ truncate(post.body, 300)|safe }}"/>
+{% endblock %}
+
 {% block content_left %}
 <div class="col-md-2" id="sidebar">
   <div class="panel panel-default" id="admin_left" data-affix-top="0">
