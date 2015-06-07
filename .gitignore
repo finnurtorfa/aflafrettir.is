@@ -67,3 +67,6 @@ backup/
 
 # whoosh stuff
 whoosh*
+
+# Logging directory
+log/
