@@ -477,7 +477,6 @@ def make_list(filename=None):
 
   if filename is not None:
     if os.path.isfile(landings.path(filename)):
-      flash('Búinn að útbúa og senda lista!')
       return send_from_directory(filename=filename,
                                  directory=landings.path(''))
 
