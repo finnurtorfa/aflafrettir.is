@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 from flask import (render_template, redirect, url_for, flash, request, json,
-                   session, current_app)
+                   session, current_app, send_from_directory)
 from flask_login import login_required, current_user
 from flask_uploads import UploadNotAllowed
 
@@ -16,7 +16,7 @@ from . import admin
 from .forms import (ProfileForm, PostForm, CategoryForm, AdForm, AboutForm,
                     ListForm)
 
-from .. import db, ads, imgs, afla_manager
+from .. import db, ads, imgs, landings, afla_manager
 from ..models import Post, Category, Image, About
 
 """Profile Related Routes
@@ -373,8 +373,6 @@ def ad_upload():
         try:
           file = request.files.get('ad')
           filename = ads.save(file)
-          """filename = do_something(ads.path(filename))
-          """
           flash("Skráin hefur verið vistuð!")
         except UploadNotAllowed:
           current_app.logger.exception('Tried to upload {}'.format(file))
@@ -473,13 +471,23 @@ def google():
 """ Aflafrettir extension
 """
 @admin.route('/list', methods=['GET', 'POST'])
-def make_list():
+@admin.route('/list/<path:filename>', methods=['GET', 'POST'])
+def make_list(filename=None):
   form = ListForm()
+
+  if filename is not None:
+    if os.path.isfile(landings.path(filename)):
+      flash('Búinn að útbúa og senda lista!')
+      return send_from_directory(filename=filename,
+                                 directory=landings.path(''))
 
   if request.method == 'POST':
     if form.validate_on_submit():
-      afla_manager.make_list(name=form.name.data,
+      afla_manager.make_list(name=landings.path(form.name.data),
                              date_from=form.date_from.data,
                              date_to=form.date_to.data)
+
+      return redirect(url_for('admin.make_list', filename=form.name.data))
+
 
   return render_template('admin/list.html', form=form)
