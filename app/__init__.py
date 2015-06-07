@@ -20,7 +20,7 @@ bootstrap = Bootstrap()
 db = SQLAlchemy()
 mail = Mail()
 babel = Babel()
-aflafrettir = Aflafrettir()
+afla_manager = Aflafrettir()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
@@ -44,7 +44,7 @@ def create_app(config_name):
   configure_uploads(app, (ads, imgs))
   mail.init_app(app)
   babel.init_app(app)
-  aflafrettir.init_app(app)
+  afla_manager.init_app(app)
 
   from .models import Post
   whoosh_index(app, Post)

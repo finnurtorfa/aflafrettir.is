@@ -16,7 +16,7 @@ from . import admin
 from .forms import (ProfileForm, PostForm, CategoryForm, AdForm, AboutForm,
                     ListForm)
 
-from .. import db, ads, imgs, aflafrettir
+from .. import db, ads, imgs, afla_manager
 from ..models import Post, Category, Image, About
 
 """Profile Related Routes
