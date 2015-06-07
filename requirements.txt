@@ -39,4 +39,4 @@ six==1.9.0
 -e git+https://github.com/michaelhelmick/requests-facebook.git#egg=requests_facebook
 
 # Flask-Aflafrettir==0.2
--e git+https://github.com/finnurtorfa/aflafrettir.git@9a54b903ab8b6cca0df24ffa0fd180e98ffa7951#egg=Flask_Aflafrettir-master
+-e git+https://github.com/finnurtorfa/aflafrettir.git@bbe78c07297262b4d76a39cccb2ef9cf14557ffe#egg=Flask_Aflafrettir-master
