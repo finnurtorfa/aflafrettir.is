@@ -74,6 +74,21 @@
           </ul> <!-- ./list-unstyled collapse in -->
         </li> <!-- ./nav-header -->
         
+        <li class="nav-header">
+          <a class="collapsible"
+             href="#"
+             data-toggle="collapse"
+             data-target="#misc-menu">
+            <h3>{{ _('Ýmislegt') }}</h3>
+          </a>
+          <ul class="list-unstyled collapse
+            {% if request.path in [url_for('admin.make_list')] %} in
+            {% endif %}"
+              id="misc-menu">
+            <li><a href="{{ url_for('admin.make_list') }}">{{ _('Útbúa lista') }}</a></li>
+          </ul> <!-- ./list-unstyled collapse in -->
+        </li> <!-- ./nav-header -->
+
       </ul> <!-- ./list-unstyled -->
     </div> <!-- ./panel-body -->
   </div> <!-- ./panel panel-default -->
