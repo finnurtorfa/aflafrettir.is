@@ -477,8 +477,9 @@ def make_list():
   form = ListForm()
 
   if request.method == 'POST':
-    afla_manager.make_list(name=form.name.data,
-                           date_from=form.date_from.data,
-                           date_to=form.date_to.data)
+    if form.validate_on_submit():
+      afla_manager.make_list(name=form.name.data,
+                             date_from=form.date_from.data,
+                             date_to=form.date_to.data)
 
   return render_template('admin/list.html', form=form)
