@@ -52,6 +52,6 @@ class AboutForm(Form):
 
 class ListForm(Form):
   name        = StringField('Nafn', validators=[Required()])
-  date_to     = DateField('Dagsetning 1', format='%Y-%m-%d', validators=[Required()])
-  date_from   = DateField('Dagsetning 2', format='%Y-%m-%d', validators=[Required()])
+  date_from   = DateField('Dagsetning 1', format='%Y-%m-%d', validators=[Required()])
+  date_to     = DateField('Dagsetning 2', format='%Y-%m-%d', validators=[Required()])
   submit      = SubmitField('Útbúa lista')
