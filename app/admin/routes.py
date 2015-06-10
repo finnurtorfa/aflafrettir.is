@@ -9,7 +9,7 @@ from flask_uploads import UploadNotAllowed
 
 from facebook import FacebookAPI, GraphAPI, GraphAPIError
 
-from helpers.text import remove_html_tags, slugify, get_all_imgs
+from helpers.text import remove_html_tags, slugify, get_all_imgs, truncate
 from helpers.image import crop_image, jpeg_convert
 
 from . import admin
@@ -99,6 +99,7 @@ def post_to_fb():
     current_app.logger.error(accounts)
     current_app.logger.error(request.args)
     flash("Ekki tókst að senda póst á Facebook!")
+
     return redirect(url_for('admin.news_index'))
 
   api = GraphAPI(page_access_token)
@@ -106,7 +107,9 @@ def post_to_fb():
     api.post(current_app.config['FB_PAGE_ID'] + '/feed',
              params={'message': session.pop('body', None),
                      'link': session.pop('link', None),
-                     'picture': session.pop('picture', None)})
+                     'picture': session.pop('picture', None),
+                     'name': session.pop('name', None),
+                     'description': session.pop('description', None)})
 
     flash("Tókst að senda póst á Facebook")
   except GraphAPIError as e:
@@ -177,6 +180,8 @@ def news_post(lang='is'):
                                 _external=True)
       session['body'] = form.facebook.data
       session['picture'] = fn
+      session['name'] = form.title.data
+      session['description'] = truncate(form.body.data)
 
       current_app.logger.debug('Preparing data for Facebook')
       current_app.logger.debug(session)
