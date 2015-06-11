@@ -93,7 +93,7 @@ def post_to_fb():
   for d in accounts['data']:
     if d['id'] == current_app.config['FB_PAGE_ID']:
       page_access_token = d['access_token']
-      break
+      breahd
   else:
     current_app.logger.error('Not able to find the page_access_token')
     current_app.logger.error(accounts)
@@ -109,7 +109,7 @@ def post_to_fb():
                      'link': session.pop('link', None),
                      'picture': session.pop('picture', None),
                      'name': session.pop('name', None),
-                     'description': session.pop('description', None)})
+                     'caption': session.pop('caption', None)})
 
     flash("Tókst að senda póst á Facebook")
   except GraphAPIError as e:
@@ -181,7 +181,7 @@ def news_post(lang='is'):
       session['body'] = form.facebook.data
       session['picture'] = fn
       session['name'] = form.title.data
-      session['description'] = truncate(form.body.data)
+      session['caption'] = truncate(form.body.data)
 
       current_app.logger.debug('Preparing data for Facebook')
       current_app.logger.debug(session)
