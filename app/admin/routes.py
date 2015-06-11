@@ -181,7 +181,7 @@ def news_post(lang='is'):
       session['body'] = form.facebook.data
       session['picture'] = fn
       session['name'] = form.title.data
-      session['caption'] = truncate(form.body.data)
+      session['caption'] = truncate(form.post.data)
 
       current_app.logger.debug('Preparing data for Facebook')
       current_app.logger.debug(session)
