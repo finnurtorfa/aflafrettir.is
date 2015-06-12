@@ -93,7 +93,7 @@ def post_to_fb():
   for d in accounts['data']:
     if d['id'] == current_app.config['FB_PAGE_ID']:
       page_access_token = d['access_token']
-      breahd
+      break
   else:
     current_app.logger.error('Not able to find the page_access_token')
     current_app.logger.error(accounts)
