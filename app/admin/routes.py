@@ -1,6 +1,7 @@
 import os
 
 from datetime import datetime
+from queue import Queue
 
 from flask import (render_template, redirect, url_for, flash, request, json,
                    session, current_app, send_from_directory)
@@ -11,6 +12,7 @@ from facebook import FacebookAPI, GraphAPI, GraphAPIError
 
 from helpers.text import remove_html_tags, slugify, get_all_imgs, truncate
 from helpers.image import crop_image, jpeg_convert
+from helpers.threading import run_in_thread, list_lock
 
 from . import admin
 from .forms import (ProfileForm, PostForm, CategoryForm, AdForm, AboutForm,
@@ -18,6 +20,13 @@ from .forms import (ProfileForm, PostForm, CategoryForm, AdForm, AboutForm,
 
 from .. import db, ads, imgs, landings, afla_manager
 from ..models import Post, Category, Image, About
+
+list_queue = Queue()
+
+@admin.before_app_request
+def before_request():
+  while not list_queue.empty():
+    flash(list_queue.get())
 
 """Profile Related Routes
 """
@@ -487,11 +496,32 @@ def make_list(filename=None):
 
   if request.method == 'POST':
     if form.validate_on_submit():
-      if afla_manager.make_list(name=landings.path(form.name.data),
-                                date_from=form.date_from.data,
-                                date_to=form.date_to.data):
-        return redirect(url_for('admin.make_list', filename=form.name.data))
-      else:
-        flash('Eitthvað fór úrskeiðis')
+      make_list_in_thread(app=current_app._get_current_object(),
+                          name=landings.path(form.name.data),
+                          date_from=form.date_from.data,
+                          date_to=form.date_to.data)
+
+      flash('Er að útbúa lista. Aðgerðin getur tekið nokkurn tíma!')
+      return redirect(url_for('admin.make_list'))
 
   return render_template('admin/list.html', form=form)
+
+@run_in_thread(current_app)
+def make_list_in_thread(app, name, date_from, date_to):
+  if list_lock.locked():
+    list_queue.put('Get aðeins útbúið einn lista í senn!')
+    app.logger.info('Thread already started, exiting!')
+  else:
+    app.logger.info('Acquiring a lock for making lists!')
+    list_lock.acquire()
+    try:
+      if afla_manager.make_list(name=name,
+                                date_from=date_from,
+                                date_to=date_to):
+        app.logger.info('The list is ready')
+      else:
+        app.logger.error('Something happened! Try again')
+    finally:
+      list_queue.put('Listinn er tilbúinn!')
+      app.logger.info('Releasing a lock for making lists')
+      list_lock.release()
