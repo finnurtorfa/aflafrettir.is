@@ -13,6 +13,7 @@ from facebook import FacebookAPI, GraphAPI, GraphAPIError
 from helpers.text import remove_html_tags, slugify, get_all_imgs, truncate
 from helpers.image import crop_image, jpeg_convert
 from helpers.threading import run_in_thread, list_lock
+from helpers.os_methods import get_all_files, remove_file
 
 from . import admin
 from .forms import (ProfileForm, PostForm, CategoryForm, AdForm, AboutForm,
@@ -488,11 +489,12 @@ def google():
 @admin.route('/list/<path:filename>', methods=['GET', 'POST'])
 def make_list(filename=None):
   form = ListForm()
+  files = get_all_files(landings.config.destination)
 
   if filename is not None:
     if os.path.isfile(landings.path(filename)):
       return send_from_directory(filename=filename,
-                                 directory=landings.path(''))
+                                 directory=landings.config.destination)
 
   if request.method == 'POST':
     if form.validate_on_submit():
@@ -504,7 +506,13 @@ def make_list(filename=None):
       flash('Er að útbúa lista. Aðgerðin getur tekið nokkurn tíma!')
       return redirect(url_for('admin.make_list'))
 
-  return render_template('admin/list.html', form=form)
+  return render_template('admin/list.html', form=form, files=files)
+
+@admin.route('/list/delete/<path:filename>/')
+def delete_list(filename):
+  remove_file(filename, landings.config.destination)
+  
+  return redirect(url_for('admin.make_list'))
 
 @run_in_thread(current_app)
 def make_list_in_thread(app, name, date_from, date_to):
