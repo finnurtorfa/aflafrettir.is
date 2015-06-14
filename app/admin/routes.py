@@ -462,6 +462,7 @@ def ad_delete(ad_id):
 """About the page related routes
 """
 @admin.route('/about', methods=['GET', 'POST'])
+@login_required
 def about():
   form = AboutForm()
   my_about = About().query.first() or About()
@@ -480,6 +481,7 @@ def about():
 """ Informatics and Analytics
 """
 @admin.route('/info/google')
+@login_required
 def google():
   return render_template('admin/google.html')
 
@@ -487,6 +489,7 @@ def google():
 """
 @admin.route('/list', methods=['GET', 'POST'])
 @admin.route('/list/<path:filename>', methods=['GET', 'POST'])
+@login_required
 def make_list(filename=None):
   form = ListForm()
   files = get_all_files(landings.config.destination)
@@ -509,6 +512,7 @@ def make_list(filename=None):
   return render_template('admin/list.html', form=form, files=files)
 
 @admin.route('/list/delete/<path:filename>/')
+@login_required
 def delete_list(filename):
   remove_file(filename, landings.config.destination)
   
