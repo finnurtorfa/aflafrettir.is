@@ -22,6 +22,7 @@ def get_locale():
 @aflafrettir.before_app_request
 def before_request():
   g.search_form = SearchForm()
+  g.categories = Category.get_all_active()
 
   if request.view_args and 'lang_code' in request.view_args:
     if request.view_args['lang_code'] not in ('en', 'is'):
@@ -29,7 +30,6 @@ def before_request():
 
 @aflafrettir.errorhandler(404)
 def page_not_found(e):
-  categories = Category.get_all_active()
   ads = Image.get_all_ads()
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
@@ -37,7 +37,6 @@ def page_not_found(e):
   current_app.logger.warning('{} for url {}'.format(e, request.url))
 
   return render_template('aflafrettir/404.html',
-                         categories=categories,
                          right_ads=right_ads,
                          left_ads=left_ads), 404
 
@@ -47,7 +46,6 @@ def page_not_found(e):
 @aflafrettir.route('/<lang_code>/frettir')
 @aflafrettir.route('/<lang_code>/frettir/<int:page>')
 def index(page=1, lang_code='is'):
-  categories = Category.get_all_active()
   posts = Post.get_per_page(page,
                             current_app.config['POSTS_PER_PAGE'],
                             lang=lang_code)
@@ -75,7 +73,6 @@ def index(page=1, lang_code='is'):
       p.thumbnail = url_for('static', filename='imgs/default.png')
 
   return render_template('aflafrettir/index.html',
-                         categories=categories,
                          posts=posts,
                          top_ads=top_ads,
                          main_lg=main_lg,
@@ -89,7 +86,6 @@ def index(page=1, lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>')
 @aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>/sida/<int:page>')
 def category(cid, page=1, lang_code='is'):
-  categories = Category.get_all_active()
   posts = Post.get_by_category(cid,
                                page,
                                current_app.config['POSTS_PER_PAGE'],
@@ -118,7 +114,6 @@ def category(cid, page=1, lang_code='is'):
       p.thumbnail = url_for('static', filename='imgs/default.png')
 
   return render_template('aflafrettir/index.html',
-                         categories=categories,
                          posts=posts,
                          top_ads=top_ads,
                          main_lg=main_lg,
@@ -131,7 +126,6 @@ def category(cid, page=1, lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/grein/<title>/<int:pid>')
 def post(title, pid, lang_code='is'):
   p = Post.get_by_id(pid)
-  categories = Category.get_all_active()
   ads = Image.get_all_ads()
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
@@ -143,7 +137,6 @@ def post(title, pid, lang_code='is'):
     lang_code = None
 
   return render_template('aflafrettir/post.html',
-                         categories=categories,
                          post=p,
                          right_ads=right_ads,
                          left_ads=left_ads,
@@ -165,7 +158,6 @@ def search(lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/leita/<query>')
 @aflafrettir.route('/<lang_code>/frettir/leita/<query>/sida/<int:page>')
 def results(query, page=1, lang_code='is'):
-  categories = Category.get_all_active()
   posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
@@ -191,7 +183,6 @@ def results(query, page=1, lang_code='is'):
       p.thumbnail = url_for('static', filename='imgs/default.png')
 
   return render_template('aflafrettir/index.html',
-                         categories=categories,
                          posts=posts,
                          top_ads=top_ads,
                          main_lg=main_lg,
@@ -205,7 +196,6 @@ def results(query, page=1, lang_code='is'):
 @aflafrettir.route('/<lang_code>/um-siduna')
 def about(lang_code='is'):
   about_page = About.query.first()
-  categories = Category.get_all_active()
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
   right_ads = [ad for ad in ads if ad.type == 3]
@@ -216,7 +206,6 @@ def about(lang_code='is'):
 
   return render_template('aflafrettir/about.html',
                          about=about_page,
-                         categories=categories,
                          top_ads=top_ads,
                          right_ads=right_ads,
                          left_ads=left_ads,
@@ -226,7 +215,6 @@ def about(lang_code='is'):
 @aflafrettir.route('/<lang_code>/hafa-samband', methods=['GET', 'POST'])
 def contact(lang_code='is'):
   form = ContactForm()
-  categories = Category.get_all_active()
   ads = Image.get_all_ads()
   top_ads = [ad for ad in ads if ad.type == 0]
   right_ads = [ad for ad in ads if ad.type == 3]
@@ -256,7 +244,6 @@ def contact(lang_code='is'):
 
   return render_template('aflafrettir/contact.html',
                          form=form,
-                         categories=categories,
                          top_ads=top_ads,
                          right_ads=right_ads,
                          left_ads=left_ads,
