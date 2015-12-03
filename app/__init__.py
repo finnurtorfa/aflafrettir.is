@@ -35,6 +35,8 @@ def create_app(config_name):
 
   configure_logging()
 
+  app.jinja_env.trim_blocks = True
+  app.jinja_env.lstrip_blocks = True
   app.jinja_env.globals.update(slugify=slugify)
   app.jinja_env.globals.update(truncate=truncate)
   app.jinja_env.globals.update(url=ads.url)
