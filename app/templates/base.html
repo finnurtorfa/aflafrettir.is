@@ -56,27 +56,29 @@
       });
     </script>
     {% endblock %}
-
-    <body {% block body_attrs %}{% endblock %}>
-    {% block body %}
-      {% block nav_bar %}
-      {% endblock %}
-
-      {% block content %}
-      {% endblock %}
-
-      {% block footer %}
-      {% endblock %}
-
-      {% block scripts %}
-      <script type="text/javascript"
-              src="http://cdn.ink.sapo.pt/3.1.10/js/ink-all.min.js"></script>
-      <script type="text/javascript"
-              src="http://cdn.ink.sapo.pt/3.1.10/js/autoload.js"></script>
-      {% endblock %}
-    {% endblock %}
-    </body>
   </head>
+
+  <body {% block body_attrs %}{% endblock %}>
+  {% block body %}
+    <div class="ink-grid">
+    {% block nav_bar %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block footer %}
+    {% endblock %}
+    </div> <!-- ./div ink-grid -->
+
+    {% block scripts %}
+    <script type="text/javascript"
+            src="http://cdn.ink.sapo.pt/3.1.10/js/ink-all.min.js"></script>
+    <script type="text/javascript"
+            src="http://cdn.ink.sapo.pt/3.1.10/js/autoload.js"></script>
+    {% endblock %}
+  {% endblock %}
+  </body>
 {% endblock %}
 </html>
 {% endblock %}
