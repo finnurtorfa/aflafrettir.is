@@ -1,16 +1,24 @@
 {% extends "base.html" %}
 
 {% block nav_bar %}
-  {% include "_navigation_bar.html" %}
+{% include "_navigation_bar.html" %}
 {% endblock %}
 
 {% block content %}
-  {% block top_ad_carousel %}
-  {% endblock %}
+    <!--[if lte IE 9 ]>
+    <div class="ink-alert basic">
+      <button class="ink-dismiss">&times;</button>
+      <p><strong>Þú ert að nota gamla útgáfu af Internet Explorer.</strong>
+        Vinsamlegast <a href="http://browsehappy.com/">uppfærðu í nýrri vafra</a> fyrir betri upplifun af vefnum.
+      </p>
+    </div>
+    -->
+    {% block top_ad_carousel %}
+    {% endblock %}
 
-  {% block main_content %}
-  {% endblock %}
+    {% block main_content %}
+    {% endblock %}
 
-  {% block right_side_ads %}
-  {% endblock %}
+    {% block right_side_ads %}
+    {% endblock %}
 {% endblock %}
