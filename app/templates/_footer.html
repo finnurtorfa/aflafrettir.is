@@ -1,0 +1,30 @@
+    <footer class="clearfix">
+      <div class="ink-grid">
+        <div class="column-group horizontal-gutters">
+          <div class="show-all all-100 medium-50 large-33 xlarge-33">
+            <ul class="fa-ul">
+              <li><i class="fa-li fa fa-user"></i><strong>Gísli Reynisson</strong></li>
+              <li><i class="fa-li fa fa-home"></i>Fífudalur 23<br>260 Reykjanesbær<li>
+              <li><i class="fa-li fa fa-phone"></i>(+354)-421-7585</li>
+              <li><i class="fa-li fa fa-mobile"></i>(+354)-663-5575</li>
+              <li><i class="fa-li fa fa-envelope-o"></i>gisli (hjá) aflafrettir . is</li>
+              <li><i class="fa-li fa fa-bank"></i>Kt: 200875-3709<br>Rnr: 0142-15-380889</li>
+            </ul>
+          </div>
+          <div class="show-all hide-tiny hide-small medium-50 large-67 xlarge-67">
+            <ul class="unstyled inline half-vertical-space">
+              {% if g.categories %}
+              {% for category in g.categories %}
+              <li>
+                <a href="{{ url_for('aflafrettir.category',
+                                    cid=category.id) }}">
+                  {{ category.name }}
+                </a>
+              </li>
+              {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
+        </div> <!-- ./div column-group horizontal-gutters -->
+      </div> <!-- ./div ink-grid -->
+    </footer>
