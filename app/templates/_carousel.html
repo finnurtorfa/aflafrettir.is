@@ -1,0 +1,28 @@
+    <div id="top-ad-carousel"
+         class="ink-carousel"
+         data-pagination="#top-ad-carousel-pagination"
+         data-auto-advance="10000">
+      <ul class="stage column-group gutters" id="trigger-modal">
+      {% if g.top_ads %}
+        {% for ad in g.top_ads %}
+        <li class="slide all-100">
+          <figure class="ink-image">
+          {% if ad.url %}
+            <a href"{{ ad.url }}">
+              <img src="{{ url(ad.filename) }}" alt="Auglýsing"/>
+            </a>
+          {% else %}
+            <img src="{{ url(ad.filename) }}" alt="Auglýsing"/>
+          {% endif %}
+          </figure>
+        </li>
+        {% endfor %}
+      {% endif %}
+      </ul>
+      <nav id="top-ad-carousel-pagination"
+           class="ink-navigation vertical-space"
+           data-next-label=""
+           data-previous-label="">
+        <ul class="pagination chevron"></ul>
+      </nav>
+    </div> <!-- ./div ink-carousel -->
