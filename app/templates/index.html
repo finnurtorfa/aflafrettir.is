@@ -17,11 +17,22 @@
     {% include "_carousel.html" %}
     {% endblock %}
 
-    {% block main_content %}
-    {% endblock %}
+    <section class="hide-all
+                    show-medium
+                    show-large
+                    show-xlarge
+                    medium-push-right
+                    large-push-right
+                    xlarge-push-right
+                    all-20">
+      {% block right_side_ads %}
+      {% endblock %}
+    </section>
 
-    {% block right_side_ads %}
-    {% endblock %}
+    <section class="show-all all-80">
+      {% block main_content %}
+      {% endblock %}
+    </section>
 {% endblock %}
 
 {% block footer %}
