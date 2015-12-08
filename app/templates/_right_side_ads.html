@@ -1,0 +1,13 @@
+{% if g.right_ads %}
+      {% for ad in g.right_ads %}
+      <figure class="ink-image">
+        {% if ad.url %}
+        <a href"{{ ad.url }}">
+          <img src="{{ url(ad.filename) }}" alt="Auglýsing"/>
+        </a>
+        {% else %}
+        <img src="{{ url(ad.filename) }}" alt="Auglýsing"/>
+        {% endif %}
+      </figure>
+      {% endfor %}
+{% endif %}
