@@ -6,9 +6,15 @@
       {% for post in posts.items %}
         <div class="all-50 small-100 tiny-100">
           <h3>{{ post.title }}</h3>
-          <p> {{ truncate(post.body_html|striptags, 300)|safe }} </p>
-          <img src="{{ post.thumbnail }}"/>
-
+          <div class="wrap-text">
+            <a href="{{ url_for('aflafrettir.post',
+                                title=slugify(post.title),
+                                pid=post.id,
+                                lang_code=lang_code) }}">
+              <img src="{{ post.thumbnail }}" class="img-resize"/>
+            </a>
+            <p>{{ truncate(post.body_html|striptags, 300)|safe }}</p>
+          </div>
         </div>
       {% endfor %}
       {% endif %}

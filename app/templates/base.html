@@ -55,6 +55,11 @@
         nope : 'http://cdn.ink.sapo.pt/3.1.10/css/ink-legacy.min.css'
       });
     </script>
+
+    <!-- load custom css stylings -->
+    <link rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='css/styles.css') }}">
     {% endblock %}
   </head>
 
