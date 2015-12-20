@@ -11,7 +11,7 @@
                                 title=slugify(post.title),
                                 pid=post.id,
                                 lang_code=lang_code) }}">
-              <img src="{{ post.thumbnail }}" class="img-resize"/>
+              <img src="{{ post.thumbnail }}" class="thumbnail-img"/>
             </a>
             <p>{{ truncate(post.body_html|striptags, 300)|safe }}</p>
           </div>
