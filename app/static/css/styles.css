@@ -23,3 +23,69 @@ header h1 small:before {
   -moz-border-radius: 20px;
   border-radius: 20px;  
 }
+
+/* Fixed width column */
+.right-side-ads a {
+  display: block;
+}
+
+.highlight-wrapper {
+  overflow: hidden;
+}
+
+@media screen and ( min-width: 1261px ) {
+  /* X-LARGE */
+  .highlight {
+    padding-right: 345px;
+  }
+
+  .right-side-ads {
+    width: 310px;
+  }
+}
+
+@media screen and ( min-width: 961px ) and ( max-width: 1260px ) {
+  /* LARGE */
+  .highlight {
+    padding-right: 345px;
+  }
+
+  .right-side-ads {
+    width: 310px;
+  }
+}
+
+@media screen and ( min-width: 641px ) and ( max-width: 960px ) {
+  /* MEDIUM */
+  .highlight {
+    padding-right: 245px;
+  }
+
+  .right-side-ads {
+    width: 210px;
+  }
+}
+
+@media screen and ( min-width: 321px ) and ( max-width: 640px ) {
+  /* SMALL */
+  .highlight {
+    padding-right: 0px;
+  }
+
+  .right-side-ads {
+    width: 310px;
+  }
+}
+
+@media screen and ( max-width: 320px ) {
+  /* TINY */
+  .highlight {
+    padding-right: 0px;
+  }
+
+  .right-side-ads {
+    width: 310px;
+  }
+}
+/* Fixed width column */
+

@@ -17,23 +17,26 @@
     {% include "_carousel.html" %}
     {% endblock %}
 
-    <section class="hide-all
+    <section class="right-side-ads
+                    hide-all
                     show-medium
                     show-large
                     show-xlarge
                     medium-push-right
                     large-push-right
-                    xlarge-push-right
-                    all-25">
+                    xlarge-push-right">
       {% block right_side_ads %}
       {% include "_right_side_ads.html" %}
       {% endblock %}
     </section>
 
-    <section class="show-all all-75">
+    <section class="highlight">
+      <div class="highlight-wrapper">
       {% block main_content %}
       {% endblock %}
+      </div> <!-- ./highlight-wrapper -->
     </section>
+
 {% endblock %}
 
 {% block footer %}

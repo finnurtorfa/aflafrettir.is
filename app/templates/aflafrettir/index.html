@@ -1,22 +1,22 @@
 {% extends "index.html" %}
 
 {% block main_content %}
-      <div class="column-group gutters">
-      {% if posts %}
-      {% for post in posts.items %}
-        <div class="all-50 small-100 tiny-100">
-          <h3>{{ post.title }}</h3>
-          <div class="wrap-text">
-            <a href="{{ url_for('aflafrettir.post',
-                                title=slugify(post.title),
-                                pid=post.id,
-                                lang_code=lang_code) }}">
-              <img src="{{ post.thumbnail }}" class="thumbnail-img"/>
-            </a>
-            <p>{{ truncate(post.body_html|striptags, 300)|safe }}</p>
+        <div class="column-group gutters">
+        {% if posts %}
+        {% for post in posts.items %}
+          <div class="all-50 small-100 tiny-100">
+            <h3>{{ post.title }}</h3>
+            <div class="wrap-text">
+              <a href="{{ url_for('aflafrettir.post',
+                                  title=slugify(post.title),
+                                  pid=post.id,
+                                  lang_code=lang_code) }}">
+                <img src="{{ post.thumbnail }}" class="thumbnail-img"/>
+              </a>
+              <p>{{ truncate(post.body_html|striptags, 300)|safe }}</p>
+            </div>
           </div>
-        </div>
-      {% endfor %}
-      {% endif %}
-      </div> <!-- column-group gutters -->
+        {% endfor %}
+        {% endif %}
+        </div> <!-- column-group gutters -->
 {% endblock %}
