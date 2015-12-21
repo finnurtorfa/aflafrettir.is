@@ -13,6 +13,17 @@ header h1 small:before {
   font-size:  1.6em;
 }
 
+/* Add a middle dot between list elements */
+li.list-elem:last-child {
+  padding-right: 0px;
+}
+
+li.list-elem:before {
+  content: "\00B7";
+  font-size: 150%;
+  padding-right: 15px;
+}
+
 figure.ink-image {
   border: 0;
 }

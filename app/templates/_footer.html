@@ -1,6 +1,6 @@
     <footer class="clearfix">
       <div class="column-group horizontal-gutters">
-        <div class="show-all all-100 medium-50 large-25 xlarge-25">
+        <div class="show-all all-100 medium-25 large-25 xlarge-25">
           <ul class="fa-ul">
             <li><i class="fa-li fa fa-user"></i><strong>Gísli Reynisson</strong></li>
             <li><i class="fa-li fa fa-home"></i>Fífudalur 23<br>260 Reykjanesbær<li>
@@ -10,11 +10,16 @@
             <li><i class="fa-li fa fa-bank"></i>Kt: 200875-3709<br>Rnr: 0142-15-380889</li>
           </ul>
         </div>
-        <div class="show-all hide-tiny hide-small medium-50 large-75 xlarge-75">
-          <ul class="unstyled inline half-vertical-space">
+        <div class="show-all
+                    hide-tiny
+                    hide-small
+                    medium-75
+                    large-75
+                    xlarge-75">
+          <ul class="align-center unstyled inline half-vertical-space">
             {% if g.categories %}
             {% for category in g.categories %}
-            <li>
+            <li {% if loop.index != 1 %} class="list-elem"{% endif %}>
               <a href="{{ url_for('aflafrettir.category',
                                   cid=category.id) }}">
                 {{ category.name }}
