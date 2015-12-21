@@ -13,6 +13,10 @@ header h1 small:before {
   font-size:  1.6em;
 }
 
+figure.ink-image {
+  border: 0;
+}
+
 /* Wrap text around thumbnail images */
 .wrap-text .thumbnail-img {
   float: left;
