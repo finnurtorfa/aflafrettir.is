@@ -13,6 +13,11 @@ header h1 small:before {
   font-size:  1.6em;
 }
 
+.ink-label a,a:hover {
+	color:#FFFFFF;
+  text-decoration:none;
+}
+
 /* Add a middle dot between list elements */
 li.list-elem:last-child {
   padding-right: 0px;

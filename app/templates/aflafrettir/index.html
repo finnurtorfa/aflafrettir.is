@@ -15,6 +15,29 @@
               </a>
               <p>{{ truncate(post.body_html|striptags, 300)|safe }}</p>
             </div>
+
+            <div>
+
+              <ul class="medium unstyled inline">
+                <li>
+                  <a href="{{ url_for('aflafrettir.post',
+                                      title=slugify(post.title),
+                                      pid=post.id,
+                                      lang_code=lang_code) }}">
+                    Birt {{ post.distance_in_time }}
+                  </a>
+                </li>
+                <li class="pull-right">
+                  <span class="ink-label grey">
+                    <a href="{{ url_for('aflafrettir.post',
+                                        title=slugify(post.title),
+                                        pid=post.id,
+                                        lang_code=lang_code) }}">
+                      Lesa meira »
+                    </a>
+                  </span>
+                </li>
+            </div>
           </div>
         {% endfor %}
         {% endif %}
