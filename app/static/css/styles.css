@@ -18,6 +18,10 @@ header h1 small:before {
   text-decoration:none;
 }
 
+.ink-navigation ul.dropdown li {
+  width: 150px;
+}
+
 /* Add a middle dot between list elements */
 li.list-elem:last-child {
   padding-right: 0px;
