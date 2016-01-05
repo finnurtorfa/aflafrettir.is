@@ -4,7 +4,32 @@
     <section class="highlight">
       <div class="highlight-wrapper">
         <article>
-          <h1>{{ post.title }}</h1>
+          <header>
+            <h1>{{ post.title }}</h1>
+            <ul class="unstyled inline">
+              <li>
+                <span class="ink-label blue">
+                  <a href="{{ url_for('aflafrettir.category',
+                                       cid = post.category_id,
+                                       lang_code = lang_code) }}">
+                    {{ post.category_name }}
+                  </a>
+                </span>
+              </li>
+              <li>
+                <p>{{ post.strftime }}
+              </li>
+              <li class="pull-right">
+                <div class="fb-like"
+                     data-href="http://www.aflafrettir.is/frettir/grein/norsk-innras-a-aflafrettir/668"
+                     data-layout="button_count"
+                     data-action="like"
+                     data-show-faces="false"
+                     data-share="true"></div>
+              </li>
+            </ul>
+          </header>
+
           <p>{{ post.body_html|safe }}</p>
         </article>
         <div id="disqus_thread"></div>
