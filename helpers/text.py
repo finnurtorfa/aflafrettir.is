@@ -145,3 +145,26 @@ def time_ago(from_date, since_date=None):
     return 'fyrir um 1 ári'
   else:
     return 'fyrir um {0} árum'.format(distance_in_minutes // 525600)
+
+def strftime(date):
+  """ Returns the date in DD. Month YYY format in icelandic """
+  months = {"01": "Janúar",
+            "02": "Febrúar",
+            "03": "Mars",
+            "04": "Apríl",
+            "05": "Maí",
+            "06": "Júní",
+            "07": "Júlí",
+            "08": "Ágúst",
+            "09": "September",
+            "10": "Október",
+            "11": "Nóvember",
+            "12": "Desember",
+           }
+
+  day = date.strftime("%d")
+  month = months[date.strftime("%m")]
+  year = date.strftime("%Y")
+
+  return "{0}. {1} {2}".format(day, month, year)
+
