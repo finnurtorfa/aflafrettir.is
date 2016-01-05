@@ -1,6 +1,8 @@
 {% extends "index.html" %}
 
 {% block main_content %}
+    <section class="highlight">
+      <div class="highlight-wrapper">
         <div class="column-group gutters">
         {% if posts %}
         {% for post in posts.items %}
@@ -42,4 +44,6 @@
         {% endfor %}
         {% endif %}
         </div> <!-- column-group gutters -->
+      </div> <!-- ./highlight-wrapper -->
+    </section>
 {% endblock %}
