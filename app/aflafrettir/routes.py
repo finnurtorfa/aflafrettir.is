@@ -10,7 +10,7 @@ from ..models import User, Category, Post, About, Image
 
 from .. import mail, imgs, babel
 
-from helpers.text import get_thumbnail, time_ago, slugify
+from helpers.text import get_thumbnail, time_ago, slugify, strftime
 
 @babel.localeselector
 def get_locale():
@@ -111,6 +111,9 @@ def category(cid, page=1, lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/grein/<title>/<int:pid>')
 def post(title, pid, lang_code='is'):
   p = Post.get_by_id(pid)
+
+  p.category_name = Category.get_by_id(p.category_id).name
+  p.strftime = strftime(p.timestamp)
 
   if title.encode('utf-8') != slugify(p.title):
     return abort(404)
