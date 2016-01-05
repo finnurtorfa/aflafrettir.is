@@ -1,88 +1,28 @@
 {% extends "aflafrettir/index.html" %}
 
-{% block header %}
-{% endblock %}
+{% block main_content %}
+    <section class="highlight">
+      <div class="highlight-wrapper">
+        <article>
+          <h1>{{ post.title }}</h1>
+          <p>{{ post.body_html|safe }}</p>
+        </article>
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+          /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+          var disqus_shortname = 'aflafrettir';
 
-{% block metas %}
-{{ super() }}
-    <meta property="og:title" content="{{ post.title }}"/>
-    <meta property="og:type" content="article"/>
-    <meta property="og:description" content="{{ truncate(post.body, 300)|safe }}"/>
-{% endblock %}
-
-{% block content_left %}
-<div class="col-md-2" id="sidebar">
-  <div class="panel panel-default" id="admin_left" data-affix-top="0">
-    <div class="panel-heading">{{ _('Flokkar') }}</div>
-    <div class="panel-body">
-      <ul class="nav nav-stacked">
-        <li>
-          <a href="{{ url_for('aflafrettir.category',
-                              cid=1, 
-                              lang_code=lang_code) }}">{{ _('Almenn frétt') }}
-          </a>
-        </li>
-        {% for category in categories %}
-        <li>
-          <a href="{{ url_for('aflafrettir.category',
-                              cid=category.id,
-                              lang_code=lang_code) }}">{{ category.name }}
-          </a>
-        </li>
-        {% endfor %}
-      </ul>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel panel-default -->
-</div> <!-- ./col-md-2 -->
-{% endblock %}
-
-{% block content_main %}
-<div class="col-md-10" id="content">
-  {% include "_warnings.html" %}
-
-  <div class="panel">
-    <div class="panel-heading">{{ post.title }}</div> 
-    <div class="panel-body post-body"> 
-      <div class="row">
-        <div class="col-xs-12">
-          <p> {{ post.body_html|safe }} </p>
-        </div> <!-- ./col-xs-12 -->
-      </div> <!-- ./row -->
-      <div class="row post-like">
-        <div class="col-12 col-sm-12">
-          <div class="pull-right">
-            <div class="fb-like" 
-                 data-href="{{ url_for('aflafrettir.post',
-                                       title=slugify(post.title),
-                                       pid=post.id,
-                                       _external=True, 
-                                       lang_code=lang_code) }}" 
-                 data-layout="button_count" 
-                 data-action="like" 
-                 data-show-faces="false"
-                 data-share="true"></div>
-          </div>
-        </div> <!-- ./col-12 col-sm-12 -->
-      </div> <!-- ./row -->
-
-      <div id="disqus_thread"></div>
-      <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'aflafrettir'; 
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel -->
-</div> <!-- ./col-md-10 -->
+          /* * * DON'T EDIT BELOW THIS LINE * * */
+          (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+          })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div> <!-- ./div highlight-wrapper -->
+    </section>
 {% endblock %}
 
 {% block disqus_comments %}
