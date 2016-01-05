@@ -23,14 +23,14 @@ header h1 small:before {
 }
 
 /* Add a middle dot between list elements */
-li.list-elem:last-child {
-  padding-right: 0px;
+ul li.list-elem:after {
+  font-size: 150%;
+  padding-left: 10px;
+  content: " \2219";
 }
 
-li.list-elem:before {
-  content: "\00B7";
-  font-size: 150%;
-  padding-right: 15px;
+ul li.list-elem:last-child:after {
+  content: none;
 }
 
 figure.ink-image {

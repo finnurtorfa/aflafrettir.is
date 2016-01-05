@@ -19,7 +19,7 @@
           <ul class="align-center unstyled inline half-vertical-space">
             {% if g.categories %}
             {% for category in g.categories %}
-            <li {% if loop.index != 1 %} class="list-elem"{% endif %}>
+            <li class="list-elem">
               <a href="{{ url_for('aflafrettir.category',
                                   cid=category.id) }}">
                 {{ category.name }}
