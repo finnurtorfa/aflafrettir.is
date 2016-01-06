@@ -37,6 +37,16 @@ figure.ink-image {
   border: 0;
 }
 
+/* Table stylings */
+.scroll-table {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.ink-table tbody, thead {
+  background: #efefef;
+}
+
 /* Wrap text around thumbnail images */
 .wrap-text .thumbnail-img {
   float: left;
