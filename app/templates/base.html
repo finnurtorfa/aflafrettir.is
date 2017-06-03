@@ -22,9 +22,6 @@
     <link rel="stylesheet" 
           type="text/css" 
           href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="stylesheet" 
-          type="text/css" 
-          href="{{ url_for('static', filename='css/fb_popup.css') }}">
     <link rel="shortcut icon" 
           type="image/x-icon" 
           href="{{ url_for('static', filename='imgs/favicon.ico') }}">
@@ -46,10 +43,6 @@
 
 <!-- Beginning of body block -->
 {% block body %}
-
-<!-- Facebook Popup flier starts -->
-{% include "_fb_popup.html" %}
-<!-- Facebook Popup flier ends -->
 
 <div id="wrap">
   <!-- Navigation bar starts -->

@@ -107,7 +107,7 @@ def post_to_fb():
   else:
     current_app.logger.error('Not able to find the page_access_token')
     current_app.logger.error(accounts)
-    current_app.logger.error(request.args)
+    current_app.logger.error(current_app.config['FB_PAGE_ID'])
     flash("Ekki tókst að senda póst á Facebook!")
 
     return redirect(url_for('admin.news_index'))

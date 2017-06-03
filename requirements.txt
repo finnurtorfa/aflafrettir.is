@@ -31,7 +31,7 @@ itsdangerous==0.24
 requests==2.3.0
 suds-jurko==0.6
 openpyxl==2.2.3
-jdcal==1.0
+jdcal==1.2
 python-dateutil==2.4.2
 six==1.9.0
 
