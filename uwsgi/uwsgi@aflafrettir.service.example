@@ -1,0 +1,34 @@
+[Unit]
+Description=UWSGI service for Aflafrettir.is
+After=network.target
+
+[Service]
+Environment=FLASK_CONFIG=
+Environment=SECRET_KEY=
+Environment=MAIL_USERNAME=
+Environment=MAIL_PASSWORD=
+Environment=FB_APP_ID=
+Environment=FB_APP_SECRET=
+Environment=FB_PAGE_ID=
+Environment=GOOGLE_ANALYTICS_ID=
+Environment=AFLAFRETTIR_USER=
+Environment=AFLAFRETTIR_PASS=
+
+ExecStart=/usr/bin/uwsgi --master \
+                         --emperor /path/to/enabled/files \
+                         --logto /path/to/log/file \
+                         --pidfile /path/to/pidfile
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStop=/bin/kill -INT $MAINPID
+
+RuntimeDirectory=uwsgi
+Restart=always
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
+User=www
+Group=www
+
+[Install]
+WantedBy=multi-user.target
