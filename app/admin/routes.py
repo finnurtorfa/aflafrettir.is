@@ -8,7 +8,7 @@ from flask import (render_template, redirect, url_for, flash, request, json,
 from flask_login import login_required, current_user
 from flask_uploads import UploadNotAllowed
 
-from facebook import FacebookAPI, GraphAPI, GraphAPIError
+from facebook import GraphAPI
 
 from helpers.text import remove_html_tags, slugify, get_all_imgs, truncate
 from helpers.image import crop_image, jpeg_convert
@@ -72,24 +72,11 @@ def post_to_fb():
                                      current_user.fb_token))
     current_app.logger.debug(request.args)
 
-    api = GraphAPI(current_user.fb_token)
+    api = GraphAPI(current_user.fb_token, version='2.7')
   elif request.args.get('code'):
-    current_app.logger.debug('Fetching Faccbook token for user {}'
+    current_app.logger.debug('Fetching Facebook token for user {}'
                              .format(current_user.username))
     current_app.logger.debug(request.args)
-
-    f = FacebookAPI(current_app.config['FB_APP_ID'],
-                    current_app.config['FB_APP_SECRET'],
-                    url_for('admin.post_to_fb',
-                            _external=True))
-    access_token = f.get_access_token(request.args.get('code'))
-    user_access_token = access_token[b'access_token'].decode('utf-8')
-
-    current_user.fb_token = user_access_token
-    db.session.add(current_user)
-    db.session.commit()
-
-    api = GraphAPI(user_access_token)
   else:
     current_app.logger.error("Not able to send post to Facebook for user {}"
                              .format(current_user.username))
@@ -98,7 +85,7 @@ def post_to_fb():
     flash("Ekki tókst að senda póst á Facebook!")
     return redirect(url_for('admin.news_index'))
 
-  accounts = api.get('me/accounts')
+  accounts = api.get_object('me/accounts')
 
   for d in accounts['data']:
     if d['id'] == current_app.config['FB_PAGE_ID']:
@@ -112,18 +99,15 @@ def post_to_fb():
 
     return redirect(url_for('admin.news_index'))
 
-  api = GraphAPI(page_access_token)
-  try:
-    api.post(current_app.config['FB_PAGE_ID'] + '/feed',
-             params={'message': session.pop('body', None),
-                     'link': session.pop('link', None),
-                     'picture': session.pop('picture', None),
-                     'name': session.pop('name', None),
-                     'caption': session.pop('caption', None)})
+  api = GraphAPI(page_access_token, version='2.7')
+  api.put_object(parent_object=current_app.config['FB_PAGE_ID'],
+                 connection_name='feed',
+                 message=session.pop('body', None),
+                 link=session.pop('link', None))
 
-    flash("Tókst að senda póst á Facebook")
-  except GraphAPIError as e:
-    flash("Tókst ekki að senda á Facebook. Skilaboð: {0}".format(e))
+  #  flash("Tókst að senda póst á Facebook")
+  #except GraphAPIError as e:
+  #  flash("Tókst ekki að senda á Facebook. Skilaboð: {0}".format(e))
 
   return redirect(url_for('admin.news_index'))
 
@@ -199,19 +183,7 @@ def news_post(lang='is'):
       if current_user.fb_token:
         return redirect(url_for('admin.post_to_fb'))
       else:
-        f = FacebookAPI(current_app.config['FB_APP_ID'],
-                        current_app.config['FB_APP_SECRET'],
-                        url_for('admin.post_to_fb',
-                                _external=True))
-        auth_url = f.get_auth_url(scope=['public_profile',
-                                         'email',
-                                         'manage_pages',
-                                         'publish_actions'])
-
-        current_app.logger.debug('Authentication url for Facebook {}'
-                                 .format(auth_url))
-
-        return redirect(auth_url)
+        current_app.error("Need to get authentication")
 
     return redirect(url_for('admin.news_index', lang=lang))
 

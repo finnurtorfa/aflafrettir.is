@@ -1,3 +1,5 @@
+facebook-sdk==2.0.0
+
 Flask==0.10.1
 Flask-Babel==0.9
 Flask-Bootstrap==3.1.1.2
@@ -11,7 +13,7 @@ Flask-SQLAlchemy==2.0
 -e hg+https://bitbucket.org/mattupstate/flask-uploads#egg=Flask-Uploads==0.2.0
 
 # Flask-WhooshAlchemy==0.55
--e git+https://github.com/jshipley/Flask-WhooshAlchemy.git#egg=flask_whooshalchemy
+-e git+https://github.com/gyllstromk/Flask-WhooshAlchemy.git#egg=flask_whooshalchemy
 
 Flask-WTF==0.11
 
@@ -34,9 +36,6 @@ openpyxl==2.2.3
 jdcal==1.2
 python-dateutil==2.4.2
 six==1.9.0
-
-# requests-facebook==0.2.1
--e git+https://github.com/michaelhelmick/requests-facebook.git#egg=requests_facebook
 
 # Flask-Aflafrettir==0.2
 -e git+https://github.com/finnurtorfa/aflafrettir.git@bbe78c07297262b4d76a39cccb2ef9cf14557ffe#egg=Flask_Aflafrettir-master
