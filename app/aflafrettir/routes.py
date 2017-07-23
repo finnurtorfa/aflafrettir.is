@@ -10,7 +10,7 @@ from ..models import User, Category, Post, About, Image
 
 from .. import mail, imgs, babel
 
-from helpers.text import get_thumbnail, time_ago, slugify
+from helpers.text import get_all_imgs, get_thumbnail, time_ago, slugify
 
 @babel.localeselector
 def get_locale():
@@ -22,6 +22,9 @@ def get_locale():
 @aflafrettir.before_app_request
 def before_request():
   g.search_form = SearchForm()
+
+  if '.com' in request.url:
+      request.view_args['lang_code'] = 'en'
 
   if request.view_args and 'lang_code' in request.view_args:
     if request.view_args['lang_code'] not in ('en', 'is'):
@@ -135,6 +138,7 @@ def post(title, pid, lang_code='is'):
   ads = Image.get_all_ads()
   right_ads = [ad for ad in ads if ad.type == 3]
   left_ads = [ad for ad in ads if ad.type == 4]
+  body_imgs = [os.path.basename(img) for img in get_all_imgs(p.body_html)]
 
   if title.encode('utf-8') != slugify(p.title):
     return abort(404)
@@ -147,7 +151,8 @@ def post(title, pid, lang_code='is'):
                          post=p,
                          right_ads=right_ads,
                          left_ads=left_ads,
-                         lang_code=lang_code)
+                         lang_code=lang_code,
+                         body_imgs=body_imgs)
 
 @aflafrettir.route('/frettir/leita', methods=['POST'])
 @aflafrettir.route('/<lang_code>/frettir/leita', methods=['POST'])

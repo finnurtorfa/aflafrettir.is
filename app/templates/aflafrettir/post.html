@@ -7,7 +7,10 @@
 {{ super() }}
     <meta property="og:title" content="{{ post.title }}"/>
     <meta property="og:type" content="article"/>
-    <meta property="og:description" content="{{ truncate(post.body, 300)|safe }}"/>
+    <meta property="og:description" content="{{ truncate(post.body, 300, span=False)|safe }}"/>
+    <meta property="og:image" content="{{ url_for('static',
+                                                  filename='uploads/imgs/'+body_imgs[0],
+                                                  _external=True) }}"/>
 {% endblock %}
 
 {% block content_left %}
@@ -18,7 +21,7 @@
       <ul class="nav nav-stacked">
         <li>
           <a href="{{ url_for('aflafrettir.category',
-                              cid=1, 
+                              cid=1,
                               lang_code=lang_code) }}">{{ _('Almenn frétt') }}
           </a>
         </li>
@@ -41,8 +44,8 @@
   {% include "_warnings.html" %}
 
   <div class="panel">
-    <div class="panel-heading">{{ post.title }}</div> 
-    <div class="panel-body post-body"> 
+    <div class="panel-heading">{{ post.title }}</div>
+    <div class="panel-body post-body">
       <div class="row">
         <div class="col-xs-12">
           <p> {{ post.body_html|safe }} </p>
@@ -51,14 +54,14 @@
       <div class="row post-like">
         <div class="col-12 col-sm-12">
           <div class="pull-right">
-            <div class="fb-like" 
+            <div class="fb-like"
                  data-href="{{ url_for('aflafrettir.post',
                                        title=slugify(post.title),
                                        pid=post.id,
-                                       _external=True, 
-                                       lang_code=lang_code) }}" 
-                 data-layout="button_count" 
-                 data-action="like" 
+                                       _external=True,
+                                       lang_code=lang_code) }}"
+                 data-layout="button_count"
+                 data-action="like"
                  data-show-faces="false"
                  data-share="true"></div>
           </div>
@@ -68,7 +71,7 @@
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'aflafrettir'; 
+        var disqus_shortname = 'aflafrettir';
 
         /* * * DON'T EDIT BELOW THIS LINE * * */
         (function() {
