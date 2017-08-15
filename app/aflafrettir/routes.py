@@ -17,6 +17,10 @@ def get_locale():
   if request.view_args:
     return request.view_args.get('lang_code', 'is')
 
+  if '.com' in request.url:
+    return 'en'
+
+
   return 'is'
 
 @aflafrettir.before_app_request
