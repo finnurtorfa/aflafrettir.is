@@ -320,20 +320,25 @@
 
 {% block footer_right %}
 <div class="col-md-9">
-  <p class="text-center"> <strong>Flokkar</strong><br><hr></p>
+  <p class="text-center"> <strong>{{ _('Flokkar') }}</strong><br><hr></p>
 </div> <!-- col-md-9 -->
 
 <ul class="list-inline">
   <li>
     <a href="{{ url_for('aflafrettir.category',
                         cid=1,
-                        lang_code=lang_code) }}">Almenn frétt</a>
+                        lang_code=lang_code) }}">{{ _('Almenn frétt') }}</a>
   </li>
   {% for category in categories %} 
   <li>
     <a href="{{ url_for('aflafrettir.category',
                         cid=category.id,
-                        lang_code=lang_code) }}">{{ category.name }}</a>
+                        lang_code=lang_code) }}">{% if not lang_code  %}
+                                                 {{ category.name }}
+                                                 {% else %}
+                                                 {{ category.name_en }}
+                                                 {% endif %}
+    </a>
   </li>
   {% endfor %}
 </ul> <!-- list-inline -->

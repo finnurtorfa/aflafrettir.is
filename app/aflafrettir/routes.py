@@ -23,9 +23,6 @@ def get_locale():
 def before_request():
   g.search_form = SearchForm()
 
-  if '.com' in request.url:
-      request.view_args['lang_code'] = 'en'
-
   if request.view_args and 'lang_code' in request.view_args:
     if request.view_args['lang_code'] not in ('en', 'is'):
       return abort(404)
@@ -50,6 +47,9 @@ def page_not_found(e):
 @aflafrettir.route('/<lang_code>/frettir')
 @aflafrettir.route('/<lang_code>/frettir/<int:page>')
 def index(page=1, lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   categories = Category.get_all_active()
   posts = Post.get_per_page(page,
                             current_app.config['POSTS_PER_PAGE'],
@@ -92,6 +92,9 @@ def index(page=1, lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>')
 @aflafrettir.route('/<lang_code>/frettir/flokkur/<int:cid>/sida/<int:page>')
 def category(cid, page=1, lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   categories = Category.get_all_active()
   posts = Post.get_by_category(cid,
                                page,
@@ -133,6 +136,9 @@ def category(cid, page=1, lang_code='is'):
 @aflafrettir.route('/frettir/grein/<title>/<int:pid>')
 @aflafrettir.route('/<lang_code>/frettir/grein/<title>/<int:pid>')
 def post(title, pid, lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   p = Post.get_by_id(pid)
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
@@ -170,6 +176,9 @@ def search(lang_code='is'):
 @aflafrettir.route('/<lang_code>/frettir/leita/<query>')
 @aflafrettir.route('/<lang_code>/frettir/leita/<query>/sida/<int:page>')
 def results(query, page=1, lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   categories = Category.get_all_active()
   posts = Post.search(query, page, current_app.config['POSTS_PER_PAGE'])
   ads = Image.get_all_ads()
@@ -209,6 +218,9 @@ def results(query, page=1, lang_code='is'):
 @aflafrettir.route('/um-siduna')
 @aflafrettir.route('/<lang_code>/um-siduna')
 def about(lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   about_page = About.query.first()
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
@@ -230,6 +242,9 @@ def about(lang_code='is'):
 @aflafrettir.route('/hafa-samband', methods=['GET', 'POST'])
 @aflafrettir.route('/<lang_code>/hafa-samband', methods=['GET', 'POST'])
 def contact(lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   form = ContactForm()
   categories = Category.get_all_active()
   ads = Image.get_all_ads()
@@ -270,6 +285,9 @@ def contact(lang_code='is'):
 @aflafrettir.route('/notandi/<username>')
 @aflafrettir.route('/<lang_code>/notandi/<username>')
 def user(username, lang_code='is'):
+  if '.com' in request.url:
+    lang_code = 'en'
+
   u = User.query.filter_by(username=username).first_or_404()
 
   if lang_code == 'is':
