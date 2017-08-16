@@ -7,7 +7,7 @@
          class="carousel slide" 
          data-ride="carousel"
          data-interval="10000">
-      {% if top_ads %}
+      {% if top_ads and lang_code != 'en' %}
       <ol class="carousel-indicators">
         {% for ad in top_ads %}
         <li data-target="#carousel-example-captions"
@@ -25,6 +25,20 @@
           {% if ad.url %}</a>{% endif %}
         </div> <!-- ./item -->
         {% endfor %}
+      </div> <!-- ./carousel-inner -->
+      {% elif lang_code == 'en' %}
+      <ol class="carousel-indicators">
+        <li data-target="#carousel-example-captions"
+            data-slide-to="0"
+            class="active">
+        </li>
+      </ol>
+
+      <div class="carousel-inner">
+        <div class="item active">
+          <img data-src="holder.js/1140x300/auto/#777:#7777"
+               alt="Laust auglýsingapláss">
+        </div> <!-- ./item -->
       </div> <!-- ./carousel-inner -->
       {% else %}
       <ol class="carousel-indicators">
@@ -83,7 +97,7 @@
         </li>
         {% endfor %}
       </ul>
-      {% if left_ads %}
+      {% if left_ads and lang_code != 'en' %}
         {% for ad in left_ads %}
         {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}<img src="{{ url(ad.filename) }}" alt="Auglýsing">{% if ad.url %}</a>{% endif %}
         {% endfor %}
@@ -307,7 +321,7 @@
 {% endblock %}
 
 {% block adbar %}
-  {% if right_ads %}
+  {% if right_ads and lang_code != 'en' %}
     {% for ad in right_ads %}
     {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
       <img src="{{ url(ad.filename) }}" alt="Auglýsing">
