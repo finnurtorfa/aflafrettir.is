@@ -1,154 +1,74 @@
-{% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% block document %}
+<!DOCTYPE html>
+<html {% block html_attrs %}{% endblock %}>
+{% block html %}
+    <head>
+        {% block metas %}
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>
+        <meta name="description" content="Aflafréttir - Sjávarútvegsfréttir um allt og alla"/>
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="mobile-web-app-capable" content="yes">
 
-{% block html_attribs %} lang="{{ lang_code or 'is' }}" {% endblock %}
+        <!-- Facebook Open Graph meta's -->
+        <meta property="og:url" content="http://www.aflafrettir.is/frettir"/>
+        <meta property="og:site_name" content="Aflafréttir"/>
+        <meta property="fb:admins" content="100000026998299"/>
+        <meta property="fb:app_id" content="1526822784207277"/>
+        {% endblock %}
 
-<!-- Beginning of head block -->
-{% block title %} Aflafréttir.is {% endblock %}
+        {% block styles %}
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 
-{% block metas %}
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta charset="utf-8"/>
-    <meta name="viewport" 
-          content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <meta property="og:url" content="{{ request.base_url }}"/>
-    <meta property="og:site_name" content="Aflafréttir"/>
-    <meta property="fb:admins" content="100000026998299"/>
-    <meta property="fb:app_id" content="1526822784207277"/>
-{% endblock %}
+        <!-- load custom css stylings -->
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+        {% endblock %}
+    </head>
+    <body {% block body_attrs %}{% endblock %}>
+    {% block body %}
+        <div id="wrap">
 
-{% block styles %}
-    {{ super() }}
-    <link rel="stylesheet" 
-          type="text/css" 
-          href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="shortcut icon" 
-          type="image/x-icon" 
-          href="{{ url_for('static', filename='imgs/favicon.ico') }}">
-    <link href='http://fonts.googleapis.com/css?family=Raleway:500,800|Open+Sans' 
-          rel='stylesheet' 
-          type='text/css'>
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" 
-          rel="stylesheet">
-{% endblock %}
+        {% block nav_bar %}
+        {% endblock %}
 
-{% block head %}
-    {{ super() }}
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-      <script src="{{ url_for('static', filename='js/Respond/src/respond.js') }}"></script>
-    <![endif]-->
-{% endblock %}
-<!-- End of head block -->
+            <div class="container-fluid">
+            {% block content %}
+            {% endblock %}
+            </div> <!-- /.container-fluid -->
+        </div> <!-- /.wrap -->
 
-<!-- Beginning of body block -->
-{% block body %}
+        {% block footer %}
+        {% endblock %}
 
-<div id="wrap">
-  <!-- Navigation bar starts -->
-  {% block navbar %}{% include "_navigation_bar.html" %}{% endblock %}
-  <!-- Navigation bar ends -->
+        {% block scripts %}
+        <script>
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '1526822784207277',
+              xfbml      : true,
+              version    : 'v2.1'
+            });
+          };
+
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "//connect.facebook.net/is_IS/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div id="fb-root"></div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
   
-  <!-- Main content of site starts -->
-  {% block content %}
-  <div class="container-fluid">
-    {% block header %}
+        {% endblock %}
     {% endblock %}
-  
-    <div class="col-xs-12 col-sm-12 col-md-9 col-md-offset-1">
-      <div class="no-gutter row">
-        <!-- Beginning of left side of main content -->
-        {% block content_left %}{% endblock %}
-        <!-- End of left side of main content -->
-    
-        <!-- Beginning of main content -->
-        {% block content_main %}{% endblock %}
-        <!-- End of main content -->
-      </div> <!-- ./no-gutter row -->
-    </div> <!-- ./col-xs-12 col-sm-12 col-md-9 col-md-offset-1-->
-  
-    <div class="col-md-2 ad-right hidden-xs hidden-sm adbar"
-      {% if request.endpoint == 'aflafrettir.post' %}id="sidebar"{% endif %}>
-      <!-- Beginning of adbar content -->
-      {% block adbar %}{% endblock %}
-      <!-- End of adbar content -->
-    </div> <!-- ./col-md-2 ad-right hidden-xs hidden-sm adbar -->
-  </div> <!-- ./container-fluid -->
-
-  <div class="push"></div>
-  {% endblock %}
-  <!-- Main content of site ends -->
-</div> <!-- /.wrap -->
-
-<!-- Footer of site starts -->
-{% block footer %} 
-<div id="footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <ul class="fa-ul">
-          <li><i class="fa-li fa fa-user"></i>
-            <strong>Gísli Reynisson </strong> </li>
-          <li><i class="fa-li fa fa-home"></i> 
-            Fífudalur 23<br>260 Reykjanesbær</li>
-          <li><i class="fa-li fa fa-phone"></i> 421-7585</li>
-          <li><i class="fa-li fa fa-mobile"></i> 663-5575</li>
-          <li><i class="fa-li fa fa-envelope-o"></i>
-            <a href="mailto:gisli@aflafrettir.is">gisli@aflafrettir.is</a></li>
-          <li><i class="fa-li fa fa-bank"></i>
-            Kennitala: 200875-3709<br>Reikningur: 0142-15-380889</li>
-        </ul>
-      </div>
-      {% block footer_right %}
-      {% endblock %}
-    </div>
-  </div>
-</div>
+    </body>
 {% endblock %}
-<!-- Footer of site ends -->
-
-<!-- Script block starts -->
-{% block scripts %}
-
-{% block disqus_comments %}{% endblock %}
-
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1526822784207277',
-      xfbml      : true,
-      version    : 'v2.1'
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/is_IS/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-<div id="fb-root"></div>
-
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', '{{ config["GOOGLE_ANALYTICS_ID"] }}', 'auto');
-  ga('send', 'pageview');
-
-</script>
-
-{{ super() }}
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-<script src="{{ url_for('static', filename='js/holder/holder.js') }}"></script>
+</html>
 {% endblock %}
-<!-- Script block ends -->
-
-{% endblock %}
-<!-- End of body block -->
-
