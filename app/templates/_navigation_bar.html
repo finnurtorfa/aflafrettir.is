@@ -1,77 +1,81 @@
-<nav role="navigation" class="navbar navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Title -->
-    <div class="navbar-header pull-left">
-      <a href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">
-        <img src="{{ url_for('static', filename='imgs/afla_logo.png') }}" />
-      </a>
-    </div>
-    
-    <!-- 'Sticky' (non-collapsing) right-side menu item(s) -->
-    <div class="navbar-header pull-right"> 
-      <ul class="nav navbar-nav pull-left">
-        <li class="dropdown pull-right"> 
-          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user fa-lg"></i></a>
-          <ul class="dropdown-menu">
-            {% if not current_user.is_authenticated() %}
-            <li><a href="{{ url_for('auth.login') }}">{{ _('Innskráning') }}</a></li>
-            {% elif current_user.is_authenticated() %}
-            <li><a href="{{ url_for('admin.profile_index') }}">{{
-                _('Stjórnborð') }}</a></li>
-            <li><a href="{{ url_for('auth.logout') }}">{{ _('Útskráning') }}</a></li>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
+    <a class="navbar-brand" href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">
+      <img src="{{ url_for('static', filename='imgs/afla_logo.png') }}" />
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">{{ _('Forsíða') }} </a>
+            </li>
+            <li class="dropdown nav-item">
+                <a data-toggle="dropdown" class="dropdown-toggle nav-link" href="{{ url_for('aflafrettir.contact', lang_code=lang_code) }}">{{ _('Flokkar') }}</a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('aflafrettir.category', cid=1, lang_code=lang_code) }}">
+                            {{ _('Almenn Frétt') }}
+                        </a>
+                    </li>
+                    {% for category in categories %}
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('aflafrettir.category', cid=category.id, lang_code=lang_code) }}">
+                            {% if not lang_code %}
+                            {{ category.name }}
+                            {% else %}
+                            {{ category.name_en }}
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('aflafrettir.contact', lang_code=lang_code) }}">{{ _('Hafa samband') }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('aflafrettir.about', lang_code=lang_code) }}">{{ _('Um síðuna') }}</a>
+            </li>
+            {% if lang_code == 'en' %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('aflafrettir.index', lang_code='') }}">Íslenska</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('aflafrettir.index', lang_code='en') }}">English</a>
+            </li>
             {% endif %}
-          </ul>
-        </li>
+        </ul>
 
-        <li class="dropdown pull-right">
-          <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-search fa-lg"></i></a>
-          <ul class="dropdown-menu">
-            <li>
-              <form action="{{ url_for('aflafrettir.search', lang_code=lang_code) }}" method="post" class="navbar-form" role="search">
-                {{ g.search_form.hidden_tag() }}
-                <div class="input-group">
-                  {{ g.search_form.search(**{'class':'form-control search-form', 
-                                             'placeholder':'Leita'}) }}
-                  <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><span class="fa fa-search"></span></button>
-                  </div> <!-- ./input-group-brn -->
-                </div> <!-- ./input-group -->
-              </form>
-            </li>
-          </ul>
-        </li>
+        <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-facebook-square fa-lg"></i></a>
+            <ul class="dropdown-menu drop-right">
+                <li>
+                    <div class="fb-like-box" data-href="https://www.facebook.com/pages/Aflafréttir/912698022080474" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
+                </li>
+            </ul>
+        </div> <!-- ./dropdown -->
 
-        <li class="dropdown pull-right">
-          <a data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-facebook-square fa-lg"></i></a>
-          <ul class="dropdown-menu facebook-like">
-            <li>
-              <div class="fb-like-box" data-href="https://www.facebook.com/pages/Aflafréttir/912698022080474" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+        <div class="dropdown">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user fa-lg"></i></a>
+            <ul class="dropdown-menu drop-right">
+                {% if not current_user.is_authenticated() %}
+                <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">{{ _('Innskráning') }}</a></li>
+                {% elif current_user.is_authenticated() %}
+                <li><a class="dropdown-item" href="{{ url_for('admin.profile_index') }}">{{ _('Stjórnborð') }}</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">{{ _('Útskráning') }}</a></li>
+                {% endif %}
+            </ul>
+        </div> <!-- ./dropdown -->
 
-      <!-- Required bootstrap placeholder for the collapsed menu -->
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">{{ _('Opna/Loka Valmynd') }}</span>
-        <i class="fa fa-list-ul fa-lg"></i>
-      </button> 
-    </div>
+        <form action="{{ url_for('aflafrettir.search', lang_code=lang_code) }}" method="post" class="form-inline mt-2 mt-md-0" role="search">
+            {{ g.search_form.hidden_tag() }}
+            <div class="input-group">
+                {{ g.search_form.search(**{'class':'form-control mr-sm-2', 'placeholder':'Leita'}) }}
+                <button class="btn btn-outline-primary my-2 my-sm-0 submit-btn" type="submit">Leita</button>
+            </div> <!-- ./input-group -->
+        </form>
 
-    <!-- The Collapsing items navbar-left or navbar-right -->
-    <div class="navbar-header collapse navbar-collapse navbar-left">
-      <!--                      pull-right keeps the drop-down in line -->
-      <ul class="nav navbar-nav pull-right">
-        <li><a href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">{{ _('Forsíða') }}</a></li>
-        <li><a href="{{ url_for('aflafrettir.contact', lang_code=lang_code) }}">{{ _('Hafa samband') }}</a></li>
-        <li><a href="{{ url_for('aflafrettir.about', lang_code=lang_code) }}">{{ _('Um síðuna') }}</a></li>
-        {% if lang_code == 'en' %}
-        <li><a href="{{ url_for('aflafrettir.index', lang_code='') }}">Íslenska</a></li>
-        {% else %}
-        <li><a href="{{ url_for('aflafrettir.index', lang_code='en') }}">English</a></li>
-        {% endif %}
-      </ul>
-    </div>
-
-  </div>
+    </div> <!-- ./collapse navbar-collapse -->
 </nav>

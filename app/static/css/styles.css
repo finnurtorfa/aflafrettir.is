@@ -1,382 +1,80 @@
 /* General stylings */
 html, body {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  font-family:'Open Sans',sans-serif;
-  font-weight:400;
-  color:#676767;
-  background-color:#efefef;
+    font-family:'Open Sans',sans-serif;
+    font-weight:400;
+    color:#676767;
+    background-color:#efefef;
 }
 
 object, embed {
-  width:100%;
-  height: 100%;
-}
-
-.ad-link {
-  height: 250px;
+    width:100%;
+    height: 100%;
 }
 
 a,a:hover {
-	color:#77CCDD;
-  text-decoration:none;
+    color:#77CCDD;
+    text-decoration:none;
 }
 
-.container-fluid,
-.container {
-  padding: 0;
-}
 /* General stylings */
 
-/* Stylings for the navigation bar at top */
+/* Navigation bar stylings */
 nav {
-  font-family:'Raleway', sans-serif;
-  font-weight:800;
-  font-size:125%;
-	background-color:#77CCDD;
-  padding-left: 10px;
-  padding-right: 10px;
+    font-family:'Raleway', sans-serif;
+    font-weight:800;
+    font-size:125%;
+    background-color:#77CCDD;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-.navbar-header li>a, .navbar-header button {
-  margin-top: 5px;
-  color:#3B5998;
+.navbar-dark .navbar-nav .nav-link {
+    color: #fff
+}
+nav .nav-link:hover {
+    color: #efefef
 }
 
-.navbar-header .dropdown.open .dropdown-toggle {
-	background-color:#77CCDD;
+ul.dropdown-menu {
+    margin: 19px;
 }
 
-.navbar-header li>a:hover, 
-.navbar-header button:hover,
-.navbar-header li>a:focus, 
-.navbar-header button:focus {
-	background-color:#77CCDD;
-	color:#fff;
-  transition: color 0.2s ease-in;
-}
-
-.navbar-header li>a i.fa-facebook-square:hover {
-  background-color:#3B5998;
-  transition: color 0.2s ease-in;
-}
-
-.dropdown-toggle {
-  font-size:125%;
-}
-
-i.fa {
-  font-size: 150%;
+ul.drop-right {
+    margin: 25px;
 }
 
 i.fa-facebook-square {
-	background-color:#fff;
+    color:#3B5998;
+    background-color:#fff;
 }
 
-i.fa-list-ul {
-  margin-top: 8px;
-  margin-left: 15px;
+i.fa-user {
+    color:#3B5998;
 }
 
-.navbar-form input {
-  width: auto;
+i.fa {
+    font-size: 175%;
 }
 
-.dropdown-menu {
-  background-color: #77CCDD;
-  color: #fff;
-  min-width: 250px;
-  -webkit-transform-origin: top;
-  transform-origin: top;
-  -webkit-animation-fill-mode: forwards;  
-  animation-fill-mode: forwards; 
-  -webkit-transform: scale(1, 0);
-  transform: scale(1, 0);
-  display: block;
-  
-  transition: all 0.2s ease-out;
-  -webkit-transition: all 0.2s ease-out;
+i.fa:hover{
+    background-color:#efefef;
 }
 
-.dropdown-menu.facebook-like {
-  background-color: #fff;
+form button.submit-btn:hover {
+    background-color: transparent;
+    color: #efefef
 }
 
-.dropdown-menu li>a {
-  color: #3B5998;
+form button.submit-btn {
+    font-family:'Raleway', sans-serif;
+    font-weight:800;
+    border-color:#3B5998;
+    background-color: transparent;
+    color: #fff
 }
+/* Navigation bar stylings */
 
-.open > .dropdown-menu {
-  -webkit-transform: scale(1,1);
-  transform: scale(1,1);
-}
-
-.navbar .nav > li > .dropdown-menu:after {
- 
-}
-
-.search-form {
-  margin-top: 5px;
-}
-/* Stylings for the navigation bar at top */
-
-/* Stylings for everything below the navigation bar */
-@media (min-width: 992px) {
-  .no-gutter.row {
-    margin-right: 0px;
-  }
-  .no-gutter.row > div[class*='col-md'] {
-    padding-left:  0;
-    padding-right: 0;
-  }
-  .no-gutter.row > .col-md-12 {
-    width: 99.99999999999999%;
-    *width: 99.93055555555554%;
-  }
-  .no-gutter.row .col-md-11 {
-    width: 91.66666666666666%;
-    *width: 91.59722222222221%;
-  }
-  .no-gutter.row > .col-md-10 {
-    width: 83.33333333333331%;
-    *width: 83.26388888888887%;
-  }
-  .no-gutter.row > .col-md-9 {
-    width: 74.99999999999999%;
-    *width: 74.93055555555554%;
-  }
-  .no-gutter.row > .col-md-8 {
-    width: 66.66666666666666%;
-    *width: 66.59722222222221%;
-  }
-  .no-gutter.row > .col-md-7 {
-    width: 58.33333333333333%;
-    *width: 58.263888888888886%;
-  }
-  .no-gutter.row > .col-md-6 {
-    width: 49.99999999999999%;
-  }
-  .no-gutter.row > .col-md-4 {
-    width: 33.33333333333333%;
-  }
-  .no-gutter.row > .col-md-3 {
-    width: 24.999999999999996%;
-    *width: 24.930555555555554%;
-  }
-  .no-gutter.row > .col-md-2 {
-    width: 16.666666666666664%;
-    *width: 16.59722222222222%;
-  }
-  .no-gutter.row > .col-md-1 {
-    width: 8.333333333333332%;
-    *width: 8.263888888888888%;
-  }
-}
-
-/* Style the carousel */
-
-/* Carousel base class */
-.carousel {
-  height: 300px;
-  margin-bottom: 12px;
-  margin-top: 10px;
-}
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  z-index: 10;
-}
-
-/* Declare heights because of positioning of img element */
-.carousel .item {
-  height: 300px;
-  background-color: #777;
-}
-.carousel-inner > .item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: auto;
-}
-
-@media (min-width: 768px) {
-
-  /* Bump up size of carousel content */
-  .carousel-caption p {
-    margin-bottom: 20px;
-    font-size: 21px;
-    line-height: 1.4;
-  }
-
-}
-/* Stylings for everything below the navigation bar */
-
-/* Stylings that apply to content on left side and main content */
-.panel, .panel-heading {
-  border-radius: 0px;
-  border-width: 0px;
-  -webkit-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.09);
-}
-
-.panel-heading {
-  font-family:'Raleway', sans-serif;
-  font-size:150%;
-}
-
-.panel-body li a {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-/* Push the main content down a bit */
-header {
-  margin-bottom: 5px;
-  margin-top: 60px;
-}
-
-#content, #sidebar {
-  top: 70px;
-}
-/* Stylings that apply to content on left side and main content */
-
-/* Stylings for content on left side of page */
-/* only apply sticky columns on wider screens */
-@media (min-width: 1200px) {
-  #content_left,
-  #admin_left {
-  margin-left:15px; 
-  }
-
-  #content_left.affix,
-  #admin_left.affix {
-    position: fixed !important;
-    width: 200px;
-  }
-}
-
-@media (max-width: 991px) {
-  #content_left.affix,
-  #admin_left.affix {
-    position: static;
-  }
-}
-
-#content_left .panel-heading, 
-#admin_left .panel-heading {
-  background-color: #a0dbe7;
-  color: #fff;
-}
-
-#content_left a,
-#admin_left a {
-  color: #676767;
-}
-
-#content_left img,
-#admin_left img {
-  max-height: 150px;
-  max-width: 150px;
-  width: 100%;
-  height: auto;
-}
-/* Stylings for content on left side of page */
-
-/* Stylings for main content of page */
-#content_main .panel-heading,
-#content .panel-heading {
-  background-color: #77CCDD;
-  color: #fff;
-}
-
-.label-default a, .label-default a:hover {
-	color:#fff;
-}
-
-.ad-main img, .adbar img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-}
-
-.wrap-text .img-resize {
-  float: left;
-  max-width: 152px;
-  min-width: 152px;
-  padding: 5px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  border-radius: 20px;  
-}
-
-.readmore {
-  position: relative;
-}
-
-.readmore:before {
-  position: absolute;
-  bottom: 0;  
-  height: 100%;
-  width: 100%;
-  content: "";
-  background: linear-gradient(to left,
-     rgba(255,255,255, 1) 10%, 
-     rgba(255,255,255, 0) 100%
-  );
-  pointer-events: none; /* so the text is still selectable */
-}
-
-.post-body img {
-  max-width: 100%;
-}
-
-.post-body .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: #f1f1f1;
-}
-
-.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-  background-color: #f5f5f5;
-}
-
-#wrap {
-  min-height: 100%;
-  /* Negative indent footer by its height */
-  margin: 0 auto -210px;
-}
-
-.post-like {
-  margin-top: 15px;
-}
-/* Stylings for main content of page */
-
-/* Stylings for right side of page */
-.ad-right {
-  padding-left: 0;
-}
-
-.ad-right img {
-  padding: 0;
-  max-width: 100%;
-  min-width: 100%;
-  margin-bottom: 10px;
-}
-/* Stylings for right side of page */
-
-/* Stylings for footer */
-.push {
-  margin-bottom: 70px;
-}
-#footer, .push {
-  height:210px;
-  padding-top:20px;
-  padding-bottom:20px;
-	background-color:#dfdfdf;
-	color:#888;
-}
-
-.push {
-  background-color:#efefef;
-}
-/* Stylings for footer */
