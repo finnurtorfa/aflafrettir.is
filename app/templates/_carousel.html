@@ -1,0 +1,29 @@
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="10000">
+    {% if top_ads and lang_code != 'en' %}
+    <div class="carousel-inner">
+        {% for ad in top_ads %}
+        <div class="carousel-item {% if loop.first %}active{% endif %}">
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+            <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+            {% if ad.url %}</a>{% endif %}
+        </div> <!-- ./carousel-item -->
+        {% endfor %}
+    </div> <!-- ./carousel-inner -->
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    {% else %}
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="first-slide" src="holder.js/1140x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+        </div>
+    {% endif %}
+</div>
