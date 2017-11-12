@@ -1,0 +1,43 @@
+<div id="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <ul class="fa-ul">
+                    <li><i class="fa-li fa fa-user no-stylings"></i>
+                        <strong>Gísli Reynisson </strong> </li>
+                    <li><i class="fa-li fa fa-home"></i> 
+                        Fífudalur 23<br>260 Reykjanesbær</li>
+                    <li><i class="fa-li fa fa-phone"></i> 421-7585</li>
+                    <li><i class="fa-li fa fa-mobile"></i> 663-5575</li>
+                    <li><i class="fa-li fa fa-envelope-o"></i>
+                        <a href="mailto:gisli@aflafrettir.is">gisli@aflafrettir.is</a></li>
+                    <li><i class="fa-li fa fa-bank"></i>
+                        Kennitala: 200875-3709<br>Reikningur: 0142-15-380889</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <p class="text-center"> <strong>{{ _('Flokkar') }}</strong><br><hr></p>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a href="{{ url_for('aflafrettir.category',
+                                        cid=1,
+                                        lang_code=lang_code) }}">{{ _('Almenn frétt') }}</a>
+                </li>
+                {% for category in categories %} 
+                <li class="list-inline-item">
+                    <a href="{{ url_for('aflafrettir.category',
+                                        cid=category.id,
+                                        lang_code=lang_code) }}">{% if not lang_code  %}
+                                                                 {{ category.name }}
+                                                                 {% else %}
+                                                                 {{ category.name_en }}
+                                                                 {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul> <!-- list-inline -->
+            </div> <!-- col-md-9 -->
+        </div> <!-- ./row -->
+    </div> <!-- ./container-fluid -->
+</div> <!-- ./footer -->
