@@ -48,13 +48,3 @@ return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) +
 };
 //]]>
 
-jQuery(document).ready(function($){
-  if($.cookie('popup_user_login') != 'yes'){
-    $('#fanback').delay(1000).fadeIn('medium');
-    $('#aflafrettir-widget, #fan-exit').click(function(){
-      $('#fanback').stop().fadeOut('medium');
-    });
-  }
-  $.cookie('popup_user_login', 'yes', { path: '/', expires: 7 });
-});
-

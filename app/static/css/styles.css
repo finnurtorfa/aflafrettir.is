@@ -85,3 +85,21 @@ div.carousel {
 }
 /* Carousel stylings */
 
+/* Main content stylings */
+.wrap-text .img-resize {
+    float: left;
+    max-width: 152px;
+    min-width: 152px;
+    padding: 5px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.footer-pagination
+{
+    padding-top: 10px;
+    background-color:#efefef;
+}
+/* Main content stylings */
+
