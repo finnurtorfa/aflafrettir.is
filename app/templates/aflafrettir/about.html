@@ -1,14 +1,17 @@
 {% extends "aflafrettir/index.html" %}
 
-{% block content_main %}
-<div class="col-md-10" id="content_main">
-  <div class="panel">
-    <div class="panel-heading">{{ _('Um Síðuna') }}</div> 
-    <div class="panel-body"> 
-      <p> {{ about.body|safe }} </p>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel -->
-</div> <!-- ./col-md-7 -->
+{% block content %}
+<div class="row">
+    <div class="col-md-1"></div>
+
+    <div class="col-md-9" id="content_main">
+        <div class="panel">
+            <h4 class="panel-heading">{{ _('Um Síðuna') }}</h4> 
+            <div class="panel-body"> 
+                <p> {{ about.body|safe }} </p>
+            </div> <!-- ./panel-body -->
+        </div> <!-- ./panel -->
+</div> <!-- ./col-md-9 -->
 {% endblock %}
 
 {% block disqus_comments %}

@@ -96,6 +96,28 @@ div.carousel {
     border-radius: 20px;
 }
 
+/* Stylings for footer */
+.card {
+    top: 35px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.push {
+  margin-bottom: 70px;
+}
+#footer, .push {
+  height:210px;
+  padding-top:20px;
+  padding-bottom:20px;
+	background-color:#dfdfdf;
+	color:#888;
+}
+
+.push {
+  background-color:#efefef;
+}
+
 .footer-pagination
 {
     padding-top: 10px;

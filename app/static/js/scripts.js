@@ -16,6 +16,19 @@ function carousel_size() {
     $('.carousel').height(carousel_height);
 }
 
+$('.card-block table').each(function(){
+    $(this).prepend('<thead></thead>')
+    $(this).find('thead').append($(this).find("tr:eq(0)"));
+  });
+
+$('.card-block table').addClass('table table-striped table-hover table-sm table-responsive');
+$('.card-block table').find('colgroup').remove().end().html();
+$('.card-block table thead').css({'font-weight': 'bold'});
+$('.card-block table td').css({'text-align': 'left',
+                              'font-size': '10pt',
+                              'font-family': 'sans-serif'});
+
+
 $(window).on("load", function(e) {
     var windowWidth = $(window).width();
     var windowHeight = $(window).height();
