@@ -84,10 +84,11 @@ form button.submit-btn {
 /* Navigation bar stylings */
 
 /* Carousel stylings */
-div.carousel {
+div.carousel, .no-carousel {
     position: relative;
     top: 35px;
 }
+
 /* Carousel stylings */
 
 /* Main content stylings */
@@ -103,7 +104,21 @@ div.carousel {
 
 /* Stylings for footer */
 .card {
-    top: 35px;
+    top: 40px;
+    font-family:'Raleway', sans-serif;
+}
+
+.card-header {
+    font-family:'Raleway', sans-serif;
+    font-weight:800;
+    font-size:125%;
+    background-color:#77CCDD;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #fff
+}
+.card-block {
+    padding-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -111,6 +126,7 @@ div.carousel {
 .push {
   margin-bottom: 70px;
 }
+
 #footer, .push {
   height:210px;
   padding-top:20px;
