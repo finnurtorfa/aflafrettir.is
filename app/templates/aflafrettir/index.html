@@ -3,9 +3,7 @@
 {% block content %}
 {% include "_warnings.html" %}
 <div class="row">
-    <div class="col-md-1"></div>
-    
-    <div class="col-md-9" id="content_main">
+    <div class="col-xs-12 col-sm-12 col-md-9 offset-md-1" id="content_main">
     
         {% set ad_type = 1 %}
         {% for post in posts.items %}
@@ -99,7 +97,7 @@
             </div> <!-- ./col-6 col-sm-6 ad-main -->
             {% else %}
             <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-6 col-sm-6 ad-main -->
             {% endif %}
     
@@ -132,21 +130,21 @@
             </div> <!-- ./col-6 col-sm-6 ad-main -->
             {% else %}
             <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-6 col-sm-6 ad-main -->
             {% endif %}
             {% endfor %}
             {% elif ad_type == 1 %}
             <div class="col-12 col-sm-12 ad-main">
-                <img data-src="holder.js/945x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                <img data-src="holder.js/1430x300/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-12 col-sm-12 -->
             {% set ad_type = 2 %}
             {% elif ad_type == 2 %}
             <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-6 col-sm-6 ad-main -->
             <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/455x250/auto/#777:#7777" alt="Laust auglýsingapláss">
+                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
             </div> <!-- ./col-6 col-sm-6 ad-main -->
     
             {% set ad_type = 1 %}
@@ -195,19 +193,21 @@
                 {% endif %}
             </ul> <!-- ./pagination .pagination-lg -->
         </nav>
-    </div> <!-- ./col-md-10 -->
+    </div> <!-- ./col-md-9 -->
+    <div class="col-md-2 ad-right hidden-sm-down">
+    {% block adbar %}
+        {% if right_ads and lang_code != 'en' %}
+            {% for ad in right_ads %}
+            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+            <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+            {% if ad.url %}</a>{% endif %}
+            {% endfor %}
+        {% else %}
+        <img data-src="holder.js/250x300/auto/#555:#5555" alt="Auglýsing">
+        {% endif %}
     {% endblock %}
     
-    {% block adbar %}
-      {% if right_ads and lang_code != 'en' %}
-        {% for ad in right_ads %}
-        {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-          <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-        {% if ad.url %}</a>{% endif %}
-        {% endfor %}
-      {% else %}
-      <img data-src="holder.js/250x300/auto/#555:#5555" alt="Auglýsing">
-      {% endif %}
+    </div> <!-- ./col-md-2 -->
     {% endblock %}
     
     {% block footer_right %}
