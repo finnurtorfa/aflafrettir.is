@@ -4,155 +4,157 @@
 {% include "_warnings.html" %}
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-9 offset-md-1" id="content_main">
+        <div class="card">
+            <div class="card-block">
+                {% set ad_type = 1 %}
+                {% for post in posts.items %}
+                {% if loop.index0 is divisibleby(2) %}
+                <div class="row"><!-- row-of-2-posts -->
+                {% endif %}
+                    <div class="col-6 col-sm-6">
+                        <h2> {{ post.title }} </h2>
+                        <div class="wrap-text"> 
+                            <a href="{{ url_for('aflafrettir.post', 
+                                                title=slugify(post.title), 
+                                                pid=post.id, 
+                                                lang_code=lang_code) }}">
+                                <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+                            </a>
+                            <p> {{ truncate(post.body, 300)|safe }} </p>
+                        </div><!-- ./wrap-text -->
     
-        {% set ad_type = 1 %}
-        {% for post in posts.items %}
-        {% if loop.index0 is divisibleby(2) %}
-        <div class="row"><!-- row-of-2-posts -->
-        {% endif %}
-            <div class="col-6 col-sm-6">
-                <h2> {{ post.title }} </h2>
-                <div class="wrap-text"> 
-                    <a href="{{ url_for('aflafrettir.post', 
-                                        title=slugify(post.title), 
-                                        pid=post.id, 
-                                        lang_code=lang_code) }}">
-                        <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
-                    </a>
-                    <p> {{ truncate(post.body, 300)|safe }} </p>
-                </div><!-- ./wrap-text -->
+                        <div class="row"> <!-- row-post -->
+                            <div class="col-12 col-sm-12">
+                                <p class="pull-right">
+                                    <span class="label label-default">
+                                        <a href="{{ url_for('aflafrettir.post',
+                                                            title=slugify(post.title),
+                                                            pid=post.id,
+                                                            lang_code=lang_code) }}">
+                                            Lesa meira »
+                                        </a> 
+                                    </span>
+                                </p> <!-- ./pull-right -->
     
-                <div class="row"> <!-- row-post -->
-                    <div class="col-12 col-sm-12">
-                        <p class="pull-right">
-                            <span class="label label-default">
-                                <a href="{{ url_for('aflafrettir.post',
-                                                    title=slugify(post.title),
-                                                    pid=post.id,
-                                                    lang_code=lang_code) }}">
-                                    Lesa meira »
-                                </a> 
-                            </span>
-                        </p> <!-- ./pull-right -->
+                                <ul class="list-inline">
+                                    <li>
+                                        <a href="{{ url_for('aflafrettir.post',
+                                                            title=slugify(post.title),
+                                                            pid=post.id,
+                                                            lang_code=lang_code) }}">
+                                            Birt {{ post.distance_in_time }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('aflafrettir.post',
+                                                            title=slugify(post.title),
+                                                            pid=post.id,
+                                                            lang_code=lang_code) }}">
+                                            <i class="glyphicon glyphicon-comment"></i>
+                                        </a>
+                                        <a href="{{ url_for('aflafrettir.post',
+                                                            title=slugify(post.title),
+                                                            pid=post.id,
+                                                            lang_code=lang_code) }}#disqus_thread">
+                                            Álit
+                                        </a>
+                                    </li>
+                                </ul> <!-- ./list-inline -->
+                            </div> <!-- ./col-12 col-sm-12 -->
+                        </div> <!-- ./row-post -->
+                    </div> <!-- ./col-6 col-sm-6 -->
+                {% if loop.index is divisibleby(2) or loop.last %}
+                </div> <!-- ./row-of-2-posts -->
+                {% endif %}
     
-                        <ul class="list-inline">
-                            <li>
-                                <a href="{{ url_for('aflafrettir.post',
-                                                    title=slugify(post.title),
-                                                    pid=post.id,
-                                                    lang_code=lang_code) }}">
-                                    Birt {{ post.distance_in_time }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url_for('aflafrettir.post',
-                                                    title=slugify(post.title),
-                                                    pid=post.id,
-                                                    lang_code=lang_code) }}">
-                                    <i class="glyphicon glyphicon-comment"></i>
-                                </a>
-                                <a href="{{ url_for('aflafrettir.post',
-                                                    title=slugify(post.title),
-                                                    pid=post.id,
-                                                    lang_code=lang_code) }}#disqus_thread">
-                                    Álit
-                                </a>
-                            </li>
-                        </ul> <!-- ./list-inline -->
+                {% if (loop.index+2) is divisibleby(4) %}
+                <div class="row"> <!-- row-ad -->
+                    {% if  main_lg and ad_type == 1 %}
+                    {% set ad = main_lg.pop() %}
+                    <div class="col-12 col-sm-12 ad-main">
+                        {% if ad.filename %}
+                            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+                                <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+                            {% if ad.url %}</a>{% endif %}
+                        {% elif ad.ad_html %}
+                        {{ ad.ad_html|safe }}
+                        {% endif %}
+                    </div> <!-- ./col-12 col-sm-12 ad-main -->
+    
+                    {% set ad_type = 2 %}
+                    {% elif main_sm and ad_type == 2 %}
+    
+                    {% for i in range(2) %}
+                    {% if main_sm %}
+                    {% set ad = main_sm.pop() %}
+                    <div class="col-6 col-sm-6 ad-main">
+                        {% if ad.filename %}
+                            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+                                <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+                            {% if ad.url %}</a>{% endif %}
+                        {% elif ad.ad_html %}
+                        {{ ad.ad_html|safe }}
+                        {% endif %}
+                    </div> <!-- ./col-6 col-sm-6 ad-main -->
+                    {% else %}
+                    <div class="col-6 col-sm-6 ad-main">
+                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+                    </div> <!-- ./col-6 col-sm-6 ad-main -->
+                    {% endif %}
+    
+                    {% endfor %}
+    
+                    {% set ad_type = 1 %}
+                    {% elif main_lg and not main_sm and ad_type == 2 %}
+                    {% set ad = main_lg.pop() %}
+                    <div class="col-12 col-sm-12 ad-main">
+                        {% if ad.filename %}
+                            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+                                <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+                            {% if ad.url %}</a>{% endif %}
+                        {% elif ad.ad_html %}
+                        {{ ad.ad_html|safe }}
+                        {% endif %}
+                    </div> <!-- ./col-12 col-sm-12 ad-main -->
+                    {% elif main_sm and not main_lg and ad_type == 1 %}
+                    {% for i in range(2) %}
+                    {% if main_sm %}
+                    {% set ad = main_sm.pop() %}
+                    <div class="col-6 col-sm-6 ad-main">
+                        {% if ad.filename %}
+                            {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
+                                <img src="{{ url(ad.filename) }}" alt="Auglýsing">
+                            {% if ad.url %}</a>{% endif %}
+                        {% elif ad.ad_html %}
+                        {{ ad.ad_html|safe }}
+                        {% endif %}
+                    </div> <!-- ./col-6 col-sm-6 ad-main -->
+                    {% else %}
+                    <div class="col-6 col-sm-6 ad-main">
+                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+                    </div> <!-- ./col-6 col-sm-6 ad-main -->
+                    {% endif %}
+                    {% endfor %}
+                    {% elif ad_type == 1 %}
+                    <div class="col-12 col-sm-12 ad-main">
+                        <img data-src="holder.js/1330x300/auto/#777:#7777" alt="Laust auglýsingapláss">
                     </div> <!-- ./col-12 col-sm-12 -->
-                </div> <!-- ./row-post -->
-            </div> <!-- ./col-6 col-sm-6 -->
-        {% if loop.index is divisibleby(2) or loop.last %}
-        </div> <!-- ./row-of-2-posts -->
-        {% endif %}
+                    {% set ad_type = 2 %}
+                    {% elif ad_type == 2 %}
+                    <div class="col-6 col-sm-6 ad-main">
+                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+                    </div> <!-- ./col-6 col-sm-6 ad-main -->
+                    <div class="col-6 col-sm-6 ad-main">
+                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
+                    </div> <!-- ./col-6 col-sm-6 ad-main -->
     
-        {% if (loop.index+2) is divisibleby(4) %}
-        <div class="row"> <!-- row-ad -->
-            {% if  main_lg and ad_type == 1 %}
-            {% set ad = main_lg.pop() %}
-            <div class="col-12 col-sm-12 ad-main">
-                {% if ad.filename %}
-                    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-                        <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-                    {% if ad.url %}</a>{% endif %}
-                {% elif ad.ad_html %}
-                {{ ad.ad_html|safe }}
+                    {% set ad_type = 1 %}
+                    {% endif %}
+                </div> <!-- ./row-ad -->
                 {% endif %}
-            </div> <!-- ./col-12 col-sm-12 ad-main -->
-    
-            {% set ad_type = 2 %}
-            {% elif main_sm and ad_type == 2 %}
-    
-            {% for i in range(2) %}
-            {% if main_sm %}
-            {% set ad = main_sm.pop() %}
-            <div class="col-6 col-sm-6 ad-main">
-                {% if ad.filename %}
-                    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-                        <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-                    {% if ad.url %}</a>{% endif %}
-                {% elif ad.ad_html %}
-                {{ ad.ad_html|safe }}
-                {% endif %}
-            </div> <!-- ./col-6 col-sm-6 ad-main -->
-            {% else %}
-            <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-6 col-sm-6 ad-main -->
-            {% endif %}
-    
-            {% endfor %}
-    
-            {% set ad_type = 1 %}
-            {% elif main_lg and not main_sm and ad_type == 2 %}
-            {% set ad = main_lg.pop() %}
-            <div class="col-12 col-sm-12 ad-main">
-                {% if ad.filename %}
-                    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-                        <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-                    {% if ad.url %}</a>{% endif %}
-                {% elif ad.ad_html %}
-                {{ ad.ad_html|safe }}
-                {% endif %}
-            </div> <!-- ./col-12 col-sm-12 ad-main -->
-            {% elif main_sm and not main_lg and ad_type == 1 %}
-            {% for i in range(2) %}
-            {% if main_sm %}
-            {% set ad = main_sm.pop() %}
-            <div class="col-6 col-sm-6 ad-main">
-                {% if ad.filename %}
-                    {% if ad.url %}<a href="{{ ad.url }}" target="_blank">{% endif %}
-                        <img src="{{ url(ad.filename) }}" alt="Auglýsing">
-                    {% if ad.url %}</a>{% endif %}
-                {% elif ad.ad_html %}
-                {{ ad.ad_html|safe }}
-                {% endif %}
-            </div> <!-- ./col-6 col-sm-6 ad-main -->
-            {% else %}
-            <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-6 col-sm-6 ad-main -->
-            {% endif %}
-            {% endfor %}
-            {% elif ad_type == 1 %}
-            <div class="col-12 col-sm-12 ad-main">
-                <img data-src="holder.js/1430x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-12 col-sm-12 -->
-            {% set ad_type = 2 %}
-            {% elif ad_type == 2 %}
-            <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-6 col-sm-6 ad-main -->
-            <div class="col-6 col-sm-6 ad-main">
-                <img data-src="holder.js/690x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-            </div> <!-- ./col-6 col-sm-6 ad-main -->
-    
-            {% set ad_type = 1 %}
-            {% endif %}
-        </div> <!-- ./row-ad -->
-        {% endif %}
-        {% endfor %}
-    
+                {% endfor %}
+            </div> <!--  ./card-block -->
+        </div> <!--  ./card -->
         <nav class="footer-pagination" aria-label="Page Navigation">
             <ul class="pagination pagination-lg justify-content-center">
                 {% if request.endpoint == 'aflafrettir.index' %}
