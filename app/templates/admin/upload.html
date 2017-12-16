@@ -1,30 +1,45 @@
 {% extends "admin/index.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content_main %}
-<div class="col-md-10" id="content">
-  {% include "_warnings.html" %}
+{% block content %}
+<div class="col-md-10 no-carousel" id="content">
+    {% include "_warnings.html" %}
 
-  <div class="panel">
-    <div class="panel-heading">{{ _('Stjórnborð') }}</div> 
-    <div class="panel-body">
-      <h1>{{ _('Bæta við auglýsingu') }}</h1>
-      
-      <form action="{{ request.path }}" 
-            method="post" 
-            enctype="multipart/form-data" 
-            class="form" role="form">
+    {% if request.path == url_for('admin.ad_upload') %} 
+    <h1>{{ _('Bæta við auglýsingu') }}</h1>
+    {% else %}
+    <h1>{{ _('Uppfæra auglýsingu') }}</h1>
+    {% endif %}
+
+    <form action="{{ request.path }}" 
+          method="post" 
+          enctype="multipart/form-data" 
+          class="form" role="form">
+        {{ form.csrf_token }}
         {% if request.path == url_for('admin.ad_upload') %} 
-        {{ wtf.form_field(form.ad) }}
+        <div class="form-group">
+            <label class="control-label" for="ad">Skrá</label>
+            {{ form.ad(**{'class': 'form-control'}) }}
+        </div>
         {% endif %}
-        {{ wtf.form_field(form.ad_html) }}
-        {{ wtf.form_field(form.placement) }}
-        {{ wtf.form_field(form.url) }}
-        {{ wtf.form_field(form.active) }}
-        {{ wtf.form_field(form.submit) }}
-      </form>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel -->
-</div> <!-- ./col-md-7 -->
+        <div class="form-group">
+            <label class="control-label" for="ad_html">HTML fyrir auglýsingu</label>
+            {{ form.ad_html(**{'class': 'form-control'}) }}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="placement">Staðsetning</label>
+            {{ form.placement(**{'class': 'form-control'}) }}
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="url">Tengill</label>
+            {{ form.url(**{'class': 'form-control'}) }}
+        </div>
+        <div class="checkbox">
+            <label> 
+                {{ form.active() }} Auglýsing virk? 
+            </label>
+        </div>
+        {{ form.submit(**{'class': 'btn btn-default'}) }}
+    </form>
+</div> <!-- ./col-md-10 -->
 {% endblock %}
 
