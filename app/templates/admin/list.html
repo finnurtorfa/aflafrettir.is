@@ -25,10 +25,10 @@
             <td> {{ file }} </td>
             <td> 
               <a href="{{ url_for('admin.make_list', filename=file) }}">
-                <span class="glyphicon glyphicon-download"></span>
+                <i class="fas fa-download"></i>
               </a>
               <a href="{{ url_for('admin.delete_list', filename=file) }}">
-                <span class="glyphicon glyphicon-trash"></span>
+                <i class="fas fa-trash-alt"></i>
               </a>
             </td>
           </tr>

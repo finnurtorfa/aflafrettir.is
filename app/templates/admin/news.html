@@ -30,7 +30,7 @@
             <td> 0 </td>
             <td> 
               <a href="{{ url_for('admin.news_edit', post_id=post.id, lang=lang) }}">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <i class="fas fa-edit"></i>
               </a>
               <a data-href="{{ url_for('admin.news_delete', 
                                        post_id=post.id, 
@@ -39,7 +39,7 @@
                  data-toggle="modal" 
                  data-target="#confirm-delete" 
                  href="#">
-                <span class="glyphicon glyphicon-trash"></span>
+                <i class="fas fa-trash-alt"></i>
               </a>
             </td>
           </tr>

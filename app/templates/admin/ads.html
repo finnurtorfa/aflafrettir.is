@@ -32,14 +32,14 @@
           <td> {{ ad.timestamp.strftime('%d-%m-%Y %H:%M:%S') }} </td>
           <td> 
             <a href="{{ url_for('admin.ad_edit', ad_id=ad.id) }}">
-              <span class="glyphicon glyphicon-pencil"></span>
+              <i class="fas fa-edit"></i>
             </a>
             <a data-href="{{ url_for('admin.ad_delete', ad_id=ad.id) }}" 
                data-title="{{ ad.filename }}" 
                data-toggle="modal" 
                data-target="#confirm-delete" 
                href="#">
-              <span class="glyphicon glyphicon-trash"></span>
+              <i class="fas fa-trash-alt"></i>
             </a>
           </td>
         </tr>

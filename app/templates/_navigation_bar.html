@@ -80,7 +80,7 @@
         </ul>
 
         <div class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-facebook-square fa-lg"></i></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fab fa-facebook-square fa-2x"></i></a>
             <ul class="dropdown-menu drop-right">
                 <li>
                     <div class="fb-like-box" data-href="https://www.facebook.com/pages/Aflafréttir/912698022080474" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="false" data-show-border="true"></div>
@@ -89,7 +89,7 @@
         </div> <!-- ./dropdown -->
 
         <div class="dropdown">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fa fa-user fa-lg"></i></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><i class="fas fa-user fa-2x"></i></a>
             <ul class="dropdown-menu drop-right">
                 {% if not current_user.is_authenticated() %}
                 <li><a class="dropdown-item" href="{{ url_for('auth.login') }}">{{ _('Innskráning') }}</a></li>
