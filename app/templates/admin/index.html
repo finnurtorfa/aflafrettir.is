@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 
-{% block body_attribs %} {% endblock %}
-
-{% block header %} 
-{% endblock %}
+{% block ad_top %}{% endblock %}
 
 {% block content_left %}
 <div class="col-md-2" id="sidebar">
@@ -15,70 +12,7 @@
           <a class="collapsible" href="#"
              data-toggle="collapse" 
              data-target="#profile-menu">
-            <h3>{{ _('Prófíll') }}</h3>
-          </a>
           <ul class="list-unstyled collapse 
-            {% if request.path in [url_for('admin.profile_index'), 
-                                   url_for('admin.profile_edit')] %} in 
-            {% endif %}" 
-              id="profile-menu">
-            <li><a href="{{ url_for('admin.profile_index') }}">{{ _('Skoða') }}</a></li>
-            <li><a href="{{ url_for('admin.profile_edit') }}">{{ _('Breyta') }}</a></li>
-          </ul> <!-- ./list-unstyled collapse in -->
-        </li> <!-- ./nav-header -->
-      
-        <li class="nav-header">
-          <a class="collapsible" 
-             href="#" 
-             data-toggle="collapse" 
-             data-target="#news-menu">
-            <h3>{{ _('Fréttir') }}</h3>
-          </a>
-          <ul class="list-unstyled collapse 
-            {% if request.path in [url_for('admin.news_index', lang=lang), 
-                                   url_for('admin.news_post', lang=lang), 
-                                   url_for('admin.news_category')] %} in 
-            {% endif %}" 
-              id="news-menu">
-            <li><a href="{{ url_for('admin.news_index') }}">{{ _('Yfirlit') }}</a></li>
-            <li><a href="{{ url_for('admin.news_post') }}">{{ _('Ný Frétt') }}</a></li>
-            <li><a href="{{ url_for('admin.news_index', lang='en') }}">{{ _('Yfirlit Enska') }}</a></li>
-            <li><a href="{{ url_for('admin.news_post', lang='en') }}">{{ _('Ný Frétt Enska') }}</a></li>
-            <li><a href="{{ url_for('admin.news_category') }}">{{ _('Flokkar') }}</a></li>
-          </ul> <!-- ./list-unstyled collapse in -->
-        </li> <!-- ./nav-header -->
-        
-        <li class="nav-header">
-          <a class="collapsible" href="#" data-toggle="collapse" data-target="#ads-menu">
-            <h3>{{ _('Auglýsingar') }}</h3>
-          </a>
-          <ul class="list-unstyled collapse 
-            {% if request.path in [url_for('admin.ad_index'), 
-                                   url_for('admin.ad_upload')] %} in 
-            {% endif %}" 
-              id="ads-menu">
-            <li><a href="{{ url_for('admin.ad_index') }}">{{ _('Yfirlit') }}</a></li>
-            <li><a href="{{ url_for('admin.ad_upload') }}">{{ _('Ný Auglýsing') }}</a></li>
-          </ul> <!-- ./list-unstyled collapse in -->
-        </li> <!-- ./nav-header -->
-        
-        <li class="nav-header">
-          <a class="collapsible" href="#" data-toggle="collapse" data-target="#about-menu">
-            <h3>{{ _('Um Síðuna') }}</h3>
-          </a>
-          <ul class="list-unstyled collapse 
-            {% if request.path in [url_for('admin.about')] %} in 
-            {% endif %}" 
-              id="about-menu">
-            <li><a href="{{ url_for('admin.about') }}">{{ _('Yfirlit') }}</a></li>
-          </ul> <!-- ./list-unstyled collapse in -->
-        </li> <!-- ./nav-header -->
-        
-        <li class="nav-header">
-          <a class="collapsible"
-             href="#"
-             data-toggle="collapse"
-             data-target="#misc-menu">
             <h3>{{ _('Ýmislegt') }}</h3>
           </a>
           <ul class="list-unstyled collapse
