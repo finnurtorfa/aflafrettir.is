@@ -29,6 +29,9 @@
         <!-- load custom css stylings -->
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/carousel.css') }}">
+        {% if current_user.is_authenticated() %}
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin-styles.css') }}">
+        {% endif %}
         {% endblock %}
     </head>
     <body {% block body_attrs %}{% endblock %}>

@@ -1,7 +1,6 @@
 {% extends "admin/index.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content_main %}
+{% block content %}
 <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
@@ -12,27 +11,22 @@ bkLib.onDomLoaded(function() {
 });
 </script>
 
-<div class="col-md-10" id="content">
-  {% include "_warnings.html" %}
+<div class="col-md-10 no-carousel" id="content">
+    {% include "_warnings.html" %}
 
-  <div class="panel">
-    <div class="panel-heading">{{ _('Stjórnborð') }}</div> 
-    <div class="panel-body">
-      <form class="form form-horizontal" method="post" role="form">
+    <h1>{{ _('Um Síðuna') }}</h1>
+    <form class="form form-horizontal" method="POST" role="form">
         {{ form.hidden_tag() }}
-        {{ wtf.form_errors(form, hiddens="only") }} 
 
         <div class="form-group {% if form.body.errors %}has-error{% endif %}">
-          {{ form.body(**{'class':'form-control', 'style':'height: 300px;'}) }}
-          {% for message in form.body.errors %}
+            {{ form.body(**{'class':'form-control', 'style':'height: 300px;'}) }}
+            {% for message in form.body.errors %}
             <p class="help-block">{{ message }}</p>
-          {% endfor %}
+            {% endfor %}
         </div>
         <br>
-        {{ wtf.form_field(form.submit) }}
-      </form>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel -->
-</div> <!-- ./col-md-7 -->
+        {{ form.submit(**{'class': 'btn btn-default'}) }}
+    </form>
+</div> <!-- ./col-md-10 -->
 {% endblock %}
 

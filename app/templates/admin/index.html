@@ -2,31 +2,3 @@
 
 {% block ad_top %}{% endblock %}
 
-{% block content_left %}
-<div class="col-md-2" id="sidebar">
-  <div class="panel panel-default" id="admin_left" data-affix-top="0">
-    <div class="panel-heading">{{ _('Valmöguleikar') }}</div>
-    <div class="panel-body">
-      <ul class="list-unstyled">
-        <li class="nav-header">
-          <a class="collapsible" href="#"
-             data-toggle="collapse" 
-             data-target="#profile-menu">
-          <ul class="list-unstyled collapse 
-            <h3>{{ _('Ýmislegt') }}</h3>
-          </a>
-          <ul class="list-unstyled collapse
-            {% if request.path in [url_for('admin.make_list')] %} in
-            {% endif %}"
-              id="misc-menu">
-            <li><a href="{{ url_for('admin.make_list') }}">{{ _('Útbúa lista') }}</a></li>
-          </ul> <!-- ./list-unstyled collapse in -->
-        </li> <!-- ./nav-header -->
-
-      </ul> <!-- ./list-unstyled -->
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel panel-default -->
-</div> <!-- ./col-md-2 -->
-{% endblock %}
-
-{% block content_main %} {% endblock %}
