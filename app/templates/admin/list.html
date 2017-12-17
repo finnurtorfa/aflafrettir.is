@@ -1,60 +1,63 @@
 {% extends "admin/index.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content_main %}
-<div class="col-md-10" id="content">
-  {% include "_warnings.html" %}
+{% block content %}
+<div class="col-md-10 no-carousel" id="content">
+    {% include "_warnings.html" %}
 
-  <div class="panel">
-    <div class="panel-heading">{{ _('Stjórnborð') }}</div> 
-    <div class="panel-body">
-      <div class="page-header">
+    <div class="page-header">
         <h1>{{ _('Skrár í boði') }}
-      </div>
-      <table class="table table-striped table-hover table-condensed">
+    </div>
+    <table class="table table-striped table-hover table-condensed">
         <thead>
-          <tr>
-            <th>{{ _('Nafn') }}</th>
-            <th>{{ _('Aðgerðir') }}</th>
-          </tr>
+            <tr>
+                <th>{{ _('Nafn') }}</th>
+                <th>{{ _('Aðgerðir') }}</th>
+            </tr>
         </thead>
-      
+    
         <tbody>
-          {% for file in files %}
-          <tr>
-            <td> {{ file }} </td>
-            <td> 
-              <a href="{{ url_for('admin.make_list', filename=file) }}">
-                <i class="fas fa-download"></i>
-              </a>
-              <a href="{{ url_for('admin.delete_list', filename=file) }}">
-                <i class="fas fa-trash-alt"></i>
-              </a>
-            </td>
-          </tr>
-          {% endfor %}
-      
+            {% for file in files %}
+            <tr>
+                <td> {{ file }} </td>
+                <td> 
+                    <a href="{{ url_for('admin.make_list', filename=file) }}">
+                        <i class="fas fa-download"></i>
+                    </a>
+                    <a href="{{ url_for('admin.delete_list', filename=file) }}">
+                        <i class="fas fa-trash-alt"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
-      </table>
+    </table>
 
-      <div class="page-header">
+    <div class="page-header">
         <h1>{{ _('Útbúa nýjann lista') }}</h1>
-      </div>
-      
-      <form class="form form-horizontal" method="post" role="form">
-        {{ form.hidden_tag() }}
-        {{ wtf.form_errors(form, hiddens="only") }} 
-      
-        <div class="col-xs-4">
-        {{ wtf.form_field(form.name) }}
-        {{ wtf.form_field(form.date_from) }}
-        {{ wtf.form_field(form.date_to) }}
-        {{ wtf.form_field(form.submit) }}
-        </div>
-      </form>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel -->
-</div> <!-- ./col-md-7 -->
+    </div>
+    
+    <div class="row">
+        <form class="form form-horizontal" method="post" role="form">
+            {{ form.csrf_token }}
+        
+            <div class="col-xs-4">
+                <div class="form-group">
+                    <label class="control-label" for="name">Nafn</label>
+                    {{ form.name(**{'class': 'form-control'}) }}
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="date_from">Dagsetning 1</label>
+                    {{ form.date_from(**{'class': 'form-control'}) }}
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="date_to">Dagsetning 2</label>
+                    {{ form.date_to(**{'class': 'form-control'}) }}
+                </div>
+                {{ form.submit(**{'class': 'btn btn-default'}) }}
+            </div>
+        </form>
+    </div> <!-- ./row -->
+</div> <!-- ./col-md-10 -->
 
 {% endblock %}
 
