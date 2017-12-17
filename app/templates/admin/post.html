@@ -1,7 +1,6 @@
 {% extends "admin/index.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content_main %}
+{% block content %}
 <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
 <script type="text/javascript">
 bkLib.onDomLoaded(function() {
@@ -12,38 +11,51 @@ bkLib.onDomLoaded(function() {
 });
 </script>
 
-<div class="col-md-10" id="content">
-  {% include "_warnings.html" %}
+<div class="col-md-12 no-carousel" id="content">
+    {% include "_warnings.html" %}
 
-  <div class="panel">
-    <div class="panel-heading">{{ _('Stjórnborð') }}</div> 
-    <div class="panel-body">
+    <div class="card">
+        <div class="card-block">
 
-      <div class="page-header">
-        <h1>{{ _('Bæta við nýrri frétt') }}</h1>
-      </div>
-      
-      <form class="form form-horizontal" method="post" role="form">
-        {{ form.hidden_tag() }}
-        {{ wtf.form_errors(form, hiddens="only") }} 
-      
-        <div class="col-xs-4">
-        {{ wtf.form_field(form.title) }}
-        {{ wtf.form_field(form.created) }}
-        {{ wtf.form_field(form.category) }}
-        {{ wtf.form_field(form.facebook) }}
-        </div>
-        <div class="form-group {% if form.post.errors %}has-error{% endif %}">
-          {{ form.post(**{'class':'form-control', 'style':'height: 300px;'}) }}
-          {% for message in form.post.errors %}
-            <p class="help-block">{{ message }}</p>
-          {% endfor %}
-        </div>
-        {{ wtf.form_field(form.submit) }}
-      </form>
-    </div> <!-- ./panel-body -->
-  </div> <!-- ./panel -->
-</div> <!-- ./col-md-7 -->
+            <div class="card-header">
+                <h1>{{ _('Bæta við nýrri frétt') }}</h1>
+            </div>
+            
+            <form class="form form-horizontal" method="post" role="form">
+                <div class="row">
+                    {{ form.csrf_token }}
+                
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label" for="title">Titill</label>
+                            {{ form.title(**{'class': 'form-control'}) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="created">Dagsetning</label>
+                            {{ form.created(**{'class': 'form-control'}) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="category">Flokkur</label>
+                            {{ form.category(**{'class': 'form-control'}) }}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="facebook">Skilaboð á Facebook</label>
+                            {{ form.facebook(**{'class': 'form-control'}) }}
+                        </div>
+                    </div>
+                </div> <!-- ./row -->
+
+                <div class="form-group {% if form.post.errors %}has-error{% endif %}">
+                    {{ form.post(**{'class':'form-control', 'style':'height: 300px;'}) }}
+                    {% for message in form.post.errors %}
+                      <p class="help-block">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                {{ form.submit(**{'class': 'btn btn-default'}) }}
+                </form>
+        </div> <!-- ./card-block -->
+    </div> <!-- ./card -->
+</div> <!-- ./col-md-12 -->
 
 {% endblock %}
 
