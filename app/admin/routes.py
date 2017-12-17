@@ -35,13 +35,15 @@ def before_request():
 @admin.route('/profile', alias=True)
 @login_required
 def profile_index():
-  return render_template('admin/user.html', user=current_user)
+  categories = Category.get_all_active()
+  return render_template('admin/user.html', categories=categories, user=current_user)
 
 #pylint: disable-msg=E1101
 @admin.route('/profile/edit', methods=['GET', 'POST'])
 @login_required
 def profile_edit():
   form = ProfileForm()
+  categories = Category.get_all_active()
 
   if form.validate_on_submit():
     current_user.name = form.name.data
@@ -59,7 +61,7 @@ def profile_edit():
   form.location.data = current_user.location
   form.bio.data = current_user.bio
 
-  return render_template('admin/edit_user.html', form=form)
+  return render_template('admin/edit_user.html', categories=categories, form=form)
 
 """News Related Routes
 """
@@ -116,11 +118,13 @@ def post_to_fb():
 @login_required
 def news_index(lang='is'):
   posts = Post.get_all(lang=lang)
+  categories = Category.get_all_active()
 
   if lang == 'is':
     lang = None
 
   return render_template('admin/news.html',
+                         categories=categories,
                          posts=posts,
                          lang=lang)
 
@@ -131,6 +135,7 @@ def news_post(lang='is'):
   form = PostForm()
   form.category.choices = [(0, 'Almenn frétt')]
   form.created.data = datetime.utcnow()
+  categories = Category.get_all_active()
 
   if lang == 'is':
     lang = None
@@ -188,6 +193,7 @@ def news_post(lang='is'):
     return redirect(url_for('admin.news_index', lang=lang))
 
   return render_template('admin/post.html',
+                         categories=categories,
                          form=form,
                          lang=lang)
 
@@ -225,6 +231,7 @@ def nicedit_upload():
 @login_required
 def news_edit(post_id, lang='is'):
   post = Post.get_by_id(post_id)
+  categories = Category.get_all_active()
 
   if lang == 'is':
     lang = None
@@ -262,6 +269,7 @@ def news_edit(post_id, lang='is'):
                            if v[1] == post.category.name][0]
 
   return render_template('admin/post.html',
+                         categories=categories,
                          form=form,
                          lang=lang)
 
@@ -270,6 +278,7 @@ def news_edit(post_id, lang='is'):
 @login_required
 def news_delete(post_id, lang='is'):
   post = Post.get_by_id(post_id)
+  categories = Category.get_all_active()
 
   if lang == 'is':
     lang = None
@@ -277,12 +286,13 @@ def news_delete(post_id, lang='is'):
   db.session.delete(post)
   db.session.commit()
 
-  return redirect(url_for('admin.news_index', lang=lang))
+  return redirect(url_for('admin.news_index', categories=categories, lang=lang))
 
 @admin.route('/news/category', methods=['GET', 'POST'])
 @login_required
 def news_category():
     form = CategoryForm()
+    categories = Category.get_all_active()
 
     active = Category.get_all_active()
     inactive = Category.get_all_active(False)
@@ -336,7 +346,7 @@ def news_category():
 
         return redirect(url_for('admin.news_category'))
 
-    return render_template('admin/category.html', form=form)
+    return render_template('admin/category.html', categories=categories, form=form)
 
 """File Upload Related Routes
 """
@@ -345,13 +355,16 @@ def news_category():
 def ad_index():
   form = AdForm()
   all_ads = Image.get_all_ads(only_active=False)
+  categories = Category.get_all_active()
 
-  return render_template('admin/ads.html', form=form, ads=all_ads)
+  return render_template('admin/ads.html', categories=categories, form=form, ads=all_ads)
 
 @admin.route('/ad/upload', methods=['GET', 'POST'])
 @login_required
 def ad_upload():
   form = AdForm()
+  categories = Category.get_all_active()
+
   filename = None
 
   if request.method == 'POST':
@@ -384,13 +397,14 @@ def ad_upload():
 
       return redirect(url_for('admin.ad_index'))
 
-  return render_template('admin/upload.html', form=form)
+  return render_template('admin/upload.html', categories=categories, form=form)
 
 @admin.route('/ad/edit/<int:ad_id>', methods=['GET', 'POST'])
 @login_required
 def ad_edit(ad_id):
   form = AdForm()
   ad = Image.get_by_id(ad_id)
+  categories = Category.get_all_active()
 
   if request.method == 'POST':
     if form.url.data:
@@ -414,7 +428,7 @@ def ad_edit(ad_id):
   form.url.data       = ad.url
   form.active.data    = ad.active
 
-  return render_template('admin/upload.html', form=form)
+  return render_template('admin/upload.html', categories=categories, form=form)
 
 @admin.route('/ad/delete/<int:ad_id>')
 @login_required
@@ -438,6 +452,7 @@ def ad_delete(ad_id):
 def about():
   form = AboutForm()
   my_about = About().query.first() or About()
+  categories = Category.get_all_active()
 
   if request.method == 'POST':
     my_about.body = form.body.data
@@ -448,7 +463,7 @@ def about():
 
   form.body.data = my_about.body
 
-  return render_template('admin/about.html', form=form)
+  return render_template('admin/about.html', categories=categories, form=form)
 
 """ Informatics and Analytics
 """
@@ -465,6 +480,7 @@ def google():
 def make_list(filename=None):
   form = ListForm()
   files = get_all_files(landings.config.destination)
+  categories = Category.get_all_active()
 
   if filename is not None:
     if os.path.isfile(landings.path(filename)):
@@ -481,7 +497,7 @@ def make_list(filename=None):
       flash('Er að útbúa lista. Aðgerðin getur tekið nokkurn tíma!')
       return redirect(url_for('admin.make_list'))
 
-  return render_template('admin/list.html', form=form, files=files)
+  return render_template('admin/list.html', categories=categories, form=form, files=files)
 
 @admin.route('/list/delete/<path:filename>/')
 @login_required
