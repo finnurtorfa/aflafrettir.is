@@ -86,7 +86,14 @@ class Post(db.Model):
     super(Post, self).__init__(**kwargs)
 
   @classmethod
-  def get_all(cls, descending=True, lang='is'):
+  def get_all(cls, descending=True):
+    if descending:
+      return cls.query.order_by(cls.timestamp.desc()).all()
+    else:
+      return cls.query.order_by(cls.timestamp).all()
+
+  @classmethod
+  def get_all_by_lang(cls, descending=True, lang='is'):
     if descending:
       return cls.query.order_by(cls.timestamp.desc())\
                 .filter_by(language=lang)\

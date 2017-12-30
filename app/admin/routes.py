@@ -117,7 +117,7 @@ def post_to_fb():
 @admin.route('/<lang>/news')
 @login_required
 def news_index(lang='is'):
-  posts = Post.get_all(lang=lang)
+  posts = Post.get_all_by_lang(lang=lang)
   categories = Category.get_all_active()
 
   if lang == 'is':

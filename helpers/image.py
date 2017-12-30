@@ -86,10 +86,7 @@ def remove_images(app):
         diff_imgs = set(db_imgs) - set(post_imgs)
 
         if diff_imgs:
-          app.logger.debug('Images found in db: {}'.format(db_imgs))
-          app.logger.debug('Images found in posts: {}'.format(db_imgs))
           app.logger.debug('Images to delete: {}'.format(db_imgs))
-
 
         for i in images:
           if i.location + i.filename in diff_imgs:
