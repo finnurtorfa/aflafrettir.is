@@ -3,6 +3,14 @@
 <html {% block html_attrs %}{% endblock %}>
 {% block html %}
     <head>
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-W52BLCZ');</script>
+        <!-- End Google Tag Manager -->
+
         {% block metas %}
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -33,9 +41,22 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin-styles.css') }}">
         {% endif %}
         {% endblock %}
+
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <script>
+         (adsbygoogle = window.adsbygoogle || []).push({
+           google_ad_client: "ca-pub-3097550301603731",
+           enable_page_level_ads: true
+         });
+        </script>
     </head>
     <body {% block body_attrs %}{% endblock %}>
     {% block body %}
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W52BLCZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
         <div id="wrap">
 
         {% block nav_bar %}{% include "_navigation_bar.html" %}{% endblock %}

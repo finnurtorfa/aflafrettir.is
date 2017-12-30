@@ -204,6 +204,16 @@
             <img src="{{ url(ad.filename) }}" alt="Auglýsing">
             {% if ad.url %}</a>{% endif %}
             {% endfor %}
+        {% elif lang_code == 'en' %}
+        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+        <!-- 250x300 -->
+        <ins class="adsbygoogle"
+             style="display:inline-block;width:300px;height:250px"
+             data-ad-client="ca-pub-3097550301603731"
+             data-ad-slot="4389418419"></ins>
+        <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
         {% else %}
         <img data-src="holder.js/250x300/auto/#555:#5555" alt="Auglýsing">
         {% endif %}
