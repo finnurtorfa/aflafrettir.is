@@ -1,12 +1,6 @@
 [submodule "app/static/js/NicEdit"]
 	path = app/static/js/NicEdit
 	url = https://github.com/danishkhan/NicEdit.git
-[submodule "app/static/js/holder"]
-	path = app/static/js/holder
-	url = https://github.com/imsky/holder.git
 [submodule "app/static/js/Respond"]
 	path = app/static/js/Respond
 	url = https://github.com/scottjehl/Respond.git
-[submodule "app/static/css/bootstrap-social"]
-	path = app/static/css/bootstrap-social
-	url = https://github.com/lipis/bootstrap-social
