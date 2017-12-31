@@ -11,7 +11,7 @@
                 {% if loop.index0 is divisibleby(2) %}
                 <div class="row"><!-- row-of-2-posts -->
                 {% endif %}
-                    <div class="col-6 col-sm-6">
+                    <div class="col-sm-6">
                         <h2> {{ post.title }} </h2>
                         <div class="wrap-text"> 
                             <a href="{{ url_for('aflafrettir.post', 
@@ -24,8 +24,8 @@
                         </div><!-- ./wrap-text -->
     
                         <div class="row"> <!-- row-post -->
-                            <div class="col-12 col-sm-12">
-                                <p class="pull-right">
+                            <div class="col-12">
+                                <p class="float-right">
                                     <span class="label label-default">
                                         <a href="{{ url_for('aflafrettir.post',
                                                             title=slugify(post.title),
@@ -34,10 +34,10 @@
                                             Lesa meira »
                                         </a> 
                                     </span>
-                                </p> <!-- ./pull-right -->
+                                </p> <!-- ./float-right -->
     
                                 <ul class="list-inline">
-                                    <li>
+                                    <li class="list-inline-item">
                                         <a href="{{ url_for('aflafrettir.post',
                                                             title=slugify(post.title),
                                                             pid=post.id,
@@ -45,7 +45,7 @@
                                             Birt {{ post.distance_in_time }}
                                         </a>
                                     </li>
-                                    <li>
+                                    <li class="list-inline-item">
                                         <a href="{{ url_for('aflafrettir.post',
                                                             title=slugify(post.title),
                                                             pid=post.id,
@@ -96,10 +96,6 @@
                         {{ ad.ad_html|safe }}
                         {% endif %}
                     </div> <!-- ./col-6 col-sm-6 ad-main -->
-                    {% else %}
-                    <div class="col-6 col-sm-6 ad-main">
-                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-                    </div> <!-- ./col-6 col-sm-6 ad-main -->
                     {% endif %}
     
                     {% endfor %}
@@ -129,26 +125,12 @@
                         {{ ad.ad_html|safe }}
                         {% endif %}
                     </div> <!-- ./col-6 col-sm-6 ad-main -->
-                    {% else %}
-                    <div class="col-6 col-sm-6 ad-main">
-                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-                    </div> <!-- ./col-6 col-sm-6 ad-main -->
                     {% endif %}
                     {% endfor %}
                     {% elif ad_type == 1 %}
-                    <div class="col-12 col-sm-12 ad-main">
-                        <img data-src="holder.js/1330x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-                    </div> <!-- ./col-12 col-sm-12 -->
-                    {% set ad_type = 2 %}
+                        {% set ad_type = 2 %}
                     {% elif ad_type == 2 %}
-                    <div class="col-6 col-sm-6 ad-main">
-                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-                    </div> <!-- ./col-6 col-sm-6 ad-main -->
-                    <div class="col-6 col-sm-6 ad-main">
-                        <img data-src="holder.js/650x300/auto/#777:#7777" alt="Laust auglýsingapláss">
-                    </div> <!-- ./col-6 col-sm-6 ad-main -->
-    
-                    {% set ad_type = 1 %}
+                        {% set ad_type = 1 %}
                     {% endif %}
                 </div> <!-- ./row-ad -->
                 {% endif %}
