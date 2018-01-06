@@ -62,11 +62,13 @@ nav .nav-link:hover {
   margin-right: .1rem;
 }
 
-ul.drop-main {
+.drop-main {
+    height: auto;
+    overflow-x: hidden;
     margin: 19px;
 }
 
-ul.drop-right {
+.drop-right {
     margin: 25px;
 }
 

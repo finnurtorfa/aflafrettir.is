@@ -11,56 +11,52 @@
                 <a class="nav-link" href="{{ url_for('aflafrettir.index', lang_code=lang_code) }}">{{ _('Forsíða') }} </a>
             </li>
             <li class="nav-item dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle nav-link" href="#">{{ _('Flokkar') }}</a>
-                <ul class="dropdown-menu drop-main">
-                    <li>
-                        <a class="dropdown-item" href="{{ url_for('aflafrettir.category', cid=1, lang_code=lang_code) }}">
-                            {{ _('Almenn Frétt') }}
-                        </a>
-                    </li>
+                <a data-toggle="dropdown" class="dropdown-toggle nav-link" id="categories-dropdown" href="#">{{ _('Flokkar') }}</a>
+                <div class="dropdown-menu drop-main" aria-labelledby="categories-dropdown">
+                    <a class="dropdown-item" href="{{ url_for('aflafrettir.category', cid=1, lang_code=lang_code) }}">
+                        {{ _('Almenn Frétt') }}
+                    </a>
                     {% for category in categories %}
-                    <li>
-                        <a class="dropdown-item" href="{{ url_for('aflafrettir.category', cid=category.id, lang_code=lang_code) }}">
-                            {% if not lang_code %}
-                            {{ category.name }}
-                            {% else %}
-                            {{ category.name_en }}
-                            {% endif %}
-                        </a>
-                    </li>
+                    <a class="dropdown-item" href="{{ url_for('aflafrettir.category', cid=category.id, lang_code=lang_code) }}">
+                        {% if not lang_code %}
+                        {{ category.name }}
+                        {% else %}
+                        {{ category.name_en }}
+                        {% endif %}
+                    </a>
                     {% endfor %}
-                </ul> <!-- ./dropdown-menu -->
+                </div> <!-- ./dropdown-menu -->
             </li> <!-- ./dropdown nav-item -->
             {% if current_user.is_authenticated() %}
             <li class="nav-item dropdown">
-                <a data-toggle="dropdown" class="dropdown-toggle nav-link" href="#">{{ _('Stjórnborð') }}</a>
+                <a data-toggle="dropdown" class="dropdown-toggle nav-link" id="admin-dropdown" href="#">{{ _('Stjórnborð') }}</a>
                 <ul class="dropdown-menu drop-main">
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">{{ _('Prófíll') }}</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('admin.profile_index') }}">{{ _('Skoða') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.profile_edit') }}">{{ _('Breyta') }}</a></li>
-                        </ul> <!-- ./dropdown-menu -->
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ url_for('admin.profile_index') }}">{{ _('Skoða') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.profile_edit') }}">{{ _('Breyta') }}</a>
+                        </div> <!-- ./dropdown-menu -->
                     </li> <!-- ./dropdown-submenu -->
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">{{ _('Fréttir') }}</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('admin.news_index') }}">{{ _('Yfirlit') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.news_post') }}">{{ _('Ný Frétt') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.news_index', lang='en') }}">{{ _('Yfirlit Enska') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.news_post', lang='en') }}">{{ _('Ný Frétt Enska') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.news_category') }}">{{ _('Flokkar') }}</a></li>
-                        </ul> <!-- ./dropdown-menu -->
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ url_for('admin.news_index') }}">{{ _('Yfirlit') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.news_post') }}">{{ _('Ný Frétt') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.news_index', lang='en') }}">{{ _('Yfirlit Enska') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.news_post', lang='en') }}">{{ _('Ný Frétt Enska') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.news_category') }}">{{ _('Flokkar') }}</a>
+                        </div> <!-- ./dropdown-menu -->
                     </li> <!-- ./dropdown-submenu -->
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">{{ _('Auglýsingar') }}</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('admin.ad_index') }}">{{ _('Yfirlit') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.ad_upload') }}">{{ _('Ný Auglýsing') }}</a></li>
-                        </ul> <!-- ./dropdown-menu -->
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ url_for('admin.ad_index') }}">{{ _('Yfirlit') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.ad_upload') }}">{{ _('Ný Auglýsing') }}</a>
+                        </div> <!-- ./dropdown-menu -->
                     </li> <!-- ./dropdown-submenu -->
                     <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">{{ _('Ýmislegt') }}</a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url_for('admin.about') }}">{{ _('Um Síðuna') }}</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin.make_list') }}">{{ _('Útbúa lista') }}</a></li>
-                        </ul> <!-- ./dropdown-menu -->
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ url_for('admin.about') }}">{{ _('Um Síðuna') }}</a>
+                            <a class="dropdown-item" href="{{ url_for('admin.make_list') }}">{{ _('Útbúa lista') }}</a>
+                        </div> <!-- ./dropdown-menu -->
                     </li> <!-- ./dropdown-submenu -->
                 </ul> <!-- ./dropdown-menu -->
             </li> <!-- ./dropdown nav-item -->
