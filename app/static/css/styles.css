@@ -22,9 +22,9 @@ a,a:hover {
 
 /* General stylings */
 .ad-main img, .ad-right img {
-  max-width: 100%;
-  width: 100%;
-  height: auto;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
 }
 
 /* Navigation bar stylings */
@@ -38,7 +38,7 @@ nav {
 }
 
 .navbar-dark span.navbar-toggler-icon {
-      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1.0)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 
 }
 
@@ -54,21 +54,21 @@ nav .nav-link:hover {
 }
 
 .dropdown-submenu {
-  position: relative;
+    position: relative;
 }
 
 .dropdown-submenu a::after {
-  transform: rotate(-90deg);
-  position: absolute;
-  right: 6px;
-  top: .8em;
+    transform: rotate(-90deg);
+    position: absolute;
+    right: 6px;
+    top: .8em;
 }
 
 .dropdown-submenu .dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-left: .1rem;
-  margin-right: .1rem;
+    top: 0;
+    left: 100%;
+    margin-left: .1rem;
+    margin-right: .1rem;
 }
 
 .drop-main {
@@ -131,7 +131,6 @@ div.carousel, .no-carousel {
     border-radius: 20px;
 }
 
-/* Stylings for footer */
 .post-card {
     top: 40px;
     font-family:'Raleway', sans-serif;
@@ -152,20 +151,42 @@ div.carousel, .no-carousel {
     padding-right: 30px;
 }
 
-.push {
-  margin-bottom: 70px;
+.readmore {
+    position: relative;
 }
 
+.readmore:before {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    content: "";
+    background: linear-gradient(to left,
+        rgba(255,255,255, 1) 10%,
+        rgba(255,255,255, 0) 100%
+    );
+    pointer-events: none; /* so the text is still selectable */
+}
+
+.card-block img {
+    max-width: 100%;
+}
+
+.badge-secondary a {
+    color: #fff;
+}
+
+/* Stylings for footer */
 #footer, .push {
-  height:210px;
-  padding-top:20px;
-  padding-bottom:20px;
-	background-color:#dfdfdf;
-	color:#888;
+    height:210px;
+    padding-top:20px;
+    padding-bottom:20px;
+    background-color:#dfdfdf;
+    color:#888;
 }
 
 .push {
-  background-color:#efefef;
+    background-color:#efefef;
 }
 
 .footer-pagination
@@ -173,5 +194,4 @@ div.carousel, .no-carousel {
     padding-top: 10px;
     background-color:#efefef;
 }
-/* Main content stylings */
 

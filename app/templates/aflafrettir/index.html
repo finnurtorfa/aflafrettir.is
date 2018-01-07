@@ -12,30 +12,34 @@
                 <div class="row"><!-- row-of-2-posts -->
                 {% endif %}
                     <div class="col-sm-6">
-                        <h2> {{ post.title }} </h2>
-                        <div class="wrap-text"> 
-                            <a href="{{ url_for('aflafrettir.post', 
-                                                title=slugify(post.title), 
-                                                pid=post.id, 
-                                                lang_code=lang_code) }}">
-                                <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
-                            </a>
-                            <p> {{ truncate(post.body, 300)|safe }} </p>
-                        </div><!-- ./wrap-text -->
-    
+                        <div class="row">
+                            <div class="col-12">
+                                <h2> {{ post.title }} </h2>
+                                <div class="wrap-text">
+                                    <a href="{{ url_for('aflafrettir.post',
+                                                        title=slugify(post.title),
+                                                        pid=post.id,
+                                                        lang_code=lang_code) }}">
+                                        <img src="{{ post.thumbnail }}" class="img-resize" alt="Generic image">
+                                    </a>
+                                    <p> {{ truncate(post.body, 300)|safe }} </p>
+                                </div><!-- ./wrap-text -->
+                                </div> <!-- ./col-12 -->
+                        </div> <!-- ./row -->
+
                         <div class="row"> <!-- row-post -->
                             <div class="col-12">
                                 <p class="float-right">
-                                    <span class="label label-default">
+                                    <span class="badge badge-secondary">
                                         <a href="{{ url_for('aflafrettir.post',
                                                             title=slugify(post.title),
                                                             pid=post.id,
                                                             lang_code=lang_code) }}">
                                             Lesa meira »
-                                        </a> 
+                                        </a>
                                     </span>
                                 </p> <!-- ./float-right -->
-    
+
                                 <ul class="list-inline">
                                     <li class="list-inline-item">
                                         <a href="{{ url_for('aflafrettir.post',
@@ -60,13 +64,13 @@
                                         </a>
                                     </li>
                                 </ul> <!-- ./list-inline -->
-                            </div> <!-- ./col-12 col-sm-12 -->
+                            </div> <!-- ./col-12 -->
                         </div> <!-- ./row-post -->
                     </div> <!-- ./col-6 col-sm-6 -->
                 {% if loop.index is divisibleby(2) or loop.last %}
                 </div> <!-- ./row-of-2-posts -->
                 {% endif %}
-    
+
                 {% if (loop.index+2) is divisibleby(4) %}
                 <div class="row"> <!-- row-ad -->
                     {% if  main_lg and ad_type == 1 %}
@@ -80,10 +84,10 @@
                         {{ ad.ad_html|safe }}
                         {% endif %}
                     </div> <!-- ./col-12 col-sm-12 ad-main -->
-    
+
                     {% set ad_type = 2 %}
                     {% elif main_sm and ad_type == 2 %}
-    
+
                     {% for i in range(2) %}
                     {% if main_sm %}
                     {% set ad = main_sm.pop() %}
@@ -97,9 +101,9 @@
                         {% endif %}
                     </div> <!-- ./col-6 col-sm-6 ad-main -->
                     {% endif %}
-    
+
                     {% endfor %}
-    
+
                     {% set ad_type = 1 %}
                     {% elif main_lg and not main_sm and ad_type == 2 %}
                     {% set ad = main_lg.pop() %}
@@ -198,22 +202,22 @@
         </script>
         {% endif %}
     {% endblock %}
-    
+
     </div> <!-- ./col-md-2 -->
     {% endblock %}
-    
+
     {% block footer_right %}
     <div class="col-md-9">
       <p class="text-center"> <strong>{{ _('Flokkar') }}</strong><br><hr></p>
     </div> <!-- col-md-9 -->
-    
+
     <ul class="list-inline">
       <li>
         <a href="{{ url_for('aflafrettir.category',
                             cid=1,
                             lang_code=lang_code) }}">{{ _('Almenn frétt') }}</a>
       </li>
-      {% for category in categories %} 
+      {% for category in categories %}
       <li>
         <a href="{{ url_for('aflafrettir.category',
                             cid=category.id,
@@ -232,7 +236,7 @@
 {% block disqus_comments %}
 <script type="text/javascript">
   /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-  var disqus_shortname = 'aflafrettir'; 
+  var disqus_shortname = 'aflafrettir';
 
   /* * * DON'T EDIT BELOW THIS LINE * * */
   (function () {
