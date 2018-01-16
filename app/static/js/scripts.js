@@ -15,7 +15,6 @@ function onResize() {
     $('.carousel .carousel-item').height(carousel_height);
     $('.carousel').height(carousel_height);
 
-    $('.drop-main').css({'max-height': $(window).height() - 200});
 }
 
 $('.card-block table').each(function(){
@@ -42,3 +41,31 @@ $(window).on("load", function(e) {
     });
 });
 
+$('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+    if (!$(this).next().hasClass('show')) {
+        $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+    }
+
+    var $subMenu = $(this).next(".dropdown-menu");
+    $subMenu.toggleClass('show');
+
+    $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+        $('.dropdown-submenu .show').removeClass("show");
+    });
+
+    return false;
+});
+
+$('#navbarCollapse').on('shown.bs.collapse', function () {
+  $('.drop-main').css({'height': 'auto',
+                       'overflow-x': 'hidden',
+                       'max-height': $(window).height() - 200,
+                       'margin': ''});
+})
+
+$('#navbarCollapse').on('hidden.bs.collapse', function () {
+  $('.drop-main').css({'height': '',
+                       'overflow-x': '',
+                       'max-height': '',
+                       'margin': '19px'});
+})

@@ -72,8 +72,6 @@ nav .nav-link:hover {
 }
 
 .drop-main {
-    height: auto;
-    overflow-x: hidden;
     margin: 19px;
 }
 
