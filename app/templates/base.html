@@ -3,6 +3,7 @@
 <html {% block html_attrs %}{% endblock %}>
 {% block html %}
     <head>
+        {% if lang_code == 'en' %}
         <!-- Google Tag Manager -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -10,6 +11,7 @@
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','GTM-W52BLCZ');</script>
         <!-- End Google Tag Manager -->
+        {% endif %}
 
         {% block metas %}
         <meta charset="utf-8"/>
@@ -21,7 +23,7 @@
         <meta name="mobile-web-app-capable" content="yes">
 
         <!-- Facebook Open Graph meta's -->
-        <meta property="og:url" content="http://www.aflafrettir.is/frettir"/>
+        <meta property="og:url" content="{{ request.url }}"/>
         <meta property="og:site_name" content="Aflafréttir"/>
         <meta property="fb:admins" content="100000026998299"/>
         <meta property="fb:app_id" content="1526822784207277"/>
@@ -42,6 +44,7 @@
         {% endif %}
         {% endblock %}
 
+        {% if lang_code == 'en' %}
         <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         <script>
          (adsbygoogle = window.adsbygoogle || []).push({
@@ -49,13 +52,16 @@
            enable_page_level_ads: true
          });
         </script>
+        {% endif %}
     </head>
     <body {% block body_attrs %}{% endblock %}>
     {% block body %}
+        {% if lang_code == 'en' %}
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W52BLCZ"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
+        {% endif %}
 
         <div id="wrap">
 

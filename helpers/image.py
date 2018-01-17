@@ -39,6 +39,13 @@ def jpeg_convert(infile):
 
   return os.path.basename(outfile)
 
+def get_image_properties(path):
+    """ Returns images base path, width and height in a tuple """
+    img = Image.open('app{}'.format(path))
+    width, height = img.size
+
+    return (os.path.basename(path), width, height)
+
 def crop_image(infile):
   """ Crop an image. Check width and height, and crop according to the lower
   parameter from the center"""

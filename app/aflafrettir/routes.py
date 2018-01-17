@@ -11,6 +11,7 @@ from ..models import User, Category, Post, About, Image
 from .. import mail, imgs, babel
 
 from helpers.text import get_all_imgs, get_thumbnail, time_ago, slugify
+from helpers.image import get_image_properties
 
 @babel.localeselector
 def get_locale():
@@ -147,7 +148,9 @@ def post(title, pid, lang_code='is'):
     ads = Image.get_all_ads()
     right_ads = [ad for ad in ads if ad.type == 3]
     left_ads = [ad for ad in ads if ad.type == 4]
-    body_imgs = [os.path.basename(img) for img in get_all_imgs(p.body_html)]
+    body_imgs = [get_image_properties(img) for img in get_all_imgs(p.body_html)]
+    print(body_imgs)
+    #body_imgs = [os.path.basename(img) for img in get_all_imgs(p.body_html)]
 
     if title.encode('utf-8') != slugify(p.title):
         return abort(404)

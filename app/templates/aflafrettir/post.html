@@ -10,8 +10,10 @@
     <meta property="og:description" content="{{ truncate(post.body, 300, span=False)|safe }}"/>
     {% if body_imgs %}
     <meta property="og:image" content="{{ url_for('static',
-                                                  filename='uploads/imgs/'+body_imgs[0],
+                                                  filename='uploads/imgs/'+body_imgs[0][0],
                                                   _external=True) }}"/>
+    <meta property="og:image:width" content="{{ body_imgs[0][1] }}"/>
+    <meta property="og:image:height" content="{{ body_imgs[0][2] }}"/>
     {% endif %}
 {% endblock %}
 
