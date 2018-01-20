@@ -126,6 +126,9 @@ def post_to_fb():
 @admin.route('/<lang>/news')
 @login_required
 def news_index(lang='is'):
+    if '.com' in request.url:
+        lang = 'en'
+
     posts = Post.get_all_by_lang(lang=lang)
     categories = Category.get_all_active()
 
@@ -141,6 +144,9 @@ def news_index(lang='is'):
 @admin.route('/<lang>/news/post', methods=['GET', 'POST'])
 @login_required
 def news_post(lang='is'):
+    if '.com' in request.url:
+        lang = 'en'
+
     form = PostForm()
     form.category.choices = [(0, 'Almenn frétt')]
     form.created.data = datetime.utcnow()
@@ -238,6 +244,9 @@ def nicedit_upload():
 @admin.route('/<lang>/news/edit/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def news_edit(post_id, lang='is'):
+    if '.com' in request.url:
+        lang = 'en'
+
     post = Post.get_by_id(post_id)
     categories = Category.get_all_active()
 
@@ -285,6 +294,9 @@ def news_edit(post_id, lang='is'):
 @admin.route('/<lang>/news/delete/<int:post_id>')
 @login_required
 def news_delete(post_id, lang='is'):
+    if '.com' in request.url:
+        lang = 'en'
+
     post = Post.get_by_id(post_id)
     categories = Category.get_all_active()
 
@@ -511,7 +523,7 @@ def make_list(filename=None):
 @login_required
 def delete_list(filename):
     remove_file(filename, landings.config.destination)
-    
+
     return redirect(url_for('admin.make_list'))
 
 @run_in_thread(current_app)
