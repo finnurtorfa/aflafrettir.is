@@ -8,7 +8,7 @@
     <meta property="og:title" content="{{ post.title }}"/>
     <meta property="og:type" content="article"/>
     <meta property="og:description" content="{{ truncate(post.body, 300, span=False)|safe }}"/>
-    {% if body_imgs %}
+    {% if body_imgs[0][0] %}
     <meta property="og:image" content="{{ url_for('static',
                                                   filename='uploads/imgs/'+body_imgs[0][0],
                                                   _external=True) }}"/>

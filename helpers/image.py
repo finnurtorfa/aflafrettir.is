@@ -41,8 +41,12 @@ def jpeg_convert(infile):
 
 def get_image_properties(path):
     """ Returns images base path, width and height in a tuple """
-    img = Image.open('app{}'.format(path))
-    width, height = img.size
+    try:
+        img = Image.open('app{}'.format(path))
+        width, height = img.size
+    except FileNotFoundError as e:
+        current_app.logger.error("Could not finde file: {}".format(path))
+        return (None, None, None)
 
     return (os.path.basename(path), width, height)
 
