@@ -8,7 +8,7 @@ from flask import (render_template, redirect, url_for, flash, request, json,
 from flask_login import login_required, current_user
 from flask_uploads import UploadNotAllowed
 
-from facebook import GraphAPI
+from facebook import get_user_from_cookie, GraphAPI
 
 from helpers.text import remove_html_tags, slugify, get_all_imgs, truncate
 from helpers.image import crop_image, jpeg_convert
@@ -72,13 +72,23 @@ def post_to_fb():
         current_app.logger.debug('User {} already has token: {}'
                                  .format(current_user.username,
                                          current_user.fb_token))
-        current_app.logger.debug(request.args)
 
-        api = GraphAPI(current_user.fb_token, version='2.7')
+        user_graph = GraphAPI(current_user.fb_token, version='2.11')
     elif request.args.get('code'):
         current_app.logger.debug('Fetching Facebook token for user {}'
                                  .format(current_user.username))
         current_app.logger.debug(request.args)
+
+        result = get_user_from_cookie(cookies=request.cookies,
+                                      app_id=current_app.config['FB_APP_ID'],
+                                      app_secret=current_app.config['FB_APP_SECRET'])
+
+        if result:
+            user_graph = GraphAPI(result['access_token'])
+
+        else:
+            flash("Ekki tókst að senda póst á Facebook! Ertu búinn að logga þig inn?")
+            return redirect(url_for('admin.news_index'))
     else:
         current_app.logger.error("Not able to send post to Facebook for user {}"
                                  .format(current_user.username))
@@ -87,7 +97,7 @@ def post_to_fb():
         flash("Ekki tókst að senda póst á Facebook!")
         return redirect(url_for('admin.news_index'))
 
-    accounts = api.get_object('me/accounts')
+    accounts = user_graph.get_object('me/accounts')
 
     for d in accounts['data']:
         if d['id'] == current_app.config['FB_PAGE_ID']:
@@ -101,11 +111,14 @@ def post_to_fb():
 
         return redirect(url_for('admin.news_index'))
 
-    api = GraphAPI(page_access_token, version='2.7')
-    api.put_object(parent_object=current_app.config['FB_PAGE_ID'],
-                   connection_name='feed',
-                   message=session.pop('body', None),
-                   link=session.pop('link', None))
+    lnk = session.pop('link', None)
+    msg = session.pop('body', None)
+
+    page_graph = GraphAPI(page_access_token, version='2.11')
+    page_graph.put_object(parent_object=current_app.config['FB_PAGE_ID'],
+                          connection_name='feed',
+                          message=msg,
+                          link=lnk)
 
     return redirect(url_for('admin.news_index'))
 

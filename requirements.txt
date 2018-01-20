@@ -1,4 +1,4 @@
-facebook-sdk==2.0.0
+-e git+https://github.com/mobolic/facebook-sdk.git#egg=facebook-sdk
 
 Flask==0.10.1
 Flask-Babel==0.9
