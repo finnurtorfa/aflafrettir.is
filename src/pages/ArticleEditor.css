@@ -1,0 +1,101 @@
+.editor-page {
+  padding: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.editor-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.editor-form .form-group {
+  margin-bottom: 2rem;
+}
+
+.editor-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.editor-form input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1.1rem;
+}
+
+.editor-form input[type="text"]:focus {
+  outline: none;
+  border-color: #77ccdd;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: auto;
+}
+
+.article-metadata {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.article-metadata .form-group {
+  margin-bottom: 0;
+}
+
+.editor-form input[type="datetime-local"],
+.editor-form select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  background: white;
+}
+
+.editor-form input[type="datetime-local"]:focus,
+.editor-form select:focus {
+  outline: none;
+  border-color: #77ccdd;
+}
+
+.editor-form select {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .article-metadata {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
