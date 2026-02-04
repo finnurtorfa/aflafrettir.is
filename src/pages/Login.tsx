@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import './Login.css';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,35 +29,57 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-box">
-        <h1>Aflafréttir Stjórnborð</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Netfang</label>
-            <input
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        bgcolor: 'primary.main',
+      }}
+    >
+      <Container maxWidth="sm">
+        <Paper elevation={3} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" textAlign="center" gutterBottom>
+            Aflafréttir Stjórnborð
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <TextField
+              fullWidth
+              label="Netfang"
               type="email"
-              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              margin="normal"
             />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Lykilorð</label>
-            <input
+            <TextField
+              fullWidth
+              label="Lykilorð"
               type="password"
-              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              margin="normal"
             />
-          </div>
-          {error && <div className="error">Rangt netfang eða lykilorð</div>}
-          <button type="submit" className="btn-primary">Innskráning</button>
-        </form>
-      </div>
-    </div>
+            {error && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                Rangt netfang eða lykilorð
+              </Alert>
+            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              size="large"
+              sx={{ mt: 3 }}
+            >
+              Innskráning
+            </Button>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 

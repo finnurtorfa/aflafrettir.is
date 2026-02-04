@@ -1,9 +1,10 @@
 # Aflafréttir Admin Interface
 
-A modern admin interface for a news website focused on the Icelandic fishing industry.
+A modern admin interface for a news website focused on the Icelandic fishing industry, built with **Material UI** and **React 19**.
 
 ## Features
 
+- 🎨 **Material UI Design System** - Modern, responsive UI with Google's Material Design
 - 🔐 **Login Interface** - Secure authentication for admin users
 - 📰 **News Article Management** - Full CRUD operations for news articles
 - 📋 **Article Metadata** - Professional content management
@@ -31,10 +32,14 @@ A modern admin interface for a news website focused on the Icelandic fishing ind
   - 🔗 **Clickable Ads** - Link ads to external websites
   - 👁️ **Image Preview** - See ads before publishing
 - 📊 **Fishing Industry Reports** - Fetch and display reports from external APIs
+- 📱 **Fully Responsive** - Optimized for desktop, tablet, and mobile devices
+- 🎯 **Centered Layout** - Content automatically centers and scales with browser width
 
 ## Tech Stack
 
 - **React 19** with TypeScript
+- **Material UI v7** (MUI) - Complete UI component library
+- **Emotion** - CSS-in-JS styling (MUI requirement)
 - **Vite** for fast development
 - **React Router** for navigation
 - **Slate.js** - Professional rich text editor framework
@@ -48,7 +53,7 @@ A modern admin interface for a news website focused on the Icelandic fishing ind
 
 ### Prerequisites
 
-- **Node.js 20+** (for local development)
+- **Node.js 22+** (for local development)
 - **Podman** or **Docker** (for containerized deployment)
 
 ### Option 1: Local Development
@@ -66,7 +71,7 @@ npm install
 npm run dev
 ```
 
-Visit **http://localhost:5173**
+Visit **http://localhost:3000**
 
 #### Build for Production
 
@@ -76,24 +81,28 @@ npm run build
 
 The production build will be in the `dist/` directory.
 
-### Option 2: Run with Podman (Recommended)
+### Option 2: Run with Podman (Recommended for Production)
 
-#### Build the Container Image
+#### Using Podman Compose
 
 ```bash
-podman build -t aflafrettir-admin:latest .
+podman-compose up -d --build
 ```
 
-#### Run the Container
+Visit **http://localhost:3000**
+
+#### Manual Podman Commands
 
 ```bash
+# Build the container image
+podman build -t aflafrettir-admin:latest .
+
+# Run the container
 podman run -d \
   --name aflafrettir-admin \
   -p 3000:80 \
   aflafrettir-admin:latest
 ```
-
-Visit **http://localhost:3000**
 
 #### Stop the Container
 
@@ -102,43 +111,34 @@ podman stop aflafrettir-admin
 podman rm aflafrettir-admin
 ```
 
-### Option 3: Run with Docker Compose / Podman Compose
+### Option 3: Development Container (with Hot Reload)
+
+For development with hot reload and volume mounts:
+
+```bash
+podman-compose -f docker-compose.dev.yml up -d --build
+```
+
+This will:
+- Mount source files for live editing
+- Enable hot module replacement
+- Run Vite dev server in container
+
+### Option 4: Run with Docker
 
 #### Using Docker Compose
 
 ```bash
-docker-compose up -d
+docker-compose up -d --build
 ```
 
-#### Using Podman Compose
+#### Manual Docker Commands
 
 ```bash
-podman-compose up -d
-```
-
-Visit **http://localhost:3000**
-
-#### Stop the Services
-
-```bash
-# Docker
-docker-compose down
-
-# Podman
-podman-compose down
-```
-
-### Option 4: Run with Docker
-
-#### Build the Container Image
-
-```bash
+# Build the container image
 docker build -t aflafrettir-admin:latest .
-```
 
-#### Run the Container
-
-```bash
+# Run the container
 docker run -d \
   --name aflafrettir-admin \
   -p 3000:80 \
@@ -146,6 +146,16 @@ docker run -d \
 ```
 
 Visit **http://localhost:3000**
+
+#### Stop the Services
+
+```bash
+# Docker Compose
+docker-compose down
+
+# Podman Compose
+podman-compose down
+```
 
 ## Login Credentials
 
@@ -160,37 +170,86 @@ For development, any email/password combination will work (mock authentication).
 ```
 aflafrettir.is/
 ├── src/
-│   ├── components/       # Reusable components
-│   │   ├── Layout.tsx
+│   ├── components/          # Reusable components
+│   │   ├── Layout.tsx       # MUI AppBar navigation
+│   │   ├── PlateEditor.tsx  # Rich text editor
 │   │   └── ProtectedRoute.tsx
-│   ├── context/         # React context providers
+│   ├── context/            # React context providers
 │   │   └── AuthContext.tsx
-│   ├── pages/          # Page components
+│   ├── pages/             # Page components (all using MUI)
 │   │   ├── Login.tsx
 │   │   ├── Dashboard.tsx
 │   │   ├── Articles.tsx
 │   │   ├── ArticleEditor.tsx
+│   │   ├── Categories.tsx
 │   │   ├── Ads.tsx
 │   │   └── Reports.tsx
-│   ├── types/          # TypeScript type definitions
+│   ├── types/             # TypeScript type definitions
 │   │   └── index.ts
-│   └── App.tsx         # Main app component
-├── Dockerfile          # Container build configuration
-├── docker-compose.yml  # Container orchestration
-├── nginx.conf         # Nginx server configuration
-└── package.json       # Node.js dependencies
+│   ├── theme.ts           # MUI theme configuration
+│   ├── App.tsx            # Main app with ThemeProvider
+│   └── main.tsx
+├── Dockerfile             # Production container (nginx)
+├── Dockerfile.dev         # Development container (vite dev server)
+├── docker-compose.yml     # Production compose file
+├── docker-compose.dev.yml # Development compose file
+├── nginx.conf            # Nginx server configuration
+├── vite.config.ts        # Vite configuration (container-ready)
+└── package.json          # Node.js dependencies
 ```
+
+## Material UI Implementation
+
+All pages use Material UI components for a consistent, modern design:
+
+### UI Components Used
+- **Layout**: AppBar, Toolbar, Container, Box
+- **Forms**: TextField, Select, Checkbox, FormControl, Button
+- **Data Display**: Card, CardContent, Typography, Chip, Table
+- **Feedback**: Alert, CircularProgress
+- **Navigation**: Button with Link integration
+- **Layout**: Grid system with responsive breakpoints
+- **Icons**: MUI Icons throughout
+
+### Theme Customization
+
+The application uses a custom theme (`src/theme.ts`) with brand colors:
+- Primary: `#77ccdd` (Aflafréttir brand color)
+- Secondary: `#3498db`
+- Error: `#e74c3c`
+- Background: `#f5f5f5`
+
+### Responsive Design
+
+All layouts use MUI Grid with responsive breakpoints:
+- `xs`: Mobile (< 600px)
+- `sm`: Small tablet (≥ 600px)
+- `md`: Medium screens (≥ 900px)
+- `lg`: Large desktop (≥ 1200px)
+- `xl`: Extra large (≥ 1536px)
+
+Content is centered with `Container maxWidth="xl"` and scales dynamically.
 
 ## Container Details
 
+### Production Container (Dockerfile)
+
 The containerized version uses a **multi-stage build**:
 
-1. **Build stage**: Compiles the React app using Node.js 20
+1. **Build stage**: Compiles the React app using Node.js 22
 2. **Production stage**: Serves static files using Nginx Alpine
 
 **Image size**: ~50MB (optimized with Alpine Linux)
 
 **Port mapping**: Container port 80 → Host port 3000
+
+### Development Container (Dockerfile.dev)
+
+For development with hot reload:
+- Uses Node.js 22 Alpine
+- Runs Vite dev server
+- Volume mounts for live editing
+- Port 3000 exposed
 
 ## Environment Variables
 
@@ -209,7 +268,7 @@ VITE_API_URL=https://api.aflafrettir.is
 # Install dependencies
 npm install
 
-# Start dev server
+# Start dev server (localhost:3000)
 npm run dev
 
 # Build for production
@@ -224,24 +283,39 @@ npm run lint
 
 ## Container Commands
 
-```bash
-# Build image
-podman build -t aflafrettir-admin .
+### Production
 
-# Run container
+```bash
+# Build and start with compose
+podman-compose up -d --build
+
+# Or manually
+podman build -t aflafrettir-admin .
 podman run -d -p 3000:80 --name aflafrettir-admin aflafrettir-admin
 
 # View logs
 podman logs -f aflafrettir-admin
 
-# Stop container
+# Stop and remove
 podman stop aflafrettir-admin
-
-# Remove container
 podman rm aflafrettir-admin
 
-# Remove image
-podman rmi aflafrettir-admin
+# Rebuild after code changes
+podman-compose down
+podman-compose up -d --build
+```
+
+### Development
+
+```bash
+# Start dev container with hot reload
+podman-compose -f docker-compose.dev.yml up -d --build
+
+# View logs
+podman logs -f aflafrettir-admin-dev
+
+# Stop
+podman-compose -f docker-compose.dev.yml down
 ```
 
 ## Editor Features
@@ -253,12 +327,22 @@ See `ENHANCED_EDITOR.md` and `TABLE_AND_UPLOAD_FEATURES.md` for detailed editor 
 - ✅ Headings (H1, H2, H3)
 - ✅ Lists (numbered and bulleted)
 - ✅ Links with URL prompts
-- ✅ **Image upload from computer** (NEW!)
+- ✅ **Image upload from computer**
 - ✅ **Image insert from URL** 
-- ✅ **Tables with custom rows/columns** (NEW!)
+- ✅ **Tables with custom rows/columns**
 - ✅ Blockquotes
 - ✅ Keyboard shortcuts (Ctrl/Cmd + B/I/U)
 - ✅ Active state toolbar buttons
+
+## Recent Updates
+
+### Version 2.0 - Material UI Migration (February 2026)
+- ✨ Complete UI overhaul with Material UI v7
+- 🎨 Modern, consistent design system
+- 📱 Enhanced responsive design with MUI Grid
+- 🎯 Centered, scalable layouts
+- 🔧 Container configuration for development and production
+- ⚡ Vite configured for container networking
 
 ## Next Steps
 
@@ -268,6 +352,8 @@ See `ENHANCED_EDITOR.md` and `TABLE_AND_UPLOAD_FEATURES.md` for detailed editor 
 4. **Image Storage** - Move from base64 to cloud storage (S3, Cloudinary)
 5. **Database** - Set up PostgreSQL or MongoDB for persistent storage
 6. **Deployment** - Deploy to production (Kubernetes, OpenShift, or cloud platform)
+7. **Testing** - Add unit and integration tests
+8. **Accessibility** - Enhance ARIA labels and keyboard navigation
 
 ## Troubleshooting
 
@@ -277,15 +363,50 @@ If port 3000 is already in use, change the port mapping:
 
 ```bash
 podman run -d -p 8080:80 --name aflafrettir-admin aflafrettir-admin
+# Access via http://localhost:8080
 ```
+
+### Can't Access localhost:3000 in Container
+
+Make sure:
+1. Container is running: `podman ps | grep aflafrettir`
+2. Port is mapped correctly: Should show `0.0.0.0:3000->80/tcp`
+3. Rebuild container after code changes: `podman-compose up -d --build`
+
+### Container Exits Immediately
+
+Check logs:
+```bash
+podman logs aflafrettir-admin
+```
+
+Common issues:
+- Build failed - Check build logs
+- Port conflict - Change port mapping
+- Nginx configuration error - Verify nginx.conf
 
 ### Permission Denied (Podman)
 
-Run Podman in rootless mode or add your user to the appropriate group.
+Run Podman in rootless mode or add your user to the appropriate group:
+```bash
+sudo usermod -aG podman $USER
+```
 
 ### Build Fails
 
-Ensure you have enough disk space and Docker/Podman is running properly.
+Ensure you have:
+- Enough disk space (>2GB free)
+- Docker/Podman is running properly
+- Internet connection for npm dependencies
+- Node.js 22+ installed (for local builds)
+
+### Material UI Components Not Rendering
+
+Make sure:
+1. All dependencies are installed: `npm install`
+2. Theme is properly configured in `App.tsx`
+3. No CSS conflicts with old styles
+4. Browser cache is cleared
 
 ## License
 

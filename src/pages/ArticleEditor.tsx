@@ -5,7 +5,21 @@ import Layout from '../components/Layout';
 import { EnhancedEditor as PlateEditor } from '../components/PlateEditor';
 import type { NewsArticle, Category } from '../types';
 import { useAuth } from '../context/AuthContext';
-import './ArticleEditor.css';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import SaveIcon from '@mui/icons-material/Save';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const ArticleEditor: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -25,12 +39,10 @@ const ArticleEditor: React.FC = () => {
   ]);
 
   useEffect(() => {
-    // Load categories from localStorage
     const savedCategories = JSON.parse(localStorage.getItem('categories') || '[]') as Category[];
     const activeCategories = savedCategories.filter(cat => cat.isActive);
     setCategories(activeCategories);
     
-    // Set default category if we have categories
     if (activeCategories.length > 0 && !category) {
       setCategory(activeCategories[0].name);
     }
@@ -47,7 +59,6 @@ const ArticleEditor: React.FC = () => {
           const parsedContent = JSON.parse(article.content);
           setEditorValue(parsedContent);
         } catch {
-          // If content is not JSON (legacy HTML), create a simple text node
           setEditorValue([
             {
               type: 'paragraph',
@@ -100,81 +111,98 @@ const ArticleEditor: React.FC = () => {
 
   return (
     <Layout>
-      <div className="editor-page">
-        <div className="editor-header">
-          <h1>{id ? 'Breyta frétt' : 'Ný frétt'}</h1>
-          <div className="editor-actions">
-            <button onClick={() => navigate('/articles')} className="btn-secondary">Hætta við</button>
-            <button onClick={handleSave} className="btn-primary">Vista</button>
-          </div>
-        </div>
-        <div className="editor-form">
-          <div className="form-group">
-            <label htmlFor="title">Titill</label>
-            <input
-              type="text"
-              id="title"
+      <Container maxWidth="xl" sx={{ py: 4, width: '100%' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h3" component="h1">
+            {id ? 'Breyta frétt' : 'Ný frétt'}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button
+              variant="outlined"
+              onClick={() => navigate('/articles')}
+              startIcon={<CancelIcon />}
+            >
+              Hætta við
+            </Button>
+            <Button
+              variant="contained"
+              onClick={handleSave}
+              startIcon={<SaveIcon />}
+            >
+              Vista
+            </Button>
+          </Box>
+        </Box>
+        <Paper sx={{ p: 3 }}>
+          <Box sx={{ mb: 3 }}>
+            <TextField
+              fullWidth
+              label="Titill"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Sláðu inn titil fréttarinnar..."
+              variant="outlined"
             />
-          </div>
-          <div className="article-metadata">
-            <div className="form-group">
-              <label htmlFor="name">Nafn fréttarinnar</label>
-              <input
-                type="text"
-                id="name"
+          </Box>
+          <Grid container spacing={2} sx={{ mb: 3 }}>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <TextField
+                fullWidth
+                label="Nafn fréttarinnar"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Nafn til birtingar..."
                 required
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor="publishDate">Birtingartími</label>
-              <input
+            </Grid>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <TextField
+                fullWidth
+                label="Birtingartími"
                 type="datetime-local"
-                id="publishDate"
                 value={publishDate}
                 onChange={(e) => setPublishDate(e.target.value)}
+                InputLabelProps={{ shrink: true }}
               />
-            </div>
-            <div className="form-group">
-              <label htmlFor="category">Flokkur</label>
-              <select
-                id="category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                {categories.length === 0 ? (
-                  <option value="">Engir flokkar í boði</option>
-                ) : (
-                  categories.map((cat) => (
-                    <option key={cat.id} value={cat.name}>
-                      {cat.name}
-                    </option>
-                  ))
-                )}
-              </select>
-            </div>
-          </div>
-          <div className="form-group">
-            <label>Efni</label>
+            </Grid>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <FormControl fullWidth>
+                <InputLabel>Flokkur</InputLabel>
+                <Select
+                  value={category}
+                  label="Flokkur"
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  {categories.length === 0 ? (
+                    <MenuItem value="">Engir flokkar í boði</MenuItem>
+                  ) : (
+                    categories.map((cat) => (
+                      <MenuItem key={cat.id} value={cat.name}>
+                        {cat.name}
+                      </MenuItem>
+                    ))
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+          <Box sx={{ mb: 3 }}>
+            <Typography variant="subtitle1" gutterBottom>
+              Efni
+            </Typography>
             <PlateEditor value={editorValue} onChange={setEditorValue} />
-          </div>
-          <div className="form-group checkbox-group">
-            <label>
-              <input
-                type="checkbox"
+          </Box>
+          <FormControlLabel
+            control={
+              <Checkbox
                 checked={published}
                 onChange={(e) => setPublished(e.target.checked)}
               />
-              Birta strax
-            </label>
-          </div>
-        </div>
-      </div>
+            }
+            label="Birta strax"
+          />
+        </Paper>
+      </Container>
     </Layout>
   );
 };

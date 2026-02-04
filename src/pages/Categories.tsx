@@ -1,7 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import type { Category } from '../types';
-import './Categories.css';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Paper from '@mui/material/Paper';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Alert from '@mui/material/Alert';
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
+import SaveIcon from '@mui/icons-material/Save';
+import AddIcon from '@mui/icons-material/Add';
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -202,172 +225,229 @@ const Categories: React.FC = () => {
 
   return (
     <Layout>
-      <div className="categories-page">
-        <div className="categories-header">
-          <h1>Flokkar</h1>
-          <div className="active-count">
-            {activeCategories.length} virkir flokkar
-          </div>
-        </div>
+      <Container maxWidth="xl" sx={{ py: 4, width: '100%' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h3" component="h1">
+            Flokkar
+          </Typography>
+          <Chip 
+            label={`${activeCategories.length} virkir flokkar`}
+            color="primary"
+            size="medium"
+          />
+        </Box>
 
         {/* API Fetch Section */}
-        <div className="api-section">
-          <h2>Sækja flokka frá API</h2>
-          <div className="api-form">
-            <input
+        <Paper sx={{ p: 3, mb: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            Sækja flokka frá API
+          </Typography>
+          <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ mb: 2 }}>
+            <TextField
+              fullWidth
               type="url"
               placeholder="https://api.example.com/categories"
               value={apiUrl}
               onChange={(e) => setApiUrl(e.target.value)}
-              className="api-input"
+              size="small"
             />
-            <button
+            <Button
+              variant="contained"
               onClick={fetchFromApi}
               disabled={isFetching}
-              className="btn-primary"
+              startIcon={<CloudDownloadIcon />}
+              sx={{ minWidth: 180 }}
             >
               {isFetching ? 'Sæki...' : 'Sækja frá API'}
-            </button>
-          </div>
-          <p className="api-hint">
+            </Button>
+          </Stack>
+          <Typography variant="body2" color="text.secondary">
             API þarf að skila fylki af flokkum með <code>name</code> eða <code>title</code> svæði
-          </p>
-        </div>
+          </Typography>
+        </Paper>
 
         {/* Create/Edit Form */}
-        <div className="category-form">
-          <h2>{isEditing ? 'Breyta flokki' : 'Nýr flokkur'}</h2>
-          {error && <div className="error-message">{error}</div>}
-          <div className="form-row">
-            <input
-              type="text"
-              placeholder="Nafn flokks"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="form-input"
-            />
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={formData.isActive}
-                onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+        <Paper sx={{ p: 3, mb: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            {isEditing ? 'Breyta flokki' : 'Nýr flokkur'}
+          </Typography>
+          {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+          <Grid container spacing={2}>
+            <Grid size={{ xs: 12, md: 8 }}>
+              <TextField
+                fullWidth
+                label="Nafn flokks"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                size="small"
               />
-              Virkur í valmynd
-            </label>
-          </div>
-          <div className="form-actions">
+            </Grid>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={formData.isActive}
+                    onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
+                  />
+                }
+                label="Virkur í valmynd"
+              />
+            </Grid>
+          </Grid>
+          <Box sx={{ mt: 2, display: 'flex', gap: 2 }}>
             {isEditing ? (
               <>
-                <button onClick={handleUpdate} className="btn-primary">
+                <Button 
+                  variant="contained" 
+                  onClick={handleUpdate}
+                  startIcon={<SaveIcon />}
+                >
                   Uppfæra
-                </button>
-                <button onClick={resetForm} className="btn-secondary">
+                </Button>
+                <Button 
+                  variant="outlined" 
+                  onClick={resetForm}
+                >
                   Hætta við
-                </button>
+                </Button>
               </>
             ) : (
-              <button onClick={handleCreate} className="btn-primary">
+              <Button 
+                variant="contained" 
+                onClick={handleCreate}
+                startIcon={<AddIcon />}
+              >
                 Stofna flokk
-              </button>
+              </Button>
             )}
-          </div>
-        </div>
+          </Box>
+        </Paper>
 
         {/* Categories List */}
-        <div className="categories-list">
-          <h2>Allir flokkar</h2>
+        <Paper sx={{ p: 3, mb: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            Allir flokkar
+          </Typography>
           {categories.length === 0 ? (
-            <p className="empty-state">Engir flokkar ennþá</p>
+            <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', py: 6 }}>
+              Engir flokkar ennþá
+            </Typography>
           ) : (
-            <div className="category-table">
-              <div className="table-header">
-                <div className="col-order">Röð</div>
-                <div className="col-name">Nafn</div>
-                <div className="col-status">Staða</div>
-                <div className="col-updated">Síðast uppfært</div>
-                <div className="col-actions">Aðgerðir</div>
-              </div>
+            <Stack spacing={1}>
               {categories.map((category, index) => (
-                <div key={category.id} className={`table-row ${!category.isActive ? 'inactive' : ''}`}>
-                  <div className="col-order">
-                    <div className="order-controls">
-                      <button
-                        onClick={() => moveUp(index)}
-                        disabled={index === 0}
-                        className="order-btn"
-                        title="Færa upp"
-                      >
-                        ▲
-                      </button>
-                      <span className="order-number">{index + 1}</span>
-                      <button
-                        onClick={() => moveDown(index)}
-                        disabled={index === categories.length - 1}
-                        className="order-btn"
-                        title="Færa niður"
-                      >
-                        ▼
-                      </button>
-                    </div>
-                  </div>
-                  <div className="col-name">
-                    <strong>{category.name}</strong>
-                  </div>
-                  <div className="col-status">
-                    <button
-                      onClick={() => toggleActive(category.id)}
-                      className={`status-badge ${category.isActive ? 'active' : 'inactive-badge'}`}
-                    >
-                      {category.isActive ? '✓ Virkur' : '✗ Óvirkur'}
-                    </button>
-                  </div>
-                  <div className="col-updated">
-                    {new Date(category.updatedAt).toLocaleDateString('is-IS', {
-                      year: 'numeric',
-                      month: 'short',
-                      day: 'numeric',
-                    })}
-                  </div>
-                  <div className="col-actions">
-                    <button
-                      onClick={() => handleEdit(category)}
-                      className="btn-edit"
-                    >
-                      Breyta
-                    </button>
-                    <button
-                      onClick={() => handleDelete(category.id)}
-                      className="btn-delete"
-                    >
-                      Eyða
-                    </button>
-                  </div>
-                </div>
+                <Card 
+                  key={category.id} 
+                  sx={{ 
+                    opacity: category.isActive ? 1 : 0.6,
+                    bgcolor: category.isActive ? 'background.paper' : 'action.hover'
+                  }}
+                >
+                  <CardContent>
+                    <Grid container spacing={2} alignItems="center">
+                      <Grid size={{ xs: 12, sm: 2, md: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                          <IconButton
+                            size="small"
+                            onClick={() => moveUp(index)}
+                            disabled={index === 0}
+                            color="primary"
+                          >
+                            <ArrowUpwardIcon fontSize="small" />
+                          </IconButton>
+                          <Typography variant="body2" sx={{ fontWeight: 'bold', minWidth: 24, textAlign: 'center' }}>
+                            {index + 1}
+                          </Typography>
+                          <IconButton
+                            size="small"
+                            onClick={() => moveDown(index)}
+                            disabled={index === categories.length - 1}
+                            color="primary"
+                          >
+                            <ArrowDownwardIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
+                      </Grid>
+                      <Grid size={{ xs: 12, sm: 4, md: 3 }}>
+                        <Typography variant="h6">
+                          {category.name}
+                        </Typography>
+                      </Grid>
+                      <Grid size={{ xs: 6, sm: 3, md: 2 }}>
+                        <Chip
+                          icon={category.isActive ? <CheckCircleIcon /> : <CancelIcon />}
+                          label={category.isActive ? 'Virkur' : 'Óvirkur'}
+                          color={category.isActive ? 'success' : 'default'}
+                          onClick={() => toggleActive(category.id)}
+                          size="small"
+                        />
+                      </Grid>
+                      <Grid size={{ xs: 6, sm: 3, md: 3 }}>
+                        <Typography variant="body2" color="text.secondary">
+                          {new Date(category.updatedAt).toLocaleDateString('is-IS', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </Typography>
+                      </Grid>
+                      <Grid size={{ xs: 12, md: 3 }}>
+                        <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            size="small"
+                            onClick={() => handleEdit(category)}
+                            startIcon={<EditIcon />}
+                          >
+                            Breyta
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            color="error"
+                            size="small"
+                            onClick={() => handleDelete(category.id)}
+                            startIcon={<DeleteIcon />}
+                          >
+                            Eyða
+                          </Button>
+                        </Box>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
               ))}
-            </div>
+            </Stack>
           )}
-        </div>
+        </Paper>
 
         {/* Active Categories Preview */}
-        <div className="active-preview">
-          <h2>Virkir flokkar í valmynd</h2>
-          <p className="preview-description">
+        <Paper sx={{ p: 3 }}>
+          <Typography variant="h5" gutterBottom>
+            Virkir flokkar í valmynd
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
             Þessir flokkar birtast í fellivalmyndinni þegar ný frétt er búin til:
-          </p>
+          </Typography>
           {activeCategories.length === 0 ? (
-            <p className="empty-state">Engir virkir flokkar</p>
+            <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', py: 6 }}>
+              Engir virkir flokkar
+            </Typography>
           ) : (
-            <div className="preview-list">
+            <Grid container spacing={1}>
               {activeCategories.map((category, index) => (
-                <div key={category.id} className="preview-item">
-                  <span className="preview-number">{index + 1}.</span>
-                  <span className="preview-name">{category.name}</span>
-                </div>
+                <Grid size={{ xs: 6, sm: 4, md: 3 }} key={category.id}>
+                  <Chip
+                    label={`${index + 1}. ${category.name}`}
+                    color="primary"
+                    variant="outlined"
+                    sx={{ width: '100%' }}
+                  />
+                </Grid>
               ))}
-            </div>
+            </Grid>
           )}
-        </div>
-      </div>
+        </Paper>
+      </Container>
     </Layout>
   );
 };
