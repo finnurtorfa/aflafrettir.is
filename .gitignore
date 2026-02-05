@@ -35,6 +35,9 @@ dist-ssr/
 .env.test.local
 .env.production.local
 
+# Configuration
+settings.json
+
 # Testing
 coverage/
 *.lcov
